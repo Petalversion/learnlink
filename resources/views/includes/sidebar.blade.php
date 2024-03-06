@@ -214,10 +214,19 @@
         </a>
       </li>
       <li class="nav-item {{ request()->routeIs('instructor.questions') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="{{route('instructor.questions')}}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseQuestions" aria-expanded="true" aria-controls="collapseQuestions">
           <i class="fas fa-fw fa-comments"></i>
-          <span>Questions and Reviews</span>
+          <span>Feedback</span>
         </a>
+        <div id="collapseQuestions" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Questions:</h6>
+            <a class="collapse-item" href="{{route('instructor.questions')}}">Recent Questions</a>
+            <div class="collapse-divider"></div>
+            <h6 class="collapse-header">Reviews:</h6>
+            <a class="collapse-item" href="#">Course Reviews</a>
+          </div>
+        </div>
       </li>
       <li class="nav-item {{ (request()->routeIs('instructor.transactions') || request()->routeIs('instructor.transactions.new')) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
@@ -230,6 +239,7 @@
             <a class="collapse-item" href="{{route('instructor.transactions')}}">Withdrawal History</a>
             <a class="collapse-item" href="{{route('instructor.transactions.new')}}">Withdrawal Request</a>
           </div>
+        </div>
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

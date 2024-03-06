@@ -26,13 +26,14 @@ class LessonController extends Controller
             return redirect('/instructor/profile');
         } else {
 
-            $courses = Course::where('course_id', $course_id)->get();
-            $instructor = Course::where('course_id', $course_id)->get();
-            $name = Auth::user()->name;
-            $user = Auth::user();
+            $name = Auth::guard('instructor')->user()->name;
+            $user = Auth::guard('instructor')->user();
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
-            foreach ($instructor as $user) {
-                $uid = $user->instructor->name;
+            $uid = $instructor_info->instructor->name;
+            $courses = Course::where('instructor_id', $user->instructor_id)->where('id', $course_id)->first();
+
+            if (!$courses) {
+                return redirect()->route('instructor.course.course');
             }
 
             return view('instructor.lesson.lesson-create', compact('courses', 'uid', 'name', 'instructor_info'));
@@ -95,8 +96,9 @@ class LessonController extends Controller
             'uploadedFiles' => $uploadedFiles,
         ]);
 
+        $id = Course::where('course_id', $course_id)->first();
 
-        return redirect()->route('instructor.course.course-view', ['course_id' => $course_id])
+        return redirect()->route('instructor.course.course-view', ['course_id' => $id->id])
             ->with('success', 'Lesson created');
         // }
 
@@ -112,15 +114,15 @@ class LessonController extends Controller
     public function destroy($lesson_id)
     {
         // Find the lesson by ID
-        $lesson = Lesson::find($lesson_id);
+        $lesson = Lesson::where('id', $lesson_id)->first();
 
         // Check if the lesson exists
         if (!$lesson) {
-            return redirect()->route('instructor.course.course-view', ['course_id' => $lesson->course_id])->with('error', 'Lesson not found');
+            return redirect()->route('instructor.course.course-view', ['course_id' => $lesson->course->id])->with('error', 'Lesson not found');
         }
 
         // Get the course ID before deleting the lesson
-        $courseId = $lesson->course_id;
+        $courseId = $lesson->course->id;
 
         // Implement any additional authorization logic if needed (e.g., check if the authenticated user owns the lesson)
 
@@ -139,14 +141,22 @@ class LessonController extends Controller
             return redirect('/instructor/profile');
         } else {
 
-            $lesson = Lesson::where('lesson_id', $lesson_id)->first();
-            $name = Auth::user()->name;
-            $user = Auth::user();
+            $lesson = Lesson::where('id', $lesson_id)->first();
+            $name = Auth::guard('instructor')->user()->name;
+            $user = Auth::guard('instructor')->user();
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
 
             if (!$lesson) {
-                return redirect()->route('instructor.course.course-view')->with('error', 'Lesson not found.');
+                return redirect()->route('instructor.course.course')->with('error', 'Lesson not found.');
             }
+
+            $course = Course::where('course_id', $lesson->course_id)->first();
+            $owner = $course->instructor_id;
+
+            if ($owner !== $user->instructor_id) {
+                return redirect()->route('instructor.course.course')->with('error', 'Lesson not found.');
+            }
+
             return view('instructor.lesson.lesson-edit', compact('lesson', 'name', 'instructor_info'));
         }
     }
@@ -205,6 +215,6 @@ class LessonController extends Controller
         }
         $lesson->save();
 
-        return redirect()->route('instructor.lesson.lesson-edit', ['lesson_id' => $lesson->lesson_id])->with('success', 'Lesson updated successfully.');
+        return redirect()->route('instructor.lesson.lesson-edit', ['lesson_id' => $lesson->id])->with('success', 'Lesson updated successfully.');
     }
 }

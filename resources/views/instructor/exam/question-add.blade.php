@@ -2,17 +2,9 @@
 
 @section('content')<!-- Begin Page Content -->
 <div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
-    @foreach ($courses as $course)
-    <a href="{{ route('instructor.course.course-view', ['course_id' => $course->course_id]) }}">
+    <a href="{{ route('instructor.course.course-view', ['course_id' => $courses->id]) }}">
         <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>
-    @endforeach
-    <!-- Page Heading -->
-
-
-
-    <!-- Content Row -->
     <div class="card shadow mb-4">
-
         <div class="card-body">
             <div class="table-responsive">
                 @if($errors->any())
@@ -31,11 +23,7 @@
                 @endif
                 <form action="{{ route('instructor.exam.question-store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @foreach ($courses as $course)
-                    <!-- Hidden input for course_id -->
-                    <input type="hidden" name="course_id" value="{{ $course->course_id }}">
-                    @endforeach
-                    <!-- Begin Page Content -->
+                    <input type="hidden" name="course_id" value="{{ $courses->course_id }}">
                     <div class="container mt-2">
                         <div class="table-responsive">
                             <h2 style="margin-bottom: 4%;">Add Exam Question</h2>

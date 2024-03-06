@@ -177,3 +177,6 @@
 <script>
   new DataTable('#myTable12345');
 </script>
+<script>
+  new DataTable('#myTable123456');
+</script>

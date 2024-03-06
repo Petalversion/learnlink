@@ -7,7 +7,7 @@
             <h1 class="h3 mb-3 text-gray-800"><i class="fas fa-fw fa-book-open"></i> Course</h1>
         </div>
         <div class="col-md-6 text-md-right">
-            <a href="{{ route('instructor.course.course-create', ['instructor_id' => $instructor->instructor_id]) }}" class="btn btn-primary btn-icon-split p-0"><span class="icon text-white-50 "><i class="fas fa-plus"></i></span><span class="text">Course</span></a>
+            <a href="{{ route('instructor.course.course-create') }}" class="btn btn-primary btn-icon-split p-0"><span class="icon text-white-50 "><i class="fas fa-plus"></i></span><span class="text">Course</span></a>
         </div>
     </div>
     <div class="card shadow mb-4">
@@ -41,8 +41,8 @@
                                                         number_format($course->amount, 2) : 'Free' }}</td>
                             <td>{{$course->status}}</td>
                             <td>
-                                <a href="{{ route('instructor.course.course-edit', ['course_id' => $course->course_id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('instructor.course.course-view', ['course_id' => $course->course_id]) }}" class="btn btn-outline-success"><i class="fas fa-eye "></i></a>
+                                <a href="{{ route('instructor.course.course-edit', ['course_id' => $course->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('instructor.course.course-view', ['course_id' => $course->id]) }}" class="btn btn-outline-success"><i class="fas fa-eye "></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -52,3 +52,4 @@
         </div>
     </div>
 </div>
+@endsection

@@ -57,12 +57,12 @@
 
                 <div class="container-fluid mt-2">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>Lessons</h2>
-                        <a href="{{ route('instructor.lesson.lesson-create', ['course_id' => $course->course_id]) }}" class="btn btn-primary btn-icon-split p-0"><span class="icon text-white-50"><i class="fas fa-plus"></i></span><span class="text">Lessons</span></a>
+                        <h2><i class="fa-solid fa-chalkboard"></i> Lessons</h2>
+                        <a href="{{ route('instructor.lesson.lesson-create', ['course_id' => $course->id]) }}" class="btn btn-primary btn-icon-split p-0"><span class="icon text-white-50"><i class="fas fa-plus"></i></span><span class="text">Lessons</span></a>
                     </div>
                     <div class="mt-4">
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="myTable12345">
                                 <thead>
                                     <tr>
                                         <th class="text-right">No.</th>
@@ -90,23 +90,23 @@
                                         </td>
                                         <td class="text-center">
                                             <!-- Edit Link -->
-                                            <a href="{{ route('instructor.lesson.lesson-edit', ['lesson_id' => $lesson->lesson_id]) }}" class="btn btn-primary">
+                                            <a href="{{ route('instructor.lesson.lesson-edit', ['lesson_id' => $lesson->id]) }}" class="btn btn-primary">
                                                 <i class="fas fa-edit fa-sm"></i>
                                             </a>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLessonModal{{$lesson->lesson_id}} ">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLessonModal{{$lesson->id}} ">
                                                 <i class="fas fa-trash fa-sm"></i>
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="deleteLessonModal{{$lesson->lesson_id}}" tabindex="-1" aria-labelledby="deleteLessonModal{{$lesson->lesson_id}}" aria-hidden="true">
+                                    <div class="modal fade" id="deleteLessonModal{{$lesson->id}}" tabindex="-1" aria-labelledby="deleteLessonModal{{$lesson->id}}" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <form action=" {{route('instructor.lesson.lesson-destroy', ['lesson_id' => $lesson->lesson_id])}}" method="POST">
+                                                <form action=" {{route('instructor.lesson.lesson-destroy', ['lesson_id' => $lesson->id])}}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
 
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteQuizLabel{{$lesson->lesson_id}}">Delete Lesson</h5>
+                                                        <h5 class="modal-title" id="deleteQuizLabel{{$lesson->id}}">Delete Lesson</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
@@ -140,15 +140,15 @@
 
                 <div class="container-fluid mt-2">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>Exam Questions</h2>
-                        <a href="{{ route('instructor.exam.question-create', ['course_id' => $course->course_id]) }}" class="
+                        <h2><i class="fa-solid fa-chalkboard-user"></i> Questions</h2>
+                        <a href="{{ route('instructor.exam.question-create', ['course_id' => $course->id]) }}" class="
                                             btn btn-primary btn-icon-split p-0"><span class="icon text-white-50">
                                 <i class="fas fa-plus"></i>
                             </span><span class="text">Questions</span></a>
                     </div>
                     <div class="mt-4">
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="myTable123456">
                                 <thead>
                                     <tr>
                                         <th class="text-right">No.</th>
@@ -173,26 +173,26 @@
                                         </td>
                                         <td class="text-center">
                                             <!-- Edit Link -->
-                                            <a href="{{ route('instructor.exam.question-edit', ['exam_id' => $question->exam_id]) }}" class="btn btn-primary">
+                                            <a href="{{ route('instructor.exam.question-edit', ['exam_id' => $question->id]) }}" class="btn btn-primary">
                                                 <i class="fas fa-edit fa-sm"></i>
                                             </a>
                                             <!-- View Link -->
 
                                             <!-- Delete Button -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteQuizModal{{$question->exam_id}}">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteQuizModal{{$question->id}}">
                                                 <i class="fas fa-trash fa-sm"></i>
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="deleteQuizModal{{$question->exam_id}}" tabindex="-1" aria-labelledby="deleteQuizModalLabel{{$question->exam_id}}" aria-hidden="true">
+                                    <div class="modal fade" id="deleteQuizModal{{$question->id}}" tabindex="-1" aria-labelledby="deleteQuizModalLabel{{$question->id}}" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <form action=" {{route('instructor.exam.question-destroy', ['exam_id' => $question->exam_id])}}" method="POST">
+                                                <form action=" {{route('instructor.exam.question-destroy', ['exam_id' => $question->id])}}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
 
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteQuizLabel{{$question->exam_id}}">
+                                                        <h5 class="modal-title" id="deleteQuizLabel{{$question->id}}">
                                                             Delete Question</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>

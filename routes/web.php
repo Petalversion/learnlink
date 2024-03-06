@@ -82,38 +82,39 @@ Route::middleware('auth:admin')->group(function () {
 
 Route::middleware('auth:instructor')->group(function () {
     // Instructor Pages
-    Route::get('/instructor/dashboard', [InstructorController::class, 'showInstructorDashboard'])->name('instructor.dashboard');
-    Route::get('/instructor/courses', [CourseController::class, 'index'])->name('instructor.course.course');
-    Route::get('/instructor/courses/create/{instructor_id}', [CourseController::class, 'createCourse'])->name('instructor.course.course-create');
-    Route::post('/instructor/courses/store', [CourseController::class, 'storeCourse'])->name('instructor.course.store');
-    Route::get('instructor/courses/{course_id}/view', [CourseController::class, 'courseView'])->name('instructor.course.course-view');
-    Route::get('instructor/courses/{course_id}/edit', [CourseController::class, 'courseEdit'])->name('instructor.course.course-edit');
-    Route::put('instructor/courses/{course_id}', [CourseController::class, 'update'])->name('instructor.course.update');
-    Route::delete('instructor/courses/{course}', [CourseController::class, 'destroy'])->name('course.destroy');
+    Route::get('dashboard', [InstructorController::class, 'showInstructorDashboard'])->name('instructor.dashboard');
+    Route::get('course', [CourseController::class, 'index'])->name('instructor.course.course');
+    Route::get('course/create', [CourseController::class, 'createCourse'])->name('instructor.course.course-create');
+    Route::post('course/store', [CourseController::class, 'storeCourse'])->name('instructor.course.store');
+    Route::get('course/{course_id}', [CourseController::class, 'courseView'])->name('instructor.course.course-view');
+    Route::get('course/{course_id}/edit', [CourseController::class, 'courseEdit'])->name('instructor.course.course-edit');
+    Route::put('course/{course_id}', [CourseController::class, 'update'])->name('instructor.course.update');
+    Route::delete('course/{course}', [CourseController::class, 'destroy'])->name('course.destroy');
     Route::get('instructor/tags', [TagController::class, 'show'])->name('instructor.course.tags');
     Route::get('instructor/tags/create', [TagController::class, 'create'])->name('instructor.course.tags-create');
     Route::post('instructor/tags/create', [TagController::class, 'store'])->name('instructor.course.tags.store');
     Route::get('instructor/categories/create', [CategoryController::class, 'create'])->name('instructor.course.category-create');
     Route::post('instructor/categories/create', [CategoryController::class, 'store'])->name('instructor.course.category.store');
     Route::get('instructor/show-category', [CategoryController::class, 'showCategory'])->name('instructor.course.category');
-    Route::get('instructor/lesson/create/{course_id}', [LessonController::class, 'create'])->name('instructor.lesson.lesson-create');
-    Route::post('instructor/lesson/store', [LessonController::class, 'store'])->name('instructor.lesson.lesson-store');
-    Route::post('instructor/lesson/upload-image', [LessonController::class, 'uploadImage'])->name('instructor.lesson.upload-image');
-    Route::delete('/instructor/lesson/{lesson_id}/destroy', [LessonController::class, 'destroy'])->name('instructor.lesson.lesson-destroy');
-    Route::get('instructor/lesson/{lesson_id}/edit', [LessonController::class, 'lessonEdit'])->name('instructor.lesson.lesson-edit');
+    Route::get('course/{course_id}/new-lesson', [LessonController::class, 'create'])->name('instructor.lesson.lesson-create');
+    Route::post('lesson/store', [LessonController::class, 'store'])->name('instructor.lesson.lesson-store');
+    Route::post('lesson/upload-image', [LessonController::class, 'uploadImage'])->name('instructor.lesson.upload-image');
+    Route::delete('lesson/{lesson_id}/destroy', [LessonController::class, 'destroy'])->name('instructor.lesson.lesson-destroy');
+    Route::get('course/lesson/{lesson_id}', [LessonController::class, 'lessonEdit'])->name('instructor.lesson.lesson-edit');
     Route::put('instructor/lesson/{lesson_id}', [LessonController::class, 'update'])->name('instructor.lesson.update');
-    Route::get('instructor/quiz/create/{course_id}', [QuizController::class, 'create'])->name('instructor.exam.question-create');
+    Route::get('course/{course_id}/new-question', [QuizController::class, 'create'])->name('instructor.exam.question-create');
     Route::post('instructor/quiz/store', [QuizController::class, 'store'])->name('instructor.exam.question-store');
     Route::delete('/instructor/quiz/{exam_id}/destroy', [QuizController::class, 'destroy'])->name('instructor.exam.question-destroy');
-    Route::get('instructor/quiz/{exam_id}/edit', [QuizController::class, 'examEdit'])->name('instructor.exam.question-edit');
+    Route::get('course/question/{exam_id}', [QuizController::class, 'examEdit'])->name('instructor.exam.question-edit');
     Route::put('instructor/quiz/{exam_id}', [QuizController::class, 'update'])->name('instructor.exam.update');
     Route::post('instructor/ckeditor/upload', [ckeditorController::class, 'upload'])->name('ckeditor.upload');
-    Route::get('instructor/comments', [CommentsandReviewsController::class, 'instructorComments'])->name('instructor.questions');
+    Route::get('instructor/recent-questions', [CommentsandReviewsController::class, 'instructorComments'])->name('instructor.questions');
+    Route::get('instructor/reviews', [CommentsandReviewsController::class, 'reviews'])->name('instructor.reviews');
     Route::post('/instructor/add-answer/', [CommentsandReviewsController::class, 'storeAnswer'])->name('add.answer');
     Route::get('/instructor/profile', [InstructorController::class, 'profile'])->name('instructor.profile');
     Route::put('/instructor/profile/update', [InstructorController::class, 'profileUpdate'])->name('instructor.profileupdate');
-    Route::get('/instructor/transactions', [InstructorWalletController::class, 'showTransactions'])->name('instructor.transactions');
-    Route::get('/instructor/transactions/new', [InstructorWalletController::class, 'newTransactions'])->name('instructor.transactions.new');
+    Route::get('/instructor/withdrawal-history', [InstructorWalletController::class, 'showTransactions'])->name('instructor.transactions');
+    Route::get('/instructor/withdrawal-request', [InstructorWalletController::class, 'newTransactions'])->name('instructor.transactions.new');
     Route::post('/instructor/transactions/add', [InstructorWalletController::class, 'addTransactions'])->name('instructor.transactions.add');
 });
 

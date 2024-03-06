@@ -3,7 +3,7 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
-    <a href="{{ route('instructor.course.course-view', ['course_id' => $quiz->course_id]) }}">
+    <a href="{{ route('instructor.course.course-view', ['course_id' => $quiz->course->id]) }}">
         <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>
     <!-- Page Heading -->
 
@@ -14,7 +14,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <form action="{{ route('instructor.exam.update', ['exam_id' => $quiz->exam_id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('instructor.exam.update', ['exam_id' => $quiz->id]) }}" method="POST" enctype="multipart/form-data">
 
                     @csrf
                     @method('PUT')

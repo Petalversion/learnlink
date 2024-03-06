@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <h2 style="margin-bottom: 2%;"><i class="fas fa-history"></i> Recent Questions</h2>
+                        <h2 style="margin-bottom: 2%;">Recent Questions</h2>
                         @foreach($all_student_comments as $comment)
                         <tr class="text-center">
                             @php

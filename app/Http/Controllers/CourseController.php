@@ -25,10 +25,8 @@ class CourseController extends Controller
         if ($status == 'Pending') {
             return redirect('/instructor/profile');
         } else {
-
             // Retrieve the currently authenticated user
             $instructor = Auth::guard('instructor')->user();
-
             $name = Auth::user()->name;
             $user = Auth::user();
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
@@ -54,6 +52,7 @@ class CourseController extends Controller
             $name = Auth::user()->name;
             $user = Auth::user();
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
+
             return view('instructor.course.course-create', compact('tags', 'categories', 'course_id', 'instructor', 'name', 'instructor_info'));
         }
     }
@@ -83,6 +82,11 @@ class CourseController extends Controller
         $status = 'draft';
         $validatedData['status'] = $status;
 
+        if ($request->hasFile('image')) {
+            // Add logic to store and handle the uploaded image
+            $imagePath = $request->file('image')->store('images', 'public');
+            $validatedData['image'] = $imagePath;
+        }
 
         $course = Course::create($validatedData);
 
@@ -97,18 +101,19 @@ class CourseController extends Controller
 
 
         // If not saved as draft, redirect to course view
-        return redirect()->route('instructor.course.course', $course->course_id)
+        return redirect()->route('instructor.course.course-view', $course->id)
             ->with('success', 'Course saved as draft.');
     }
 
     public function courseView($course_id)
     {
         $status = Auth::guard('instructor')->user()->status;
+        $instructor_id = Auth::guard('instructor')->user()->instructor_id;
         if ($status == 'Pending') {
             return redirect('/instructor/profile');
         } else {
 
-            $course = Course::where('course_id', $course_id)->first();
+            $course = Course::where('instructor_id', $instructor_id)->where('id', $course_id)->first();
 
             if (!$course) {
                 return redirect()->route('instructor.course.course')->with('error', 'Course not found.');
@@ -124,30 +129,34 @@ class CourseController extends Controller
     public function courseEdit($course_id)
     {
         $status = Auth::guard('instructor')->user()->status;
+        $instructor_id = Auth::guard('instructor')->user()->instructor_id;
         if ($status == 'Pending') {
             return redirect('/instructor/profile');
         } else {
 
-            $course = Course::where('course_id', $course_id)->first();
-            $lessons = count($course->lessons);
-            $quizzes = count($course->quiz);
+            $course = Course::where('instructor_id', $instructor_id)->where('id', $course_id)->first();
+            if ($course) {
+                $lessons = count($course->lessons);
+                $quizzes = count($course->quiz);
 
-            if ($lessons == 0 || $quizzes == 0) {
-                $combo = 0;
-            } else {
-                $combo = 1;
+                if ($lessons == 0 || $quizzes == 0) {
+                    $combo = 0;
+                } else {
+                    $combo = 1;
+                }
+
+                if (!$course) {
+                    return redirect()->route('instructor.course.course')->with('error', 'Course not found.');
+                }
+                $tags = Tag::all();
+                $categories = Category::all();
+
+                $name = Auth::user()->name;
+                $user = Auth::user();
+                $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
+                return view('instructor.course.course-edit', compact('course', 'tags', 'categories', 'name', 'instructor_info', 'combo'));
             }
-
-            if (!$course) {
-                return redirect()->route('instructor.course.course')->with('error', 'Course not found.');
-            }
-            $tags = Tag::all();
-            $categories = Category::all();
-
-            $name = Auth::user()->name;
-            $user = Auth::user();
-            $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
-            return view('instructor.course.course-edit', compact('course', 'tags', 'categories', 'name', 'instructor_info', 'combo'));
+            return redirect()->route('instructor.course.course');
         }
     }
 
@@ -200,7 +209,7 @@ class CourseController extends Controller
         // Sync tags and categories for the course
         $course->tags()->sync($request->input('tags'));
 
-        return redirect()->route('instructor.course.course-edit', ['course_id' => $course->course_id])->with('success', 'Course updated successfully.');
+        return redirect()->route('instructor.course.course-edit', ['course_id' => $course->id])->with('success', 'Course updated successfully.');
     }
 
     // Delete a course

@@ -27,10 +27,15 @@ class QuizController extends Controller
         if ($status == 'Pending') {
             return redirect('/instructor/profile');
         } else {
-            $courses = Course::where('course_id', $course_id)->get();
-            $name = Auth::user()->name;
-            $user = Auth::user();
+
+            $name = Auth::guard('instructor')->user()->name;
+            $user = Auth::guard('instructor')->user();
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
+            $courses = Course::where('instructor_id', $user->instructor_id)->where('id', $course_id)->first();
+            if (!$courses) {
+                return redirect()->route('instructor.course.course');
+            }
+
             return view('instructor.exam.question-add', compact('courses', 'name', 'instructor_info'));
         }
     }
@@ -88,7 +93,8 @@ class QuizController extends Controller
             'choices' => $choices,
         ]);
 
-        return redirect()->route('instructor.exam.question-create', ['course_id' => $course_id])
+        $id = Course::where('course_id', $course_id)->first();
+        return redirect()->route('instructor.exam.question-create', ['course_id' => $id->id])
             ->with('success', 'Question Successfully Added!');
     }
 
@@ -96,21 +102,16 @@ class QuizController extends Controller
     public function destroy($exam_id)
     {
         // Find the lesson by ID
-        $quiz = Exam::find($exam_id);
-
+        $quiz = Exam::where('id', $exam_id)->first();
         // Check if the lesson exists
         if (!$quiz) {
-            return redirect()->route('instructor.course.course-view', ['course_id' => $quiz->course_id])->with('error', 'Question does not exist!');
+            return redirect()->route('instructor.course.course-view', ['course_id' => $quiz->course->id])->with('error', 'Question does not exist!');
         }
-
         // Get the course ID before deleting the lesson
-        $course_id = $quiz->course_id;
-
+        $course_id = $quiz->course->id;
         // Implement any additional authorization logic if needed (e.g., check if the authenticated user owns the lesson)
-
         // Delete the lesson
         $quiz->delete();
-
         // Redirect to the course edit page with the same course_id
         return redirect()->route('instructor.course.course-view', ['course_id' => $course_id])
             ->with('success', 'Question has been deleted!');
@@ -123,12 +124,21 @@ class QuizController extends Controller
             return redirect('/instructor/profile');
         } else {
 
-            $quiz = Exam::where('exam_id', $exam_id)->first();
-            $name = Auth::user()->name;
-            $user = Auth::user();
+            $quiz = Exam::where('id', $exam_id)->first();
+            $name = Auth::guard('instructor')->user()->name;
+            $user = Auth::guard('instructor')->user();
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
             if (!$quiz) {
-                return redirect()->route('instructor.course.course-view')->with('error', 'Question not found.');
+                return redirect()->route('instructor.course.course')->with('error', 'Question not found.');
+            }
+
+
+            $exam = Course::where('course_id', $quiz->course_id)->first();
+            $owner = $exam->instructor_id;
+
+
+            if ($owner !== $user->instructor_id) {
+                return redirect()->route('instructor.course.course')->with('error', 'Question not found.');
             }
 
             return view('instructor.exam.question-edit', compact('quiz', 'name', 'instructor_info'));
@@ -154,7 +164,7 @@ class QuizController extends Controller
             ]);
         }
 
-        $quiz = Exam::where('exam_id', $exam_id)->first();
+        $quiz = Exam::where('id', $exam_id)->first();
 
         if (!$quiz) {
             return redirect()->route('instructor.course.course-view')->with('error', 'Question not found.');
@@ -185,6 +195,6 @@ class QuizController extends Controller
         $quiz->choices = $choices;
         $quiz->save();
 
-        return redirect()->route('instructor.exam.question-edit', ['exam_id' => $quiz->exam_id])->with('success', 'Question updated successfully.');
+        return redirect()->route('instructor.exam.question-edit', ['exam_id' => $quiz->id])->with('success', 'Question updated successfully.');
     }
 }
