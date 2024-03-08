@@ -10235,9 +10235,7 @@ body {
     object-fit: cover;
     height: 50px;
     width: 50px;
-    /* Cover the entire container with the image */
     display: block;
-    /* Remove any extra space */
     max-width: 100%;
     align-items: center;
     justify-content: center;

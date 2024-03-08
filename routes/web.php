@@ -122,7 +122,7 @@ Route::middleware('auth:instructor')->group(function () {
 
 Route::middleware('auth:student')->group(function () {
     //Student Pages
-    Route::get('/student/dashboard', [StudentController::class, 'showStudentDashboard'])->name('student.dashboard');
+    // Route::get('/student/dashboard', [StudentController::class, 'showStudentDashboard'])->name('student.dashboard');
     Route::get('/student/courses', [StudentController::class, 'showStudentCourses'])->name('student.courses');
     Route::get('/student/learn/{course_id}/lesson/{lesson_id}', [StudentController::class, 'showLearn'])->name('student.learn');
     Route::get('/student/examination/{course_id}', [StudentController::class, 'exam'])->name('student.examination');

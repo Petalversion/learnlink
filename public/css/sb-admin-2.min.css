@@ -12745,6 +12745,14 @@ body.sidebar-toggled footer.sticky-footer {
     margin-right: 15px;
 }
 
+.withdrawal-request {
+    padding-left: 14px;
+    margin-top: 0px;
+    margin-right: 14px;
+}
+
+
+
 .large-img {
     display: block;
 }
@@ -12767,5 +12775,19 @@ body.sidebar-toggled footer.sticky-footer {
         margin-top: 85px;
         margin-bottom: 15px;
         margin-right: 15px;
+    }
+
+    .withdrawal-request {
+        padding-left: 14px;
+        margin-top: 0;
+        padding-right: 14px;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .withdrawal-request {
+        padding-left: 14px;
+        margin-top: 0;
+        padding-right: 14px;
     }
 }

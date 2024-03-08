@@ -40,6 +40,8 @@ class IndexController extends Controller
             return $course;
         });
 
+
+
         $coursesWithReviewsDatarandom = $coursesrandom->map(function ($course) use ($reviewsData) {
             $reviewData = $reviewsData->where('course_id', $course->course_id)->first();
             $course->average_score = $reviewData ? $reviewData->average_score : 0;

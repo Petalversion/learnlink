@@ -128,19 +128,18 @@
             </div>
             <div class="container">
                 <div class="row" style="margin-top: 5%;">
-                    <h2 class="display-2" style="font-size: 30px;">Instructor</h2>
-                    <h5 class="card-title">{{$course_check->instructor->name}}</h5>
-                    <p class="card-text"></p>
-
                     <div class="col-sm-12 col-md-2 col-lg-3">
                         <img class="profile-picture-2" src="{{ asset('storage/' . $course_check->instructor_info->profile_picture) }}" alt="...">
                     </div>
+                    <h2 class="display-2" style="font-size: 30px;margin-top: 2%;">Instructor</h2>
+                    <h5 class="card-title">{{$course_check->instructor->name}}</h5>
+                    <p class="card-text"></p>
                     <div class="col-sm-12 col-md-5 col-lg-9 d-flex align-items-center">
-                        <ul style="margin-bottom: 0;">
-                            <li>[[Instructor->Average_Rating]]</li>
-                            <li>[[Instructor->Total_Reviews]]</li>
-                            <li>[[Instructor->Total_Students]]</li>
-                            <li>[[Instructor->Total_Courses]]</li>
+                        <ul class="pl-0 ml-0 list-unstyled mb-0">
+                            <li><i class="fa-solid fa-star fa-sm"></i> {{$totalAverageReviews}} Instructor Rating</li>
+                            <li><i class="fa-solid fa-award fa-lg"></i> {{$totalReviews}} {{ $totalStudents > 1 ? 'Reviews' : 'Review' }}</li>
+                            <li><i class="fa-solid fa-user-graduate"></i> {{$totalStudents}} {{ $totalStudents > 1 ? 'Students' : 'Student' }}</li>
+                            <li><i class="fa-solid fa-book"></i> {{$totalCourses}} {{ $totalCourses > 1 ? 'Courses' : 'Course' }}</li>
                         </ul>
                     </div>
                     <div style="margin-top: 3%;">

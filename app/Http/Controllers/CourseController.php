@@ -310,8 +310,53 @@ class CourseController extends Controller
                     }
                 }
             }
+            $instructor_courses = Course::where('status', 'publish')->where('instructor_id', $instructor)->get();
+
+            $totalCourses = count($instructor_courses);
+
+            $instructorId = $course_check->instructor_id;
+            $courseIds = Course::where('instructor_id', $instructorId)->pluck('course_id');
+
+            $transactions = Transactions::where(function ($query) use ($courseIds) {
+                foreach ($courseIds as $courseId) {
+                    $query->orWhereJsonContains('course_id_amount', [['course_id' => $courseId]]);
+                }
+            })->get();
+
+            $instructor_reviews = Reviews::whereIn('course_id', $courseIds)->get();
+
+            $labels = [];
+            $courseTitles = Course::whereIn('course_id', $courseIds)->pluck('title', 'course_id');
+            // Iterate over each data point
+            $labels = $courseTitles->toArray();
+            $courseCounts = array_fill_keys($labels, 0);
+
+            // Iterate over each data point
+            foreach ($transactions as $transaction) {
+                // Extract course_id and amount from each transaction
+                foreach ($transaction->course_id_amount as $item) {
+                    // Check if the course ID is in the $courseIds array
+                    if (in_array($item['course_id'], $courseIds->toArray())) {
+                        // Increment the count for the corresponding course title
+                        $courseCounts[$courseTitles[$item['course_id']]]++;
+                    }
+                }
+            }
+
+            // If a course doesn't appear in any transaction, its count will remain 0
+            $courseCounts = array_values($courseCounts);
+            $totalStudents = array_sum($courseCounts);
+            $totalReviews = count($instructor_reviews);
+
+            $AverageReviews = 0;
+            foreach ($instructor_reviews as $items) {
+                $AverageReviews += $items->score;
+            }
+
+            $totalAverageReviews = $AverageReviews / $totalReviews;
+
             $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
-            return view('course_details', compact('coursesWithReviewsData', 'course_count', 'rounded_rating', 'course_check', 'course_list', 'cart', 'user_info', 'instructor_info'));
+            return view('course_details', compact('coursesWithReviewsData', 'course_count', 'rounded_rating', 'course_check', 'course_list', 'cart', 'user_info', 'instructor_info', 'totalCourses', 'totalStudents', 'totalReviews', 'totalAverageReviews'));
         }
         return redirect()->route('index');
     }

@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Begin Page Content -->
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-3 text-gray-800"><i class="fas fa-fw fa-users"></i> All Instructors</h1>

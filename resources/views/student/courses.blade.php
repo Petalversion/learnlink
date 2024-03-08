@@ -2,7 +2,7 @@
 
 @section('content')
 <title>All Courses</title>
-<div class="container" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
     <h1 class="h3 mb-3 text-gray-900">Your Courses</h1>
     @if(isset($courseinfo) && !empty($courseinfo))
     <div class="row mb-4">

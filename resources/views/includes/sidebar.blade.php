@@ -13,14 +13,6 @@
       </div>
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item {{ request()->routeIs('student.dashboard') ? 'active' : '' }}">
-        <a class="nav-link" href="{{route('student.dashboard')}}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-      <!-- Divider -->
-      <hr class="sidebar-divider">
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item {{ request()->routeIs('student.courses') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{route('student.courses')}}">
@@ -173,12 +165,12 @@
                 @endif
               </a>
               <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+              <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{route('instructor.profile')}}">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-              </div>
+              </div> -->
             </li>
         </nav>
       </div>

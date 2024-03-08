@@ -40,7 +40,7 @@
                     </li>
                     @elseif(Auth::guard('student')->check())
                     <li>
-                        <a href="{{ route('student.dashboard') }}" style="color:#31dcfe; font-weight:750 !important;">DASHBOARD</a>
+                        <a href="{{ route('student.profile') }}" style="color:#31dcfe; font-weight:750 !important;">PROFILE</a>
                     </li>
                     <li>
                         <a href="{{ route('student.cart') }}">

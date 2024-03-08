@@ -1,7 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
-<div class="container" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
     @if(isset($transactions) && $transactions->isNotEmpty())
     <div class="card shadow mb-4">
         <div class="card-body">
