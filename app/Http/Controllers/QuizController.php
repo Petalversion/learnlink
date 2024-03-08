@@ -7,6 +7,8 @@ use App\Models\Lesson;
 use App\Models\Lecture;
 use App\Models\Course;
 use App\Models\Instructor_info;
+use App\Models\Instructor;
+use App\Models\Questions;
 use App\Models\Exam;
 use App\Models\Image;
 use Illuminate\Support\Str;
@@ -36,7 +38,19 @@ class QuizController extends Controller
                 return redirect()->route('instructor.course.course');
             }
 
-            return view('instructor.exam.question-add', compact('courses', 'name', 'instructor_info'));
+            $instructorId = Auth::user()->instructor_id;
+            $instructor_un = Instructor::where('instructor_id', $user->instructor_id)->first();
+            $all_student_comments_un = [];
+            // Loop through each course
+            $all_student_comments_un = Questions::whereIn('course_id', $instructor_un->courses->pluck('course_id'))
+                ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                    $query->where('instructor_id', $instructorId);
+                }, 'student_info'])
+                ->whereDoesntHave('answers')
+                ->get();
+
+            $questionNotif = count($all_student_comments_un);
+            return view('instructor.exam.question-add', compact('courses', 'name', 'instructor_info', 'questionNotif'));
         }
     }
 
@@ -141,7 +155,20 @@ class QuizController extends Controller
                 return redirect()->route('instructor.course.course')->with('error', 'Question not found.');
             }
 
-            return view('instructor.exam.question-edit', compact('quiz', 'name', 'instructor_info'));
+            $instructorId = Auth::user()->instructor_id;
+            $instructor_un = Instructor::where('instructor_id', $user->instructor_id)->first();
+            $all_student_comments_un = [];
+            // Loop through each course
+            $all_student_comments_un = Questions::whereIn('course_id', $instructor_un->courses->pluck('course_id'))
+                ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                    $query->where('instructor_id', $instructorId);
+                }, 'student_info'])
+                ->whereDoesntHave('answers')
+                ->get();
+
+            $questionNotif = count($all_student_comments_un);
+
+            return view('instructor.exam.question-edit', compact('quiz', 'name', 'instructor_info', 'questionNotif'));
         }
     }
 

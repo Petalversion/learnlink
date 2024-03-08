@@ -34,7 +34,7 @@
                                         <h4 class="clamped-line card-title" style="font-size: 15px;"><a href="{{route('course_details', $course->course_id)}}">{{ $course->title }}</a></h4>
                                     </div>
                                     <div class="col-md-2 col-sm-12 d-flex align-items-center">
-                                        <h4 class="card-title" style="margin: 10px 0;">₱ {{ number_format($course->amount, 2, '.', ',') }} </h4>
+                                        <h4 class="card-title " style="margin: 10px 0;">₱ {{ number_format($course->amount, 2, '.', ',') }} </h4>
                                     </div>
                                     <div class="col-md-1 col-sm-12 d-flex justify-content-center align-items-center">
                                         <form action="{{ route('cart.remove', $cartItem->id) }}" method="post">
@@ -63,7 +63,7 @@
                     </div>
                     <h3 style="padding-left: 5%; padding-top: 5%;">Total</h3>
                     <div class="d-flex justify-content-center">
-                        <h1 class="card-title" style="margin: 10px 0;">₱ {{ number_format($total, 2, '.', ',') }}</h1>
+                        <h1 class="card-title text-success" style="margin: 10px 0;">₱ {{ number_format($total, 2, '.', ',') }}</h1>
                     </div>
 
                     <!-- Card Body -->
@@ -74,9 +74,9 @@
                             <form action="{{route('paypal.pay')}}" method="POST">
                                 @csrf
                                 <input type="hidden" value="{{$total}}" name="amount">
-                                <button type="submit" class="btn btn-primary" style="margin-bottom:5%;border-radius: 20px; min-width:100%">PayPal</button>
+                                <button type="submit" class="btn btn-warning" style="margin-bottom:5%;border-radius: 20px; min-width:100%"><i class="fa-brands fa-paypal"></i> PayPal</button>
                             </form>
-                            <a href="{{route('gcash.pay')}}" class="btn btn-primary" style="border-radius: 20px; min-width:100%">Gcash</a>
+                            <a href="{{route('gcash.pay')}}" class="btn btn-primary" style="border-radius: 20px; min-width:100%;"><img style="max-width:25px;" src="https://iili.io/HMyL54S.png" alt="HMyL54S.png" border="0" /> Gcash</a>
                         </div>
                     </div>
                 </div>

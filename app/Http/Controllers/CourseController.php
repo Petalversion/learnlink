@@ -8,6 +8,8 @@ use App\Models\Tag;
 use App\Models\Lesson;
 use App\Models\Student;
 use App\Models\Instructor_info;
+use App\Models\Instructor;
+use App\Models\Questions;
 use App\Models\Student_info;
 use App\Models\Category;
 use App\Models\Transactions;
@@ -34,7 +36,20 @@ class CourseController extends Controller
             // Get only the courses created by the current instructor
             $courses = Course::where('instructor_id', $instructor->instructor_id)->paginate(10);
 
-            return view('instructor.course.course', compact('courses', 'instructor', 'name', 'instructor_info'));
+            $instructorId = Auth::user()->instructor_id;
+            $instructor_un = Instructor::where('instructor_id', $user->instructor_id)->first();
+            $all_student_comments_un = [];
+            // Loop through each course
+            $all_student_comments_un = Questions::whereIn('course_id', $instructor_un->courses->pluck('course_id'))
+                ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                    $query->where('instructor_id', $instructorId);
+                }, 'student_info'])
+                ->whereDoesntHave('answers')
+                ->get();
+
+            $questionNotif = count($all_student_comments_un);
+
+            return view('instructor.course.course', compact('courses', 'instructor', 'name', 'instructor_info', 'questionNotif'));
         }
     }
 
@@ -54,7 +69,19 @@ class CourseController extends Controller
             $user = Auth::user();
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
 
-            return view('instructor.course.course-create', compact('tags', 'categories', 'course_id', 'instructor', 'name', 'instructor_info'));
+            $instructorId = Auth::user()->instructor_id;
+            $instructor_un = Instructor::where('instructor_id', $user->instructor_id)->first();
+            $all_student_comments_un = [];
+            // Loop through each course
+            $all_student_comments_un = Questions::whereIn('course_id', $instructor_un->courses->pluck('course_id'))
+                ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                    $query->where('instructor_id', $instructorId);
+                }, 'student_info'])
+                ->whereDoesntHave('answers')
+                ->get();
+
+            $questionNotif = count($all_student_comments_un);
+            return view('instructor.course.course-create', compact('tags', 'categories', 'course_id', 'instructor', 'name', 'instructor_info', 'questionNotif'));
         }
     }
 
@@ -137,9 +164,23 @@ class CourseController extends Controller
                 $course_rating = Reviews::where('course_id', $course->course_id)->get();
                 $rounded_rating = round($course_rating->avg('score'), 1);
                 $course_count = count($course_rating);
-                return view('instructor.course.course-view', compact('course', 'name', 'instructor_info', 'combo', 'rounded_rating', 'course_count'));
+
+                $instructorId = Auth::user()->instructor_id;
+                $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
+                $all_student_comments_un = [];
+                // Loop through each course
+                $all_student_comments_un = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+                    ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                        $query->where('instructor_id', $instructorId);
+                    }, 'student_info'])
+                    ->whereDoesntHave('answers')
+                    ->get();
+
+                $questionNotif = count($all_student_comments_un);
+
+                return view('instructor.course.course-view', compact('course', 'name', 'instructor_info', 'combo', 'rounded_rating', 'course_count', 'questionNotif'));
             }
-            return redirect()->route('instructor.course');
+            return redirect()->route('instructor.course.course');
         }
     }
 
@@ -171,7 +212,20 @@ class CourseController extends Controller
                 $name = Auth::user()->name;
                 $user = Auth::user();
                 $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
-                return view('instructor.course.course-edit', compact('course', 'tags', 'categories', 'name', 'instructor_info', 'combo'));
+                $instructorId = Auth::user()->instructor_id;
+                $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
+                $all_student_comments_un = [];
+                // Loop through each course
+                $all_student_comments_un = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+                    ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                        $query->where('instructor_id', $instructorId);
+                    }, 'student_info'])
+                    ->whereDoesntHave('answers')
+                    ->get();
+
+                $questionNotif = count($all_student_comments_un);
+
+                return view('instructor.course.course-edit', compact('course', 'tags', 'categories', 'name', 'instructor_info', 'combo', 'questionNotif'));
             }
             return redirect()->route('instructor.course.course');
         }
@@ -352,8 +406,11 @@ class CourseController extends Controller
             foreach ($instructor_reviews as $items) {
                 $AverageReviews += $items->score;
             }
+            $totalAverageReviews = 0;
+            if ($AverageReviews > 0) {
+                $totalAverageReviews = $AverageReviews / $totalReviews;
+            }
 
-            $totalAverageReviews = $AverageReviews / $totalReviews;
 
             $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
             return view('course_details', compact('coursesWithReviewsData', 'course_count', 'rounded_rating', 'course_check', 'course_list', 'cart', 'user_info', 'instructor_info', 'totalCourses', 'totalStudents', 'totalReviews', 'totalAverageReviews'));
@@ -374,5 +431,10 @@ class CourseController extends Controller
         $course->save();
 
         return redirect()->route('instructor.course.course-view', ['course_id' => $course->id])->with('success', 'Status updated successfully.');
+    }
+    public function certificate()
+    {
+        $name = Auth::guard('student')->user()->name;
+        return view('cc', compact('name'));
     }
 }

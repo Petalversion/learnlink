@@ -11,8 +11,13 @@
     <div class="card shadow mb-4">
 
         <div class="card-body">
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
             <div class="table-responsive">
-                <table id="myTable12345" class="table table-striped">
+                <table id="myTable12345" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -37,7 +42,10 @@
                                 <span class="badge badge-pill badge-danger">{{$instructor->status}}</span>
                                 @endif
                             </td>
-                            <td class="text-center"><button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                            <td class="text-center">
+                                <button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}"><i class="fa-solid fa-tag"></i></button>
+                                <button type="button" onclick="window.location='{{ route('admin.course', ['instructor_id' => $instructor->id]) }}'" class=" badge badge-pill badge-info"><i class="fa-solid fa-book"></i></button>
+                            </td>
                         </tr>
                         <div class="modal fade" id="exampleModal{{ $loop->index }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">

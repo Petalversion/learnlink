@@ -112,8 +112,9 @@ class CommentsandReviewsController extends Controller
                 ->whereDoesntHave('answers')
                 ->get();
 
+            $questionNotif = count($all_student_comments);
 
-            return view('instructor.questions', compact('name', 'instructor_info', 'user', 'all_student_comments'));
+            return view('instructor.questions', compact('name', 'instructor_info', 'user', 'all_student_comments', 'questionNotif'));
         }
     }
 
@@ -156,7 +157,23 @@ class CommentsandReviewsController extends Controller
                 ->whereHas('answers')
                 ->get();
 
-            return view('instructor.course.questions', compact('name', 'instructor_info', 'user', 'all_student_comments', 'back'));
+
+            $instructorId = Auth::user()->instructor_id;
+            $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
+            $all_student_comments_un = [];
+            // Loop through each course
+            $all_student_comments_un = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+                ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                    $query->where('instructor_id', $instructorId);
+                }, 'student_info'])
+                ->whereDoesntHave('answers')
+                ->get();
+
+            $questionNotif = count($all_student_comments_un);
+
+
+
+            return view('instructor.course.questions', compact('name', 'instructor_info', 'user', 'all_student_comments', 'back', 'questionNotif'));
         }
     }
 
@@ -176,7 +193,7 @@ class CommentsandReviewsController extends Controller
         // Save the course before attaching tags and categories
         $answer->save();
 
-        return redirect()->back();
+        return redirect()->route('instructor.questions')->with('success', 'Question successfully answered!');
     }
 
     public function reviews()
@@ -206,7 +223,20 @@ class CommentsandReviewsController extends Controller
 
             $reviewIds = array_column($all_student_reviews, 'review_id');
 
-            return view('instructor.inquiries.reviews', compact('name', 'instructor_info', 'user', 'all_student_reviews'));
+            $instructorId = Auth::user()->instructor_id;
+            $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
+            $all_student_comments_un = [];
+            // Loop through each course
+            $all_student_comments_un = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+                ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                    $query->where('instructor_id', $instructorId);
+                }, 'student_info'])
+                ->whereDoesntHave('answers')
+                ->get();
+
+            $questionNotif = count($all_student_comments_un);
+
+            return view('instructor.inquiries.reviews', compact('name', 'instructor_info', 'user', 'all_student_reviews', 'questionNotif'));
         }
     }
 }

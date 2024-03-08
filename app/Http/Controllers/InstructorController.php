@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Instructor_info;
 use App\Models\Instructor_wallet;
+use App\Models\Questions;
 use App\Models\Transactions;
+use Illuminate\Support\Carbon;
 
 class InstructorController extends Controller
 {
@@ -194,8 +196,45 @@ class InstructorController extends Controller
 
         $totalStudents = array_sum($courseCounts);
 
+        $instructorId = Auth::user()->instructor_id;
+        $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
+        $all_student_comments = [];
 
-        return view('instructor.dashboard', compact('instructor', 'courses', 'name', 'user', 'instructor_info', 'amounts', 'labels', 'courseIds', 'courseCounts', 'courseTitles', 'totalEarningsFormatted', 'totalCourses', 'reviews', 'totalStudents'));
+        // Retrieve all courses associated with the instructor
+        $courses = $instructor->courses;
+
+        // Loop through each course
+        $all_student_comments = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+            ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                $query->where('instructor_id', $instructorId);
+            }, 'student_info'])
+            ->whereDoesntHave('answers')
+            ->get();
+
+        $questionNotif = count($all_student_comments);
+
+        $earnings = array_fill(0, 12, 0);
+
+        $currentYear = Carbon::now()->year;
+        $transactions = Transactions::whereYear('created_at', $currentYear)->where('total_amount', '>=', 0)->get();
+
+        $wallet = Instructor_wallet::where('instructor_id', $instructor->instructor_id)->where('amount', '>=', 0)->get();
+
+
+        foreach ($wallet as $transaction) {
+            $month = Carbon::parse($transaction->created_at)->month;
+            $earnings[$month - 1] += $transaction->amount; // Subtract 1 to match array index
+        }
+
+        $withdrawals = array_fill(0, 12, 0);
+        $withdrawal = Instructor_wallet::where('instructor_id', $instructor->instructor_id)->where('amount', '<=', 0)->whereNotNull('reference_id')->get();
+
+        foreach ($withdrawal as $transaction) {
+            $month = Carbon::parse($transaction->created_at)->month;
+            $withdrawals[$month - 1] += abs($transaction->amount); // Subtract 1 to match array index
+        }
+
+        return view('instructor.dashboard', compact('instructor', 'courses', 'name', 'user', 'instructor_info', 'amounts', 'labels', 'courseIds', 'courseCounts', 'courseTitles', 'totalEarningsFormatted', 'totalCourses', 'reviews', 'totalStudents', 'questionNotif', 'earnings', 'withdrawals'));
     }
 
     public function profile(Request $request)
@@ -203,8 +242,23 @@ class InstructorController extends Controller
         $name = Auth::user()->name;
         $user = Auth::user();
         $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
+        $instructorId = Auth::user()->instructor_id;
+        $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
+        $all_student_comments = [];
 
-        return view('instructor.profile', compact('name', 'user', 'instructor_info'));
+        // Retrieve all courses associated with the instructor
+        $courses = $instructor->courses;
+
+        // Loop through each course
+        $all_student_comments = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+            ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                $query->where('instructor_id', $instructorId);
+            }, 'student_info'])
+            ->whereDoesntHave('answers')
+            ->get();
+
+        $questionNotif = count($all_student_comments);
+        return view('instructor.profile', compact('name', 'user', 'instructor_info', 'questionNotif'));
     }
 
     public function profileUpdate(Request $request)

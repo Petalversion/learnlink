@@ -1,0 +1,163 @@
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+ 
+  height: 188mm;
+}
+
+.border-pattern {
+  position: absolute;
+  left: 4mm;
+  top: -6mm;
+  height: 200mm;
+  width: 267mm;
+  border: 1mm solid #49bbdb;
+  /* http://www.heropatterns.com/ */
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h16v2h-6v6h6v8H8v-6H2v6H0V0zm4 4h2v2H4V4zm8 8h2v2h-2v-2zm-8 0h2v2H4v-2zm8-8h2v2h-2V4z' fill='%23991B1B' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.content {
+  position: absolute;
+  left: 10mm;
+  top: 10mm;
+  height: 178mm;
+  width: 245mm;
+  border: 1mm solid #4d7888;
+  background: white;
+}
+
+.inner-content {
+
+  margin: 4mm;
+  padding: 10mm;
+  height: 148mm;
+  text-align: center;
+  border: 1mm solid hsl(0, 0%, 86%);
+}
+
+h1 {
+  text-transform: uppercase;
+  font-size: 48pt;
+  margin-bottom: 0;
+  color: #444343;
+}
+
+h2 {
+  font-size: 40pt;
+  margin-top: 0;
+  padding-bottom: 1mm;
+  display: inline-block;
+  border-bottom: 1mm solid #91999c;
+  color: #444343;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  padding-bottom: 4mm;
+  border-bottom: 1mm solid #5c5855;
+}
+
+h3 {
+  font-size: 20pt;
+  margin-bottom: 0;
+  margin-top: 46px;
+}
+
+p {
+  font-size: 16pt;
+}
+
+
+
+.logo {
+ text-align: left;
+}
+
+.heebo-h2 {
+  text-align: center;
+  font-size: 35px;
+  margin-top: 66px;
+  margin-bottom: 10px;
+
+}
+
+
+.heebo-h3 {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 35px;
+}
+
+.heebo-h4 {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.heebo-h5 {
+  text-align: center;
+  font-size: 28px;
+  margin-top: 0px;
+}
+
+.heebo-custom {
+  font-family: "Overpass", sans-serif;
+  text-align: left;
+  font-size: 15px;
+  margin-top: 16px;
+  margin-bottom: 0px;
+}
+
+.roboto-slab-h4  {
+  text-align: left;
+  font-size: 50px;
+  margin-top: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1mm solid #4d7888;
+}
+
+.namdhinggo-regular {
+  font-size: 35px;
+  text-align: left;
+  margin-top: 70px;
+}
+
+.namdhinggo-regular-h2 {
+  font-size: 22px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.montserrat-h2{
+  font-size: 18px;
+  text-align: left;
+  margin-top: 35px;
+}
+
+.icon-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+ 
+}
+
+.icon-container p {
+  margin-bottom: 2px;
+  font-family: "Overpass", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.overpass-h2 {
+  font-size: 18px;
+  text-align: left;
+  margin-top: 35px;
+}
+

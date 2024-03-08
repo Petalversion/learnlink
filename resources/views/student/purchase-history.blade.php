@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="sidetoppadding">
+    <h1 class="h3 mb-3 text-gray-800"><i class="fa-solid fa-cart-shopping"></i> Purchase History</h1>
     @if(isset($transactions) && $transactions->isNotEmpty())
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -9,9 +10,9 @@
             <div class="table-responsive">
 
                 <!-- Begin Page Content -->
-                <div class="container mt-2">
+                <div class="container-fluid mt-2">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-striped table-bordered">
                             <thead>
                                 <tr class="text-center">
                                     <th onclick="sortTable(0)" class="text-center" colspan="1">Reference #</th>
@@ -20,13 +21,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <h2 class="text-primary" style="margin-bottom: 4%;">Purchase History</h2>
                                 @foreach($transactions as $transaction)
                                 <tr class="text-center hover-pointer" id="transaction-row-{{$transaction->transaction_id}}" onclick="toggleCourseDetails('{{$transaction->transaction_id}}')">
-                                    <th class="bg-secondary" colspan=" 1">{{$transaction->transaction_id}}</th>
-                                    <th class="bg-secondary" colspan=" 1">{{$transaction->created_at}}</th>
-                                    <th class="text-end bg-secondary " colspan=" 1">₱</th>
-                                    <th class="text-end bg-secondary " colspan=" 1"> {{number_format($transaction->total_amount,2)}}</th>
+                                    <th class="text-primary" colspan=" 1">{{$transaction->transaction_id}}</th>
+                                    <th class="text-primary" colspan=" 1">{{$transaction->created_at}}</th>
+                                    <th class="text-primary" colspan=" 1">₱</th>
+                                    <th class="text-success text-end" colspan=" 1"> {{number_format($transaction->total_amount,2)}}</th>
                                 </tr>
                                 @foreach($transaction->course_id_amount as $courses)
                                 <tr class="text-end" id="course-details-{{$transaction->transaction_id}}-{{$loop->index}}" style="display: none;">

@@ -2,12 +2,15 @@
 
 @section('content')
 <div class="sidetoppadding">
-
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     <!-- Page Heading -->
 
     <div class="card shadow mb-4">
         <div class="card-body">
-            <!-- Begin Page Content -->
             <div class="container-fluid mt-2" style="max-width: 100%; overflow-x: auto;">
                 <table class="table table-striped" id="myTable12345">
                     <thead>

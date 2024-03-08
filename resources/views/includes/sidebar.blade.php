@@ -2,7 +2,7 @@
 @if(Auth::guard('student')->check())
 <div id="wrapper">
   <!-- Sidebar -->
-  <div class="position-fixed" style="left: 0; top: 0; height: 100%; overflow-y: auto; z-index: 1000;">
+  <div class="position-fixed" style="top: 0; height: 100%; z-index: 1000;">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
@@ -16,19 +16,25 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item {{ request()->routeIs('student.courses') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{route('student.courses')}}">
-          <i class="fas fa-fw fa-folder"></i>
+          <i class="fas fa-fw fa-book"></i>
           <span>Enrolled Courses</span>
+        </a>
+      </li>
+      <li class="nav-item {{ request()->routeIs('student.courses') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="{{route('student.courses')}}">
+          <i class="fas fa-fw fa-award"></i>
+          <span>Certificates</span>
         </a>
       </li>
       <li class="nav-item {{ request()->routeIs('student.history') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{route('student.history')}}">
-          <i class="fas fa-fw fa-folder"></i>
+          <i class="fas fa-fw fa-clock-rotate-left"></i>
           <span>Purchase History</span>
         </a>
       </li>
       <li class="nav-item {{ request()->routeIs('student.cart') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{route('student.cart')}}">
-          <i class="fas fa-fw fa-folder"></i>
+          <i class="fas fa-fw fa-cart-shopping"></i>
           <span>My Cart</span>
         </a>
       </li>
@@ -47,7 +53,7 @@
     <!-- Main Content -->
     <div id="content">
       <!-- Topbar -->
-      <div class="navbar-wrapper position-fixed w-100" style="top: 0; z-index: 999;">
+      <div class="navbar-wrapper position-fixed w-100" style="z-index: 999;">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -83,7 +89,7 @@
 @elseif(Auth::guard('admin')->check())
 <div id="wrapper">
   <!-- Sidebar -->
-  <div class="position-fixed" style="left: 0; top: 0; height: 100%; overflow-y: auto; z-index: 1000;">
+  <div class="position-fixed" style="top: 0; height: 100%; z-index: 1000;">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
@@ -98,24 +104,34 @@
       <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('admin.dashboard')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Dashboard</span>
+        </a>
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item {{ (request()->routeIs('admin.student') || request()->routeIs('admin.instructor')) ? 'active' : '' }}">
+      <li class="nav-item {{ (request()->routeIs('admin.student') || request()->routeIs('admin.instructor')) || request()->routeIs('admin.admin') || request()->routeIs('admin.course') || request()->routeIs('admin.lesson') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
           <i class="fas fa-fw fa-users"></i>
           <span>Users</span>
+          @if ($pendingInstructor > 0)
+          <span class="badge bg-danger rounded-pill position-absolute top-0 start-51">{{ $pendingInstructor }}</span>
+          @endif
         </a>
         <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">User Accounts:</h6>
             <a class="collapse-item" href="{{route('admin.student')}}">Students</a>
-            <a class="collapse-item" href="{{route('admin.instructor')}}">Instructor</a>
+            <a class="collapse-item position-relative" href="{{route('admin.instructor')}}">
+              Instructor
+              @if ($pendingInstructor > 0)
+              <span class="badge bg-danger rounded-pill position-absolute top-0 start-51">{{ $pendingInstructor }}</span>
+              @endif
+            </a>
+            <a class="collapse-item" href="{{route('admin.admin')}}">Admin</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Register:</h6>
-            <a class="collapse-item" href="#">New Admin</a>
+            <a class="collapse-item" href="{{route('admin.register')}}">New Admin</a>
           </div>
         </div>
       </li>
@@ -129,6 +145,9 @@
         <a class="nav-link collapsed" href="{{route('admin.withdrawal.request')}}">
           <i class="fas fa-fw fa-receipt"></i>
           <span>Withdrawal Requests</span>
+          @if ($withdrawalRequest > 0)
+          <span class="badge bg-danger rounded-pill position-absolute top-0 start-98">{{ $withdrawalRequest }}</span>
+          @endif
         </a>
       </li>
       <!-- Divider -->
@@ -146,12 +165,8 @@
     <!-- Main Content -->
     <div id="content">
       <!-- Topbar -->
-      <div class="navbar-wrapper position-fixed w-100" style="top: 0; z-index: 999;">
+      <div class="navbar-wrapper w-100" style="z-index: 999;">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
@@ -182,7 +197,7 @@
 @else
 <div id="wrapper">
   <!-- Sidebar -->
-  <div class="position-fixed" style="left: 0; top: 0; height: 100%; overflow-y: auto; z-index: 1000;">
+  <div class="position-fixed" style="top: 0; height: 100%; z-index: 1000;">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
@@ -212,11 +227,19 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseQuestions" aria-expanded="true" aria-controls="collapseQuestions">
           <i class="fas fa-fw fa-comments"></i>
           <span>Feedback</span>
+          @if ($questionNotif > 0)
+          <span class="badge bg-danger rounded-pill position-absolute top-0 start-98">{{ $questionNotif }}</span>
+          @endif
         </a>
         <div id="collapseQuestions" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Questions:</h6>
-            <a class="collapse-item" href="{{route('instructor.questions')}}">Recent Questions</a>
+            <a class="collapse-item position-relative" href="{{route('instructor.questions')}}">
+              Recent Questions
+              @if ($questionNotif > 0)
+              <span class="badge bg-danger rounded-pill position-absolute top-0 start-51">{{ $questionNotif }}</span>
+              @endif
+            </a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Reviews:</h6>
             <a class="collapse-item" href="{{route('instructor.reviews')}}">Course Reviews</a>
@@ -251,7 +274,7 @@
     <!-- Main Content -->
     <div id="content">
       <!-- Topbar -->
-      <div class="navbar-wrapper position-fixed w-100" style="top: 0; z-index: 999;">
+      <div class="navbar-wrapper position-fixed w-100" style="z-index: 999;">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">

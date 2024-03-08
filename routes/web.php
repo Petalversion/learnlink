@@ -35,9 +35,7 @@ Route::get('/course/{course_id}/details', [CourseController::class, 'details'])-
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // Admin Registration
-Route::get('/admin/register', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
-Route::post('/admin/register', [AdminController::class, 'register']);
-Route::post('/admin/register', [AdminController::class, 'store']);
+Route::get('certificate', [CourseController::class, 'certificate'])->name('certificate');
 
 // Admin Login
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
@@ -71,6 +69,9 @@ Route::middleware('auth:admin')->group(function () {
     // Admin Pages
     Route::get('/admin/dashboard', [AdminController::class, 'showAdminDashboard'])->name('admin.dashboard');
     Route::get('/admin/users/instructor', [AdminController::class, 'showInstructorList'])->name('admin.instructor');
+    Route::get('/admin/users/instructor/course/{instructor_id}', [AdminController::class, 'showCourseList'])->name('admin.course');
+    Route::get('/admin/users/instructor/lesson/{course_id}', [AdminController::class, 'showCourseLesson'])->name('admin.lesson');
+    Route::get('/admin/users/admin', [AdminController::class, 'showAdminList'])->name('admin.admin');
     Route::get('/admin/users/student', [AdminController::class, 'showStudentList'])->name('admin.student');
     Route::get('/admin/transactions', [AdminController::class, 'showTransactionList'])->name('admin.transaction');
     Route::get('/admin/withdrawal/requests', [AdminController::class, 'showWithdrawalRequestList'])->name('admin.withdrawal.request');
@@ -78,6 +79,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/user', [AdminController::class, 'showUserProfile'])->name('admin.user');
     Route::get('/admin/user/table', [AdminController::class, 'getUserProfile'])->name('get.user');
     Route::put('/admin/users/instructor/update', [AdminController::class, 'updateStatus'])->name('update-status');
+    Route::get('/admin/users/new-admin', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
+    Route::post('/admin/users/new-admin', [AdminController::class, 'register']);
+    Route::post('/admin/users/new-admin', [AdminController::class, 'store']);
 });
 
 Route::middleware('auth:instructor')->group(function () {
