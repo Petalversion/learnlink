@@ -27,7 +27,7 @@ class InstructorController extends Controller
                 return redirect()->route('instructor.dashboard');
             }
         } elseif (Auth::guard('student')->check()) {
-            return redirect()->route('student.dashboard');
+            return redirect()->route('student.profile');
         }
 
         return view('instructor.register'); // Return the view for the registration form
@@ -97,7 +97,7 @@ class InstructorController extends Controller
                 return redirect()->route('instructor.dashboard');
             }
         } elseif (Auth::guard('student')->check()) {
-            return redirect()->route('student.dashboard');
+            return redirect()->route('student.profiles');
         }
 
         return view('instructor.login');

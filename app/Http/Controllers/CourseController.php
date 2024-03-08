@@ -432,9 +432,4 @@ class CourseController extends Controller
 
         return redirect()->route('instructor.course.course-view', ['course_id' => $course->id])->with('success', 'Status updated successfully.');
     }
-    public function certificate()
-    {
-        $name = Auth::guard('student')->user()->name;
-        return view('cc', compact('name'));
-    }
 }

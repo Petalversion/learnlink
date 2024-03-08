@@ -71,7 +71,7 @@
                     </li>
                     @else
                     <li>
-                        <a href="{{ route('instructor.register') }}" style="color:#31dcfe; font-weight:750 !important;">Become an
+                        <a href="{{ route('become.instructor') }}" style="color:#31dcfe; font-weight:750 !important;">Become an
                             Instructor</a>
                     </li>
                     <li>

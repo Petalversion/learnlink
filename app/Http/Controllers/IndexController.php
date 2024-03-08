@@ -51,4 +51,15 @@ class IndexController extends Controller
 
         return view('landing/index', compact('coursesWithReviewsData', 'coursesWithReviewsDatarandom', 'courses', 'coursesrandom', 'cart', 'user_info', 'instructor_info'));
     }
+
+    public function showInstructorPage()
+    {
+        $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
+        $user_info = Student_info::where('student_id', $userId)->first();
+        $InstrId = Auth::guard('instructor')->user() ? Auth::guard('instructor')->user()->instructor_id : null;
+        $instructor_info = Instructor_info::where('instructor_id', $InstrId)->first();
+        $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
+
+        return view('intsland', compact('cart', 'user_info', 'instructor_info'));
+    }
 }

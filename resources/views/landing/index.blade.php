@@ -589,7 +589,7 @@
           <p class="text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam voluptas
             minima dolorem laboriosam eveniet itaque modi quis vitae perferendis, praesentium quas culpa
             facilis omnis animi temporibus quae ullam amet unde.</p>
-          <a href="{{ route('instructor.register') }}" class="btn custom-btn">Start Now</a>
+          <a href="{{ route('become.instructor') }}" class="btn custom-btn">Start Now</a>
         </div>
       </div>
     </div>

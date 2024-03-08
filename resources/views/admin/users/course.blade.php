@@ -31,7 +31,7 @@
                             <td class="text-end">{{ $course->paid == 1 ? '₱' . ' ' .
                                                         number_format($course->amount, 2) : 'Free' }}</td>
                             <td class="text-center">
-                                <button type="button" onclick="window.location='{{ route('admin.lesson', ['course_id' => $course->id]) }}'" class=" badge badge-pill badge-success"><i class="fa-solid fa-scroll"></i></button>
+                                <button type="button" onclick="window.location='{{ route('instructor.course.course-view', ['course_id' => $course->id]) }}'" class=" badge badge-pill badge-success"><i class="fa-solid fa-book"></i></button>
                             </td>
                         </tr>
                         @endforeach

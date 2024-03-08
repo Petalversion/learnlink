@@ -48,7 +48,7 @@ class AdminController extends Controller
         if (Auth::guard('instructor')->check()) {
             return redirect()->route('instructor.dashboard');
         } elseif (Auth::guard('student')->check()) {
-            return redirect()->route('student.dashboard');
+            return redirect()->route('student.profile');
         }
         $name = Auth::user()->name;
         $user = Auth::user();
@@ -95,7 +95,7 @@ class AdminController extends Controller
         if (Auth::guard('instructor')->check()) {
             return redirect()->route('instructor.dashboard');
         } elseif (Auth::guard('student')->check()) {
-            return redirect()->route('student.dashboard');
+            return redirect()->route('student.profile');
         } elseif (Auth::guard('admin')->check()) {
             return redirect()->route('admin.dashboard');
         }

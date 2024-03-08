@@ -5913,7 +5913,7 @@ if ((_gsScope._gsQueue || (_gsScope._gsQueue = [])).push(function () {
                         wrapAround: !1,
                         cellAlign: "center"
                     })
-                }), t(e.children(".nk-carousel-inner"))), b(".nk-carousel-2 > .nk-carousel-inner").each(function () { b(this).flickity({ pageDots: "true" === b(this).parent().attr("data-dots") || !1, autoPlay: parseFloat(b(this).parent().attr("data-autoplay")) || !1, prevNextButtons: !1, wrapAround: !1, imagesLoaded: !0, cellAlign: "center" }), t(b(this)) })
+                }), t(e.children(".nk-carousel-inner"))), b(".nk-carousel-2 > .nk-carousel-inner").each(function () { b(this).flickity({ pageDots: "true" === b(this).parent().attr("data-dots") || !1, autoPlay: parseFloat(b(this).parent().attr("data-autoplay")) || !1, prevNextButtons: !1, wrapAround: !0, imagesLoaded: !0, cellAlign: "center" }), t(b(this)) })
             }
         }
 

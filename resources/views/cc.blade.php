@@ -75,6 +75,39 @@
       font-optical-sizing: auto;
       font-weight: 200;
       font-style: normal;
+      margin: 1;
+      /* Remove margin */
+      padding: 5px;
+      /* Remove padding */
+    }
+
+    .icon-container {
+      position: absolute;
+      top: 443px;
+      left: 690px;
+    }
+
+    .date {
+      position: absolute;
+      top: 570px;
+      left: 55px;
+    }
+
+    .instructor {
+      position: absolute;
+      top: 550px;
+      left: 55px;
+    }
+
+    .code {
+      position: absolute;
+      top: 644px;
+      left: 825px;
+      font-family: "Roboto Slab", serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+      font-size: 12px;
     }
   </style>
 
@@ -88,15 +121,23 @@
         <div class="logo ">
           <img src="/img/blcck.png" alt="" width="140">
         </div>
+
         <h3 class="namdhinggo-regular">CERTIFICATE OF COMPLETION</h3>
         <h3 class="overpass-h2 ">THIS CERTIFY THAT</h3>
         <p class="roboto-slab-h4">{{$name}}</p>
-        <h3 class="overpass-h2 ">HAS COMPLETED THE <strong>"JavaScript: The Critical Parts Masterclass"</strong> ONLINE COURSE</h3>
-        <p class="heebo-custom">INSTRUCTOR <strong>JAVON ATREIDES</strong></p>
+        <div>
+          <h3 class="overpass-h2 ">HAS COMPLETED THE
+            <strong style="text-transform: uppercase;">"{{$courseName}}"</strong>
+            ONLINE COURSE
+          </h3>
+          <p class="heebo-custom instructor">INSTRUCTOR <strong style="text-transform: uppercase;">{{$Instructor}}</strong></p>
+        </div>
+        <p class="montserrat-h2 date">{{$date->format('F j, Y')}}</p>
 
+        <p class="code" style="text-transform: uppercase;">LL{{$cid}}</p>
         <div class="icon-container">
-          <p>MARCH 7, 2024</p>
-          <img src="/img/oo.png" alt="" width="190">
+
+          <img src="/img/oo.png" alt="" width="180">
         </div>
       </div>
     </div>

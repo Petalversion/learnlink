@@ -137,20 +137,18 @@ function optionSelected(answer) {
         answer.classList.add("incorrect"); //adding red color to correct selected option
         answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
         console.log("Wrong Answer");
-
-        // for (i = 0; i < allOptions; i++) {
-        //     if (option_list.children[i].textContent == correcAns) { //if there is an option which is matched to an array answer 
-        //         option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-        //         option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
-        //         console.log("Auto selected correct answer.");
-        //     }
-        // }
     }
     for (i = 0; i < allOptions; i++) {
         option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
     }
     next_btn.classList.add("show"); //show the next button if user selected any option
 }
+
+
+
+// Define the saveScoreToDatabase function
+
+
 
 function showResult() {
     info_box.classList.remove("activeInfo"); //hide info box
@@ -161,17 +159,20 @@ function showResult() {
         //creating a new span tag and passing the user score number and total question number
         let percentage = (userScore / questions.length) * 100;
         let scoreTag = '<span>and congrats! 🎉, You got <p>' + percentage.toFixed(2) + '%</p></span>';
-        scoreText.innerHTML = scoreTag;  //adding new span tag inside score_Text
+        scoreText.innerHTML = scoreTag;
+        saveScoreToDatabase(percentage); //adding new span tag inside score_Text
     }
-    else if (userScore > (questions.length * 0.7)) { // if user scored more than 1
+    else if (userScore > (questions.length * 0.75)) { // if user scored more than 1
         let percentage = (userScore / questions.length) * 100;
         let scoreTag = '<span>and nice 😎, You got <p>' + percentage.toFixed(2) + '%</p></span>';
         scoreText.innerHTML = scoreTag;
+        saveScoreToDatabase(percentage);
     }
     else { // if user scored less than 1
         let percentage = (userScore / questions.length) * 100;
         let scoreTag = '<span>and sorry 😐, You got only <p>' + percentage.toFixed(2) + '%</p></span>';
         scoreText.innerHTML = scoreTag;
+        saveScoreToDatabase(percentage);
     }
 }
 
@@ -205,11 +206,11 @@ function startTimer(time) {
 }
 
 function startTimerLine(time) {
-    counterLine = setInterval(timer, 71);
+    counterLine = setInterval(timer, 136);
     function timer() {
         time += 1; //upgrading time value with 1
         time_line.style.width = time + "px"; //increasing width of time_line with px by time value
-        if (time > 849) { //if time value is greater than 549
+        if (time > 449) { //if time value is greater than 549
             clearInterval(counterLine); //clear counterLine
         }
     }
@@ -221,3 +222,4 @@ function queCounter(index) {
     let totalQueCounTag = '<span><p>' + index + '</p> of <p>' + questions.length + '</p> Questions</span>';
     bottom_ques_counter.innerHTML = totalQueCounTag;  //adding new span tag inside bottom_ques_counter
 }
+

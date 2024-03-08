@@ -17,6 +17,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InstructorWalletController;
 use App\Http\Controllers\CommentsandReviewsController;
+use App\Http\Controllers\CertificateController;
 use App\Models\Instructor;
 
 /*
@@ -35,7 +36,7 @@ Route::get('/course/{course_id}/details', [CourseController::class, 'details'])-
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // Admin Registration
-Route::get('certificate', [CourseController::class, 'certificate'])->name('certificate');
+Route::get('certificate/{course_id}', [CertificateController::class, 'certificate'])->name('certificate');
 
 // Admin Login
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
@@ -43,6 +44,7 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 
 // Instructor Registration
 Route::get('/instructor/register', [InstructorController::class, 'showRegistrationForm'])->name('instructor.register');
+Route::get('/become-an-instructor', [IndexController::class, 'showInstructorPage'])->name('become.instructor');
 Route::post('/instructor/register', [InstructorController::class, 'register']);
 Route::post('/instructor/register', [InstructorController::class, 'store']);
 
@@ -128,8 +130,10 @@ Route::middleware('auth:student')->group(function () {
     //Student Pages
     // Route::get('/student/dashboard', [StudentController::class, 'showStudentDashboard'])->name('student.dashboard');
     Route::get('/student/courses', [StudentController::class, 'showStudentCourses'])->name('student.courses');
+    Route::get('/student/certificates', [StudentController::class, 'showCertificates'])->name('student.certificates');
     Route::get('/student/learn/{course_id}/lesson/{lesson_id}', [StudentController::class, 'showLearn'])->name('student.learn');
     Route::get('/student/examination/{course_id}', [StudentController::class, 'exam'])->name('student.examination');
+    Route::post('/save-score', [CertificateController::class, 'examAttempt'])->name('save.score');
     Route::get('/student/cart', [CartController::class, 'showCart'])->name('student.cart');
     Route::post('/student/add-to-cart/', [CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('/student/cart/{id}', [CartController::class, 'removeItem'])->name('cart.remove');

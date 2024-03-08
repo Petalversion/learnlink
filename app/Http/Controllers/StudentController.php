@@ -11,12 +11,14 @@ use App\Models\Cart;
 use App\Models\Lesson;
 use App\Models\Questions;
 use App\Models\Answers;
+use App\Models\QuizAttemptCounter;
 use App\Models\Reviews;
 use App\Models\Student_info;
 use App\Models\Transactions;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Question\Question;
+use Illuminate\Support\Carbon;
 
 class StudentController extends Controller
 {
@@ -28,6 +30,17 @@ class StudentController extends Controller
             return redirect()->route('student.profile');
         }
         return view('student.register'); // Return the view for the registration form
+    }
+
+    public function showCertificates()
+    {
+        $userId = Auth::user()->student_id;
+        $name = Auth::user()->name;
+        $user = Auth::user();
+        $user_info = Student_info::where('student_id', $user->student_id)->first();
+        $certificates = QuizAttemptCounter::where('student_id', $user->student_id)->get();
+
+        return view('student.certificates', compact('name', 'user_info', 'certificates')); // Return the view for the registration form
     }
 
     public function showStudentCourses()
@@ -113,7 +126,7 @@ class StudentController extends Controller
         if (Auth::guard('instructor')->check()) {
             return redirect()->route('instructor.dashboard');
         } elseif (Auth::guard('student')->check()) {
-            return redirect()->route('student.dashboard');
+            return redirect()->route('student.profile');
         }
         return view('student.login');
     }
@@ -139,7 +152,7 @@ class StudentController extends Controller
 
 
         if (!$course) {
-            return redirect()->route('student.dashboard')->with('error', 'Course not found.');
+            return redirect()->route('student.profile')->with('error', 'Course not found.');
         }
 
         return view('student.learn', compact('course', 'lesson', 'cart', 'name', 'user_info', 'student_comment', 'instructor_comment', 'user', 'course_reviews', 'student_review'));
@@ -197,26 +210,40 @@ class StudentController extends Controller
         // Convert the formatted questions array to JSON
         $jsonFormattedQuestions = json_encode($formattedQuestions);
 
-        // Retrieve the currently authenticated user
-        // $instructor = Auth::guard('instructor')->user();
-
         // Get only the courses created by the current instructor
         $exams = Exam::where('course_id', $course_id)->get();
         $count = Exam::where('course_id', $course_id)->count();
         $header = Course::where('course_id', $course_id)->get();
-        return view('student.examination', compact('exams', 'count', 'jsonFormattedQuestions', 'header', 'name', 'user_info'));
+        $courses = Course::where('course_id', $course_id)->first();
+        $coursex = $courses->course_id;
+        $attempts = QuizAttemptCounter::where('student_id', $user->student_id)->where('course_id', $coursex)->first();
+        $remainingTime = '';
+        $attempt = '';
+        if ($attempts) {
+            $attempt = $attempts->attempt;
+            $attempttimer = Carbon::parse($attempts->updated_at);
+            // Get the current time
+            $currentDateTime = Carbon::now();
+
+            // Calculate the difference in minutes
+            $timeDifferenceInMinutes = $currentDateTime->diffInMinutes($attempttimer);
+
+            // Calculate remaining hours and minutes until 24 hours
+            $hoursRemaining = floor((24 * 60 - $timeDifferenceInMinutes) / 60); // Convert remaining minutes to hours
+            $minutesRemaining = (24 * 60 - $timeDifferenceInMinutes) % 60;
+
+            $remainingTime = '';
+            if ($hoursRemaining > 0) {
+                $remainingTime .= $hoursRemaining . ' hour' . ($hoursRemaining > 1 ? 's' : '');
+            }
+            if ($minutesRemaining > 0) {
+                $remainingTime .= ($hoursRemaining > 0 ? ' and ' : '') . $minutesRemaining . ' minute' . ($minutesRemaining > 1 ? 's' : '');
+            }
+        }
+
+        return view('student.examination', compact('exams', 'count', 'jsonFormattedQuestions', 'header', 'name', 'user_info', 'coursex', 'remainingTime', 'attempt'));
     }
 
-    public function showStudentDashboard()
-    {
-        $name = Auth::user()->name;
-        $student = Auth::guard('student')->user();
-        $user = Auth::user();
-        $user_info = Student_info::where('student_id', $user->student_id)->first();
-
-        // $courses = Course::where('instructor_id', $instructor->instructor_id)->paginate(10);
-        return view('student.dashboard', compact('student', 'name', 'user_info'));
-    }
 
     public function profile(Request $request)
     {

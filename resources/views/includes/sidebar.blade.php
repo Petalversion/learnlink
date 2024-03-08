@@ -14,14 +14,14 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item {{ request()->routeIs('student.courses') ? 'active' : '' }}">
+      <li class="nav-item {{ request()->routeIs('student.courses') || request()->routeIs('student.learn') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="{{route('student.courses')}}">
           <i class="fas fa-fw fa-book"></i>
           <span>Enrolled Courses</span>
         </a>
       </li>
-      <li class="nav-item {{ request()->routeIs('student.courses') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="{{route('student.courses')}}">
+      <li class="nav-item {{ request()->routeIs('student.certificates') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="{{route('student.certificates')}}">
           <i class="fas fa-fw fa-award"></i>
           <span>Certificates</span>
         </a>
