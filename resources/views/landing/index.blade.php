@@ -156,7 +156,7 @@
 
   <div class="nk-carousel-2 nk-carousel-x2 nk-carousel-no-margin nk-carousel-all-visible nk-blog-isotope" data-dots="true">
     <div class="nk-carousel-inner">
-      @foreach($courses as $course)
+      @foreach($coursesWithReviewsData as $course)
       <div>
         <div>
 
@@ -164,7 +164,7 @@
             <div class="nk-blog-post">
 
               <div class="nk-post-thumb">
-                <a href="{{route('course_details', $course->course_id)}}">
+                <a href="{{route('course_details', $course->id)}}">
                   @if ($course->image)
                   <img src="{{ asset('storage/' . $course->image) }}" alt="" class="course-img">
                   @else
@@ -173,19 +173,29 @@
                   @endif
                 </a>
               </div>
-              <h2 class="nk-post-title h4 clamp-two-lines"><a href="{{route('course_details', $course->course_id)}}">{{ $course->title }}</a></h2>
+              <h2 class="nk-post-title h4 clamp-two-lines"><a href="{{route('course_details', $course->id)}}">{{ $course->title }}</a></h2>
 
               <div class="nk-post-date">
                 {{ $course->instructor->name }}
               </div>
 
+              @php
+              $averageScore = $coursesWithReviewsData->where('course_id', $course->course_id)->first();
+              @endphp
+
               <div class="ratings">
-                <!-- Add your rating HTML here -->
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star unchecked"></span>
+                @if ($averageScore->average_score)
+                @php
+                $fullStars = floor($averageScore->average_score);
+                $halfStar = round($averageScore->average_score - $fullStars, 1) >= 0.5 ? 1 : 0;
+                $blankStars = 5 - $fullStars - $halfStar;
+
+                $stars = '';
+
+                for ($i = 0; $i < $fullStars; $i++) { $stars .='<i class="fa-solid fa-star" style="color: #ffa500;"></i>' ; } if ($halfStar) { $stars .='<i class="fa-solid fa-star-half-stroke" style="color: #ffa500;"></i>' ; } for ($i=0; $i < $blankStars; $i++) { $stars .='<i class="fa-regular fa-star" style="color: #ffa500;"></i>' ; } @endphp <p><strong>{{number_format($averageScore->average_score, 1) }}</strong> {!! $stars !!} ({{ $averageScore->reviewer_count }})</p>
+                  @else
+                  <p>No Reviews Yet</p>
+                  @endif
               </div>
 
               <div class="nk-post-text">
@@ -208,7 +218,7 @@
 
   <div class="nk-carousel-2 nk-carousel-x2 nk-carousel-no-margin nk-carousel-all-visible nk-blog-isotope" data-dots="true">
     <div class="nk-carousel-inner">
-      @foreach($coursesrandom as $course)
+      @foreach($coursesWithReviewsDatarandom as $course)
       <div>
         <div>
 
@@ -216,7 +226,7 @@
             <div class="nk-blog-post">
 
               <div class="nk-post-thumb">
-                <a href="{{route('course_details', $course->course_id)}}">
+                <a href="{{route('course_details', $course->id)}}">
                   @if ($course->image)
                   <img src="{{ asset('storage/' . $course->image) }}" alt="" class="course-img">
                   @else
@@ -226,19 +236,28 @@
                 </a>
 
               </div>
-              <h2 class="nk-post-title h4 clamp-two-lines"><a href="{{route('course_details', $course->course_id)}}">{{ $course->title }}</a></h2>
+              <h2 class="nk-post-title h4 clamp-two-lines"><a href="{{route('course_details', $course->id)}}">{{ $course->title }}</a></h2>
 
               <div class="nk-post-date">
                 {{ $course->instructor->name }}
               </div>
+              @php
+              $averageScore = $coursesWithReviewsDatarandom->where('course_id', $course->course_id)->first();
+              @endphp
 
               <div class="ratings">
-                <!-- Add your rating HTML here -->
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star unchecked"></span>
+                @if ($averageScore->average_score)
+                @php
+                $fullStars = floor($averageScore->average_score);
+                $halfStar = round($averageScore->average_score - $fullStars, 1) >= 0.5 ? 1 : 0;
+                $blankStars = 5 - $fullStars - $halfStar;
+
+                $stars = '';
+
+                for ($i = 0; $i < $fullStars; $i++) { $stars .='<i class="fa-solid fa-star" style="color: #ffa500;"></i>' ; } if ($halfStar) { $stars .='<i class="fa-solid fa-star-half-stroke" style="color: #ffa500;"></i>' ; } for ($i=0; $i < $blankStars; $i++) { $stars .='<i class="fa-regular fa-star" style="color: #ffa500;"></i>' ; } @endphp <p><strong>{{number_format($averageScore->average_score, 1) }}</strong> {!! $stars !!} ({{ $averageScore->reviewer_count }})</p>
+                  @else
+                  <p>No Reviews Yet</p>
+                  @endif
               </div>
 
               <div class="nk-post-text">

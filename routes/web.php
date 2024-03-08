@@ -89,6 +89,7 @@ Route::middleware('auth:instructor')->group(function () {
     Route::get('course/{course_id}', [CourseController::class, 'courseView'])->name('instructor.course.course-view');
     Route::get('course/{course_id}/edit', [CourseController::class, 'courseEdit'])->name('instructor.course.course-edit');
     Route::put('course/{course_id}', [CourseController::class, 'update'])->name('instructor.course.update');
+    Route::put('course/{course_id}/status', [CourseController::class, 'updateStatus'])->name('course.status.update');
     Route::delete('course/{course}', [CourseController::class, 'destroy'])->name('course.destroy');
     Route::get('instructor/tags', [TagController::class, 'show'])->name('instructor.course.tags');
     Route::get('instructor/tags/create', [TagController::class, 'create'])->name('instructor.course.tags-create');
@@ -108,7 +109,8 @@ Route::middleware('auth:instructor')->group(function () {
     Route::get('course/question/{exam_id}', [QuizController::class, 'examEdit'])->name('instructor.exam.question-edit');
     Route::put('instructor/quiz/{exam_id}', [QuizController::class, 'update'])->name('instructor.exam.update');
     Route::post('instructor/ckeditor/upload', [ckeditorController::class, 'upload'])->name('ckeditor.upload');
-    Route::get('instructor/recent-questions', [CommentsandReviewsController::class, 'instructorComments'])->name('instructor.questions');
+    Route::get('instructor/recent-questions', [CommentsandReviewsController::class, 'instructorRecentComments'])->name('instructor.questions');
+    Route::get('instructor/course/questions/{lesson_id}', [CommentsandReviewsController::class, 'instructorComments'])->name('instructor.course.questions');
     Route::get('instructor/reviews', [CommentsandReviewsController::class, 'reviews'])->name('instructor.reviews');
     Route::post('/instructor/add-answer/', [CommentsandReviewsController::class, 'storeAnswer'])->name('add.answer');
     Route::get('/instructor/profile', [InstructorController::class, 'profile'])->name('instructor.profile');
@@ -131,6 +133,7 @@ Route::middleware('auth:student')->group(function () {
     Route::post('/student/PayPal', [PaypalController::class, 'pay'])->name('paypal.pay');
     Route::get('/student/pay/success/{transaction_id}', [PaymentController::class, 'success'])->name('gcash.success');
     Route::get('success', [PaypalController::class, 'success']);
+    Route::get('error', [PaypalController::class, 'error']);
     Route::get('/student/profile', [StudentController::class, 'profile'])->name('student.profile');
     Route::put('/student/profile/update', [StudentController::class, 'profileUpdate'])->name('student.profileupdate');
     Route::post('/student/add-question/', [CommentsandReviewsController::class, 'storeQuestion'])->name('add.question');

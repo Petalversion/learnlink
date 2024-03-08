@@ -86,7 +86,7 @@ class CommentsandReviewsController extends Controller
         return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 9);
     }
 
-    public function instructorComments()
+    public function instructorRecentComments()
     {
         $status = Auth::guard('instructor')->user()->status;
         if ($status == 'Pending') {
@@ -95,6 +95,7 @@ class CommentsandReviewsController extends Controller
 
             $name = Auth::user()->name;
             $user = Auth::user();
+            $instructorId = Auth::user()->instructor_id;
             $userId = Auth::guard('instructor')->user() ? Auth::guard('instructor')->user()->instructor_id : null;
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
             $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
@@ -104,24 +105,58 @@ class CommentsandReviewsController extends Controller
             $courses = $instructor->courses;
 
             // Loop through each course
-            foreach ($courses as $course) {
-                // Retrieve student comments for the current course
-                $student_comments = Questions::where('course_id', $course->course_id)->get();
-                // Merge the student comments into the array
-                $all_student_comments = array_merge($all_student_comments, $student_comments->toArray());
-            }
-
-            $commentIds = array_column($all_student_comments, 'comment_id');
-
-            // Check if there are any answers with comment IDs matching the extracted comment IDs
-            $matchingAnswers = Answers::whereIn('comment_id', $commentIds)->get();
-            $commentIds = array_column($all_student_comments, 'comment_id');
-
-            // Retrieve questions that do not have a corresponding comment ID in the Answers model
-            $questionsWithoutComments = Questions::whereNotIn('id', $commentIds)->get();
+            $all_student_comments = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+                ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                    $query->where('instructor_id', $instructorId);
+                }, 'student_info'])
+                ->whereDoesntHave('answers')
+                ->get();
 
 
             return view('instructor.questions', compact('name', 'instructor_info', 'user', 'all_student_comments'));
+        }
+    }
+
+    public function instructorComments($lesson_id)
+    {
+        $status = Auth::guard('instructor')->user()->status;
+        if ($status == 'Pending') {
+            return redirect('/instructor/profile');
+        } else {
+
+            $name = Auth::user()->name;
+            $user = Auth::user();
+            $instructorId = Auth::user()->instructor_id;
+            $userId = Auth::guard('instructor')->user() ? Auth::guard('instructor')->user()->instructor_id : null;
+            $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
+            $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
+            $all_student_comments = [];
+
+            // Retrieve all courses associated with the instructor
+            $courses = $instructor->courses;
+
+            $lesson = Lesson::where('id', $lesson_id)->first();
+
+            if (!$lesson) {
+                return redirect()->route('instructor.course.course')->with('error', 'Lesson not found.');
+            }
+
+            $course = Course::where('course_id', $lesson->course_id)->first();
+            $owner = $course->instructor_id;
+            $back = $course->id;
+            if ($owner !== $user->instructor_id) {
+                return redirect()->route('instructor.course.course')->with('error', 'Lesson not found.');
+            }
+
+            $all_student_comments = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+                ->where('lesson_id', $lesson->lesson_id)
+                ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                    $query->where('instructor_id', $instructorId);
+                }, 'student_info'])
+                ->whereHas('answers')
+                ->get();
+
+            return view('instructor.course.questions', compact('name', 'instructor_info', 'user', 'all_student_comments', 'back'));
         }
     }
 
@@ -156,7 +191,7 @@ class CommentsandReviewsController extends Controller
             $userId = Auth::guard('instructor')->user() ? Auth::guard('instructor')->user()->instructor_id : null;
             $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
             $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
-            $all_student_comments = [];
+            $all_student_reviews = [];
 
             // Retrieve all courses associated with the instructor
             $courses = $instructor->courses;
@@ -164,22 +199,14 @@ class CommentsandReviewsController extends Controller
             // Loop through each course
             foreach ($courses as $course) {
                 // Retrieve student comments for the current course
-                $student_comments = Questions::where('course_id', $course->course_id)->get();
+                $student_reviews = Reviews::where('course_id', $course->course_id)->get();
                 // Merge the student comments into the array
-                $all_student_comments = array_merge($all_student_comments, $student_comments->toArray());
+                $all_student_reviews = array_merge($all_student_reviews, $student_reviews->toArray());
             }
 
-            $commentIds = array_column($all_student_comments, 'comment_id');
+            $reviewIds = array_column($all_student_reviews, 'review_id');
 
-            // Check if there are any answers with comment IDs matching the extracted comment IDs
-            $matchingAnswers = Answers::whereIn('comment_id', $commentIds)->get();
-            $commentIds = array_column($all_student_comments, 'comment_id');
-
-            // Retrieve questions that do not have a corresponding comment ID in the Answers model
-            $questionsWithoutComments = Questions::whereNotIn('id', $commentIds)->get();
-
-
-            return view('instructor.inquiries.reviews', compact('name', 'instructor_info', 'user', 'all_student_comments'));
+            return view('instructor.inquiries.reviews', compact('name', 'instructor_info', 'user', 'all_student_reviews'));
         }
     }
 }

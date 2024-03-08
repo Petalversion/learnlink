@@ -9,6 +9,7 @@
 <script src="/js/demo/chart-bar-demo.js"></script>
 <script src="/assets/js/combined.js"></script>
 <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&disable-funding=card&intent=authorize"></script>
+
 <script>
   paypal.Buttons({
     style: {
@@ -180,3 +181,4 @@
 <script>
   new DataTable('#myTable123456');
 </script>
+<script></script>

@@ -23,11 +23,11 @@ class StudentController extends Controller
     public function showRegistrationForm()
     {
         if (Auth::guard('instructor')->check()) {
-            return redirect('/instructor/dashboard');
+            return redirect()->route('instructor.dashboard');
         } elseif (Auth::guard('student')->check()) {
-            return redirect('/student/dashboard');
+            return redirect()->route('student.dashboard');
         }
-        return view('student_register'); // Return the view for the registration form
+        return view('student.register'); // Return the view for the registration form
     }
 
     public function showStudentCourses()
@@ -111,11 +111,11 @@ class StudentController extends Controller
     public function showLoginForm()
     {
         if (Auth::guard('instructor')->check()) {
-            return redirect('/instructor/dashboard');
+            return redirect()->route('instructor.dashboard');
         } elseif (Auth::guard('student')->check()) {
-            return redirect('/student/dashboard');
+            return redirect()->route('student.dashboard');
         }
-        return view('student_login');
+        return view('student.login');
     }
 
     public function showLearn($course_id, $lesson_id)
@@ -158,11 +158,11 @@ class StudentController extends Controller
 
         if (Auth::guard('student')->attempt($credentials)) {
             // Authentication success, redirect to student dashboard or any other page
-            return redirect('/');
+            return redirect()->route('student.dashboard');
         }
 
         // If login fails, redirect back with an error message
-        return view('student_login')->withErrors(['error' => 'Invalid credentials. Please try again.']);
+        return redirect()->route('student.login')->withErrors(['error' => 'Invalid credentials. Please try again.']);
     }
 
     // Define other student-specific actions or methods as needed

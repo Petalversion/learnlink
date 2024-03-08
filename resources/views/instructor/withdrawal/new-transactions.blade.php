@@ -5,7 +5,7 @@
 <!-- End of Topbar -->
 
 <!-- Begin Page Content -->
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
 
     <div class="col-md-6">
         <h1 class="h3 mb-3 text-gray-800"><i class="fas fa-fw fa-exchange"></i> Withdrawal Request</h1>

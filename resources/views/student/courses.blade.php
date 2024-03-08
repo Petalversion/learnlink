@@ -6,10 +6,20 @@
     <h1 class="h3 mb-3 text-gray-900">Your Courses</h1>
     @if(isset($courseinfo) && !empty($courseinfo))
     <div class="row mb-4">
+        @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
         @foreach($courseinfo as $course)
         <div class="col-md-6 col-lg-3 col-sm-12">
             <div class="card mb-4">
+                @if ($course->image)
                 <img src="{{ asset('storage/' . $course->image) }}" class="card-img-top" alt="...">
+                @else
+                <img src="{{ asset('img/course_placeholder.png') }}" alt="Placeholder Image" class="card-img-top">
+                @endif
+
                 <div class="card-body">
                     <h5 class="card-title clamp-two-lines">{{$course->title}}</h5>
                     <!-- <p class="card-text">{{$course->summary}}</p> -->

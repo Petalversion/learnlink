@@ -2,7 +2,7 @@
 
 @section('content')
 <title>My Cart</title>
-<div class="container" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->

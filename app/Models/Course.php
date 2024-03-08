@@ -60,4 +60,8 @@ class Course extends Model
     {
         return $this->hasMany(Exam::class, 'course_id', 'course_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Reviews::class, 'course_id', 'course_id');
+    }
 }

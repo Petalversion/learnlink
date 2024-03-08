@@ -7,7 +7,8 @@
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
         <a href="{{route('index')}}" class="nk-nav-logo">
-          <img src="/img/white.png" alt="" width="105" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
+          <img src="/img/white.png" alt="" width="105" class="logo-img large-img" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
+          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;margin-top:15px;margin-left:32px;margin-bottom:15px">
         </a>
       </div>
       <!-- Divider -->
@@ -95,7 +96,8 @@
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
         <a href="{{route('index')}}" class="nk-nav-logo">
-          <img src="/img/white.png" alt="" width="105" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
+          <img src="/img/white.png" alt="" width="105" class="logo-img large-img" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
+          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;margin-top:15px;margin-left:32px;margin-bottom:15px">
         </a>
       </div>
       <!-- Divider -->
@@ -193,11 +195,12 @@
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
         <a href="{{route('index')}}" class="nk-nav-logo">
-          <img src="/img/white.png" alt="" width="105" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
+          <img src="/img/white.png" alt="" width="105" class="logo-img large-img" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
+          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;margin-top:15px;margin-left:32px;margin-bottom:15px">
         </a>
       </div>
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+      <hr class=" sidebar-divider my-0">
       <!-- Nav Item - Dashboard -->
       <li class="nav-item {{ request()->routeIs('instructor.dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{route('instructor.dashboard')}}">
@@ -224,7 +227,7 @@
             <a class="collapse-item" href="{{route('instructor.questions')}}">Recent Questions</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Reviews:</h6>
-            <a class="collapse-item" href="#">Course Reviews</a>
+            <a class="collapse-item" href="{{route('instructor.reviews')}}">Course Reviews</a>
           </div>
         </div>
       </li>

@@ -32,4 +32,19 @@ class Questions extends Model
     {
         return $this->hasMany(Answers::class, 'comment_id', 'comment_id');
     }
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class, 'lesson_id', 'lesson_id');
+    }
+
+    public function coures()
+    {
+        return $this->belongsTo(Course::class, 'course_id', 'course_id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answers::class, 'comment_id', 'comment_id');
+    }
 }

@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
 
     <a href="{{ route('instructor.course.course') }}">
         <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>
@@ -54,30 +54,7 @@
                                     <label for="requirements" class="form-label">Requirements</label>
                                     <textarea name="requirements" id="requirements"></textarea>
                                 </div>
-                                <div class="container border p-3" style="border-radius: 15px;">
-                                    <div class="mb-3">
-                                        <label class="form-label">Difficulty</label><br>
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" id="beginner" name="difficulty" class="form-check-input" value="beginner" required>
-                                            <label for="beginner" class="form-check-label">Beginner</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" id="intermediate" name="difficulty" class="form-check-input" value="intermediate" required>
-                                            <label for="intermediate" class="form-check-label">Intermediate</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" id="expert" name="difficulty" class="form-check-input" value="expert" required>
-                                            <label for="expert" class="form-check-label">Expert</label>
-                                        </div>
 
-                                    </div>
-                                </div>
-
-                                <div class="container p-0 mt-3 mb-3" style="border-radius: 15px;">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <!-- <button type="submit" name="draft" value="1"
-                                                    class="btn btn-secondary">Save as Draft</button> -->
-                                </div>
                             </div>
 
                             <div class="col-md-3">
@@ -90,6 +67,26 @@
 
                                 <hr>
 
+                                <div class="container border p-3 mb-3" style="border-radius: 15px;">
+                                    <div class="mb-1">
+                                        <label class="form-label">Difficulty</label><br>
+                                        <div class="form-check form-check-inline col-xl-12 ">
+                                            <input type="radio" id="beginner" name="difficulty" class="form-check-input" value="beginner" required>
+                                            <label for="beginner" class="form-check-label">Beginner</label>
+                                        </div>
+                                        <div class="form-check form-check-inline col-xl-12 ">
+                                            <input type="radio" id="intermediate" name="difficulty" class="form-check-input" value="intermediate" required>
+                                            <label for="intermediate" class="form-check-label">Intermediate</label>
+                                        </div>
+                                        <div class="form-check form-check-inline col-xl-12 ">
+                                            <input type="radio" id="expert" name="difficulty" class="form-check-input" value="expert" required>
+                                            <label for="expert" class="form-check-label">Expert</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <hr>
                                 <div class="container border p-3 mb-3" style="border-radius: 15px;">
                                     <div class="mb-3">
                                         <label for="tag" class="form-label">Tag</label>
@@ -133,6 +130,11 @@
                                         <span class="input-group-text">₱</span>
                                         <input type="number" id="amount" name="amount" class="form-control" step="0.01" placeholder="Course Amount">
                                     </div>
+                                </div>
+                                <div class="container p-0 mt-3 mb-3" style="border-radius: 15px;">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <!-- <button type="submit" name="draft" value="1"
+                                                    class="btn btn-secondary">Save as Draft</button> -->
                                 </div>
                             </div>
                         </div>

@@ -40,7 +40,7 @@ class AdminController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('Design/register'); // Return the view for the registration form
+        return view('admin.register'); // Return the view for the registration form
     }
 
     public function register(Request $request)
@@ -79,14 +79,14 @@ class AdminController extends Controller
     {
 
         if (Auth::guard('instructor')->check()) {
-            return redirect('/instructor/dashboard');
+            return redirect()->route('instructor.dashboard');
         } elseif (Auth::guard('student')->check()) {
-            return redirect('/student/dashboard');
+            return redirect()->route('student.dashboard');
         } elseif (Auth::guard('admin')->check()) {
-            return redirect('/admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
-        return view('admin_login');
+        return view('admin.login');
     }
 
     public function login(Request $request)
@@ -101,7 +101,7 @@ class AdminController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::guard('admin')->attempt($credentials)) {
             // Authentication success, redirect to admin dashboard or any other page
-            return redirect('/admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         // Authentication failed, redirect back with an error message
@@ -111,7 +111,7 @@ class AdminController extends Controller
     public function logout()
     {
         Auth::logout(); // Log the admin out
-        return redirect('/');
+        return redirect()->route('index');
     }
 
     public function showAdminDashboard()

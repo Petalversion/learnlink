@@ -15,6 +15,6 @@ class LogoutController extends Controller
         $request->session()->invalidate(); // Invalidate the session
         $request->session()->regenerateToken(); // Regenerate the CSRF token
 
-        return redirect('/'); // Redirect to the home page after logout
+        return redirect()->route('index'); // Redirect to the home page after logout
     }
 }

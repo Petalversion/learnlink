@@ -4,7 +4,7 @@
 <title>{{$name}} - Profile</title>
 
 <!-- End of Topbar -->
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
     <!-- Page Heading -->
     @if(session('success'))
     <div class="alert alert-success">

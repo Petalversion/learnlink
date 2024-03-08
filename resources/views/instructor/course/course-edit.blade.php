@@ -1,7 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
 
     <a href="{{ route('instructor.course.course') }}">
         <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>
@@ -62,12 +62,28 @@
                                     <label for="requirements" class="form-label">Requirements</label>
                                     <textarea name="requirements" id="requirements">{{ old('requirements', $course->requirements) }}</textarea>
                                 </div>
-
-                                <div class="container border p-3" style="border-radius: 15px;">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="container border p-3 mb-3" style="border-radius: 15px;">
                                     <div class="mb-3">
+                                        @if ($course->image)
+                                        <img src="{{ asset('storage/' . $course->image) }}" alt="" class="course-img" style="max-width:100%;">
+                                        @else
+                                        <img src="{{ asset('img/course_placeholder.png') }}" alt="Placeholder Image" class="course-img" style="max-width: 100%;">
+                                        @endif
+
+                                        <label for="image" class="form-label">Change Image</label>
+                                        <input type="file" id="image" name="image" class="form-control">
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="container border p-3 mb-3" style="border-radius: 15px;">
+                                    <div class="mb-1">
                                         <label class="form-label">Difficulty</label><br>
                                         @foreach(['beginner', 'intermediate', 'expert'] as $difficulty)
-                                        <div class="form-check form-check-inline">
+                                        <div class="col-xl-12 form-check form-check-inline">
                                             <input type="radio" id="{{ $difficulty }}" name="difficulty" class="form-check-input" value="{{ $difficulty }}" {{
                                                                 old('difficulty', $course->difficulty) === $difficulty ?
                                                             'checked' : '' }} required>
@@ -78,25 +94,7 @@
 
                                     </div>
                                 </div>
-
-                                <div class="container p-0 mt-3 mb-3" style="border-radius: 15px;">
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                    <!-- <button type="submit" name="draft" value="1"
-                                                    class="btn btn-secondary">Save as Draft</button> -->
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="container border p-3 mb-3" style="border-radius: 15px;">
-                                    <div class="mb-3">
-                                        <img src="{{ asset('storage/' . $course->image) }}" alt="" class="course-img" style="max-width:100%;">
-                                        <label for="image" class="form-label">Change Image</label>
-                                        <input type="file" id="image" name="image" class="form-control">
-                                    </div>
-                                </div>
-
                                 <hr>
-
                                 <div class="container border p-3 mb-3" style="border-radius: 15px;">
                                     <div class="mb-3">
                                         <label for="tag" class="form-label">Tag</label>
@@ -141,6 +139,11 @@
                                         <span class="input-group-text">₱</span>
                                         <input type="number" id="amount" name="amount" class="form-control" step="0.01" placeholder="Course Amount" value="{{ old('amount', isset($course) ? $course->amount : '') }}">
                                     </div>
+                                </div>
+                                <div class="container p-0 mt-3 mb-3" style="border-radius: 15px;">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <!-- <button type="submit" name="draft" value="1"
+                                                    class="btn btn-secondary">Save as Draft</button> -->
                                 </div>
                             </div>
                         </div>

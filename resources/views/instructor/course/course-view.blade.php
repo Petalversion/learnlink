@@ -1,7 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
 
     <!-- Page Heading -->
 
@@ -16,7 +16,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid mt-2">
                     <div class="row mx-2">
-                        <div class="col-sm-8 container m-2" style="border-radius: 20px;">
+                        <div class="col-sm-8 container m-2">
                             <h1>Course Details</h1>
                             <hr>
                             <h3>{{$course->title}}</h3>
@@ -27,11 +27,45 @@
                                     {{$course->difficulty}}
                                 </span>
                             </p>
+                            @if ($course_count)
+                            @php
+                            $fullStars = floor($rounded_rating);
+                            $halfStar = round($rounded_rating - $fullStars, 1) >= 0.5 ? 1 : 0;
+                            $blankStars = 5 - $fullStars - $halfStar;
 
-                            <p class="badge bg-success"></p>
+                            $stars = '';
+
+                            for ($i = 0; $i < $fullStars; $i++) { $stars .='<i class="fa-solid fa-star" style="color: #ffa500;"></i>' ; } if ($halfStar) { $stars .='<i class="fa-solid fa-star-half-stroke" style="color: #ffa500;"></i>' ; } for ($i=0; $i < $blankStars; $i++) { $stars .='<i class="fa-regular fa-star" style="color: #ffa500;"></i>' ; } @endphp <p><strong>{{ number_format($rounded_rating, 1) }}</strong> {!! $stars !!} ({{ $course_count }})</p>
+                                @else
+                                <p>No Reviews Yet</p>
+                                @endif
+                                <form action="{{ route('course.status.update', ['course_id' => $course->course_id]) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="row align-items-center">
+                                        <label for="status" class="form-label">Set Status</label>
+                                        <div class="col-md-6">
+                                            <select name="status" id="status" class="form-select" {{ $combo == 0 ? 'disabled' : '' }}>
+                                                <option value="publish" {{ old('status', $course->status) === 'publish' ? 'selected' : '' }}>Publish</option>
+                                                <option value="draft" {{ old('status', $course->status) === 'draft' ? 'selected' : '' }}>Draft</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="submit" class="btn btn-primary" class="form-select" {{ $combo == 0 ? 'disabled' : '' }}>Update</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <p class="badge bg-success"></p>
+
                         </div>
                         <div class="col-sm-3 container d-flex align-items-center">
+                            @if ($course->image)
                             <img src="{{ asset('storage/' . $course->image) }}" alt="Course Image" style="max-width: 100%;">
+                            @else
+                            <!-- Placeholder image or any alternative content when $course->image is null -->
+                            <img src="{{ asset('img/course_placeholder.png') }}" alt="Placeholder Image" style="max-width: 100%;">
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -67,6 +101,7 @@
                                     <tr>
                                         <th class="text-right">No.</th>
                                         <th class="text-center">Title</th>
+                                        <th class="text-center">Questions</th>
                                         <th class="text-center">Attachments</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -76,6 +111,9 @@
                                     <tr>
                                         <td class="text-right">{{ $loop->iteration }}.</td>
                                         <td> {{$lesson->title}} </td>
+                                        <td class="text-center"> <a href="{{ route('instructor.course.questions', ['lesson_id' => $lesson->id])}}" class="btn btn-success">
+                                                <i class="fa-solid fa-comments text-white"></i>
+                                            </a> </td>
                                         <td class="text-left">
                                             @if (!empty($lesson->uploadedFiles))
                                             @foreach ($lesson->uploadedFiles as $file)

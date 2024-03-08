@@ -1,24 +1,22 @@
 @extends('layout.main-side')
 
 @section('content')
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
     <div class="row">
-        <div class="col-md-6">
-            <h1 class="h3 mb-3 text-gray-800"><i class="fas fa-fw fa-book-open"></i> Course</h1>
-        </div>
-        <div class="col-md-6 text-md-right">
+
+        <div class="col-md-12 text-md-right mb-2">
             <a href="{{ route('instructor.course.course-create') }}" class="btn btn-primary btn-icon-split p-0"><span class="icon text-white-50 "><i class="fas fa-plus"></i></span><span class="text">Course</span></a>
         </div>
     </div>
     <div class="card shadow mb-4">
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="container-fluid mt-2" style="max-width: 100%; overflow-x: auto;">
                 @if(session()->has('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
                 @endif
-                <table class="table table-striped" id="myTable12345">
+                <table class="table table-striped table-bordered" id="myTable12345">
                     <thead>
                         <tr class="text-center">
                             <th>Title</th>
@@ -30,11 +28,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <h2 style="margin-bottom: 2%;"><i class="fa-solid fa-book"></i> Courses</h2>
                         @foreach($courses as $course)
                         <tr>
                             <td>{{$course->title}}</td>
-                            <td>
-                                {{$course->difficulty}}
+                            <td class="text-center">
+                                <span class="badge rounded-pill {{$course->difficulty == 'beginner' ? 'badge-beginner' : ($course->difficulty == 'intermediate' ? 'badge-intermediate' : 'badge-expert')}}">
+                                    {{$course->difficulty}}
+                                </span>
                             </td>
                             <td>{{ $course->paid == 1 ? 'Paid' : 'Free' }}</td>
                             <td class="text-end">{{ $course->paid == 1 ? '₱' . ' ' .

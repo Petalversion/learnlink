@@ -1,7 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')<!-- Begin Page Content -->
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
     <a href="{{ route('instructor.course.course-view', ['course_id' => $courses->id]) }}">
         <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>
     <div class="card shadow mb-4">

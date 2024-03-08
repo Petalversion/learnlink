@@ -127,8 +127,7 @@ class PaymentController extends Controller
         Cart::where('student_id', $userId)->delete();
 
 
-        return redirect()->route('student.cart')
-            ->with('success', 'Payment Successful');
+        return view('thankyou');
     }
 
 

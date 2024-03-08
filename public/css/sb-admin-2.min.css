@@ -12737,3 +12737,35 @@ body.sidebar-toggled footer.sticky-footer {
 .radio-type:checked+label {
     display: inline-block;
 }
+
+.sidetoppadding {
+    padding-left: 237px;
+    margin-top: 85px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+
+.large-img {
+    display: block;
+}
+
+.small-img {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .large-img {
+        display: none;
+    }
+
+    .small-img {
+        display: block;
+    }
+
+    .sidetoppadding {
+        padding-left: 120px;
+        margin-top: 85px;
+        margin-bottom: 15px;
+        margin-right: 15px;
+    }
+}

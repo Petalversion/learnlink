@@ -92,14 +92,13 @@ class PaypalController extends Controller
                     'student_id' => $userId,
                     'course_id_amount' => $lineItems,
                     'total_amount' => $total,
-                    'type' => 'gcash',
+                    'type' => 'paypal',
                 ]);
 
                 Cart::where('student_id', $userId)->delete();
 
 
-                return redirect()->route('student.cart')
-                    ->with('success', 'Payment Successful');
+                return view('thankyou');
             } else {
                 return $response->getMessage();
             }
@@ -110,7 +109,7 @@ class PaypalController extends Controller
 
     public function error()
     {
-        return 'User declined the Payment!';
+        return redirect()->route('student.cart')->with('error', 'User declined the Payment!');
     }
 
     private function generateTransactionId()

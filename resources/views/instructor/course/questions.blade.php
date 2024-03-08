@@ -3,6 +3,9 @@
 @section('content')
 <div class="sidetoppadding">
 
+    <a href="{{ route('instructor.course.course-view', ['course_id' => $back]) }}">
+        <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>
+
     <!-- Page Heading -->
 
     <div class="card shadow mb-4">
@@ -12,14 +15,13 @@
                 <table class="table table-striped" id="myTable12345">
                     <thead>
                         <tr class="text-center">
-                            <th>Course</th>
-                            <th>Lesson</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th class="text-left">Date</th>
+                            <th>Student Name</th>
+                            <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <h2 style="margin-bottom: 2%;"><i class="fas fa-history"></i> Recent Questions</h2>
+                        <h2 style="margin-bottom: 2%;"><i class="fa-solid fa-comments"></i> Questions</h2>
                         @foreach($all_student_comments as $comment)
                         @php
                         $lesson = $comment->lesson ?? null;
@@ -27,9 +29,9 @@
 
                         @if($lesson)
                         <tr class="text-center">
-                            <td>{{ $lesson->course->title ?? 'N/A' }}</td>
-                            <td>{{ $lesson->title ?? 'N/A' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($comment->created_at)->format('Y-m-d H:i') }}</td>
+
+                            <td class="text-left">{{ \Carbon\Carbon::parse($comment->created_at)->format('Y-m-d H:i') }}</td>
+                            <td class="text-left">{{ $comment->student->name }}</td>
                             <td>
                                 <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}">
                                     <i class="fas fa-eye fa-sm"></i>

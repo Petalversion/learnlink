@@ -2,8 +2,8 @@
 
 @section('content')
 <title>{{$lesson->title}}</title>
-<div class="container" style="padding-left: 250px; margin-top:5%;">
-  <div class="container">
+<div class="sidetoppadding">
+  <div class="container-fluid">
     <h1>{{$lesson->title}}</h1>
     <hr>
     @if(!is_null($lesson) && !is_null($lesson->video_source))
@@ -32,7 +32,7 @@
   </ul>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="comment-tab-pane" role="tabpanel" aria-labelledby="comment-tab" tabindex="0">
-      <div class="container">
+      <div class="container-fluid">
         <div class="row">
           @if ($errors->any())
           <div class="alert alert-danger">
@@ -43,7 +43,7 @@
             </ul>
           </div>
           @endif
-          <div class="col-10 mx-auto">
+          <div class="col-md-12 ">
             <form action="{{ route('add.question') }}" method="POST">
               @csrf
               <div class="form-group">
@@ -57,12 +57,8 @@
               </div>
               <button class="btn btn-info" type="submit">Submit</button>
             </form>
-            <p id="warning"></p>
           </div>
         </div>
-
-
-
         @foreach($student_comment as $comments)
         <div class="row d-flex justify-content-center border mb-2 mt-5">
           <div class="col-md-2 d-flex align-items-center justify-content-center">
@@ -109,99 +105,100 @@
         @endforeach
       </div>
     </div>
-  </div>
 
 
-  <div class="tab-pane fade" id="rating-tab-pane" role="tabpanel" aria-labelledby="rating-tab" tabindex="0">
-    <div class="container">
-      <div class="row">
-        <div class="col-10 mx-auto mb-5">
-          @if(empty($student_review))
-          <form action="{{ route('add.review') }}" method="POST">
-            @csrf
-            <div class="form-group mt-4">
-              <label for="comment">Review:</label>
-              <input type="hidden" value="{{$course->course_id}}" name="course_id">
-              <input type="hidden" value="{{$user->student_id}}" name="student_id">
-              <textarea class="form-control" rows="5" id="comment" name="comment" required></textarea>
-              <br>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <button class="btn btn-info" type="submit">Submit</button>
+
+    <div class="tab-pane fade" id="rating-tab-pane" role="tabpanel" aria-labelledby="rating-tab" tabindex="0">
+      <div class="container">
+        <div class="row">
+          <div class="col-10 mx-auto mb-5">
+            @if(empty($student_review))
+            <form action="{{ route('add.review') }}" method="POST">
+              @csrf
+              <div class="form-group mt-4">
+                <label for="comment">Review:</label>
+                <input type="hidden" value="{{$course->course_id}}" name="course_id">
+                <input type="hidden" value="{{$user->student_id}}" name="student_id">
+                <textarea class="form-control" rows="5" id="comment" name="comment" required></textarea>
+                <br>
               </div>
-              <div class="col-md-6 text-right">
-                <div class="rate">
-                  <input type="radio" id="star5" name="score" value="5" />
-                  <label for="star5" title="text">5 stars</label>
-                  <input type="radio" id="star4" name="score" value="4" />
-                  <label for="star4" title="text">4 stars</label>
-                  <input type="radio" id="star3" name="score" value="3" />
-                  <label for="star3" title="text">3 stars</label>
-                  <input type="radio" id="star2" name="score" value="2" />
-                  <label for="star2" title="text">2 stars</label>
-                  <input type="radio" id="star1" name="score" value="1" />
-                  <label for="star1" title="text">1 star</label>
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn btn-info" type="submit">Submit</button>
+                </div>
+                <div class="col-md-6 text-right">
+                  <div class="rate">
+                    <input type="radio" id="star5" name="score" value="5" />
+                    <label for="star5" title="5 stars">5 stars</label>
+                    <input type="radio" id="star4" name="score" value="4" />
+                    <label for="star4" title="4 stars">4 stars</label>
+                    <input type="radio" id="star3" name="score" value="3" />
+                    <label for="star3" title="3 stars">3 stars</label>
+                    <input type="radio" id="star2" name="score" value="2" />
+                    <label for="star2" title="2 stars">2 stars</label>
+                    <input type="radio" id="star1" name="score" value="1" />
+                    <label for="star1" title="1 star">1 star</label>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
-          @else
-          <div class="row d-flex justify-content-center border mb-2 mt-5">
-            <div class="col-md-2 d-flex align-items-center justify-content-center">
-              <img class="d-flex fixed-profile-image" src="{{ asset('storage/' . $student_review->student_info->profile_picture) }}" alt="Image Description">
-            </div>
-            <div class="col-md-10 d-flex">
-              <div class="media-comment-wrapper">
-                <div class="media g-mb-30 media-comment">
-                  <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
-                    <div class="g-mb-15">
-                      <h5 class="h5 g-color-gray-dark-v1 mb-0 mt-3">{{$student_review->student->name}}</h5>
-                      <span class="g-color-gray-dark-v4 g-font-size-12">{{$student_review->created_at->diffForHumans()}}</span>
-                      @php
-                      $stars = '';
-                      for ($i = 0; $i < $student_review->score; $i++) {
-                        $stars .= '<i class="fas fa-star"></i>';
-                        }
-                        for ($i = $student_review->score; $i < 5; $i++) { $stars .='<i class="far fa-star"></i>' ; } @endphp <h5 class="h5 text-warning mb-0 mt-1">{!! $stars !!}</h5>
-                          <hr style="width: 200px;">
+            </form>
+            @else
+            <div class="row d-flex justify-content-center border mb-2 mt-5">
+              <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <img class="d-flex fixed-profile-image" src="{{ asset('storage/' . $student_review->student_info->profile_picture) }}" alt="Image Description">
+              </div>
+              <div class="col-md-10 d-flex">
+                <div class="media-comment-wrapper">
+                  <div class="media g-mb-30 media-comment">
+                    <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                      <div class="g-mb-15">
+                        <h5 class="h5 g-color-gray-dark-v1 mb-0 mt-3">{{$student_review->student->name}}</h5>
+                        <span class="g-color-gray-dark-v4 g-font-size-12">{{$student_review->created_at->diffForHumans()}}</span>
+                        @php
+                        $stars = '';
+                        for ($i = 0; $i < $student_review->score; $i++) {
+                          $stars .= '<i class="fa-solid fa-star" style="color: #ffa500;"></i>';
+                          }
+                          for ($i = $student_review->score; $i < 5; $i++) { $stars .='<i class="fa-regular fa-star" style="color: #ffa500;"></i>' ; } @endphp <h5 class="h5 text-warning mb-0 mt-1">{!! $stars !!}</h5>
+                            <hr style="width: 200px;">
+                      </div>
+                      <p class=" mb-3 mt-0">{{$student_review->comment}}</p>
                     </div>
-                    <p class=" mb-3 mt-0">{{$student_review->comment}}</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          @endif
+            @endif
 
-          @foreach($course_reviews as $reviews)
-          <div class="row d-flex justify-content-center border mb-2 mt-5">
-            <div class="col-md-2 d-flex align-items-center justify-content-center">
-              <img class="d-flex fixed-profile-image" src="{{ asset('storage/' . $reviews->student_info->profile_picture) }}" alt="Image Description">
-            </div>
-            <div class="col-md-10 d-flex">
-              <div class="media-comment-wrapper">
-                <div class="media g-mb-30 media-comment">
-                  <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
-                    <div class="g-mb-15">
-                      <h5 class="h5 g-color-gray-dark-v1 mb-0 mt-3">{{$reviews->student->name}}</h5>
-                      <span class="g-color-gray-dark-v4 g-font-size-12">{{$reviews->created_at->diffForHumans()}}</span>
+            @foreach($course_reviews as $reviews)
+            <div class="row d-flex justify-content-center border mb-2 mt-5">
+              <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <img class="d-flex fixed-profile-image" src="{{ asset('storage/' . $reviews->student_info->profile_picture) }}" alt="Image Description">
+              </div>
+              <div class="col-md-10 d-flex">
+                <div class="media-comment-wrapper">
+                  <div class="media g-mb-30 media-comment">
+                    <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                      <div class="g-mb-15">
+                        <h5 class="h5 g-color-gray-dark-v1 mb-0 mt-3">{{$reviews->student->name}}</h5>
+                        <span class="g-color-gray-dark-v4 g-font-size-12">{{$reviews->created_at->diffForHumans()}}</span>
 
-                      @php
-                      $stars = '';
-                      for ($i = 0; $i < $reviews->score; $i++) {
-                        $stars .= '<i class="fas fa-star"></i>';
-                        }
-                        for ($i = $reviews->score; $i < 5; $i++) { $stars .='<i class="far fa-star"></i>' ; } @endphp <h5 class="h5 text-warning mb-0 mt-1">{!! $stars !!}</h5>
-                          <hr style="width: 200px;">
+                        @php
+                        $stars = '';
+                        for ($i = 0; $i < $reviews->score; $i++) {
+                          $stars .= '<i class="fa-solid fa-star" style="color: #ffa500;"></i>';
+                          }
+                          for ($i = $reviews->score; $i < 5; $i++) { $stars .='<i class="fa-regular fa-star" style="color: #ffa500;"></i>' ; } @endphp <h5 class="h5 text-warning mb-0 mt-1">{!! $stars !!}</h5>
+                            <hr style="width: 200px;">
+                      </div>
+                      <p class=" mb-3 mt-0">{{$reviews->comment}}</p>
                     </div>
-                    <p class=" mb-3 mt-0">{{$reviews->comment}}</p>
                   </div>
                 </div>
               </div>
             </div>
+            @endforeach
           </div>
-          @endforeach
         </div>
       </div>
     </div>
@@ -237,7 +234,4 @@
     </div>
   </div>
 </div>
-
-
-
 @endsection

@@ -1,19 +1,19 @@
 @extends('layout.main-side')
 
 @section('content')
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
     <div class="row">
         <div class="col-md-6">
             <h1 class="h3 mb-3 text-gray-800"><i class="fas fa-fw fa-receipt"></i>Withdrawal History</h1>
         </div>
-        <div class="col-md-6 text-md-right">
+        <!-- <div class="col-md-6 text-md-right">
             <a href="{{ route('instructor.transactions.new') }}" class="btn btn-primary btn-icon-split p-0">
                 <span class="icon text-white-50">
                     <i class="fas fa-circle-plus"></i>
                 </span>
                 <span class="text">Request</span>
             </a>
-        </div>
+        </div> -->
     </div>
     <div class="card shadow mb-4">
         <div class="card-body">

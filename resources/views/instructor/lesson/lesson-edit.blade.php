@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container-fluid" style="padding-left: 250px; margin-top:5%;">
+<div class="sidetoppadding">
 
     <a href="{{ route('instructor.course.course-view', ['course_id' => $lesson->course->id]) }}">
         <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>

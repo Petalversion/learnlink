@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Instructor;
 use App\Models\Course;
+use App\Models\Reviews;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Instructor_info;
-
+use App\Models\Instructor_wallet;
+use App\Models\Transactions;
 
 class InstructorController extends Controller
 {
@@ -18,15 +20,15 @@ class InstructorController extends Controller
         if (Auth::guard('instructor')->check()) {
             $status = Auth::guard('instructor')->user()->status;
             if ($status == 'Pending') {
-                return redirect('/instructor/profile');
+                redirect()->route('instructor.profile');
             } else {
-                return redirect('/instructor/dashboard');
+                return redirect()->route('instructor.dashboard');
             }
         } elseif (Auth::guard('student')->check()) {
-            return redirect('/student/dashboard');
+            return redirect()->route('student.dashboard');
         }
 
-        return view('instructor_register'); // Return the view for the registration form
+        return view('instructor.register'); // Return the view for the registration form
     }
 
     public function register(Request $request)
@@ -88,15 +90,15 @@ class InstructorController extends Controller
         if (Auth::guard('instructor')->check()) {
             $status = Auth::guard('instructor')->user()->status;
             if ($status == 'Pending') {
-                return redirect('/instructor/profile');
+                return redirect()->route('instructor.profile');
             } else {
-                return redirect('/instructor/dashboard');
+                return redirect()->route('instructor.dashboard');
             }
         } elseif (Auth::guard('student')->check()) {
-            return redirect('/student/dashboard');
+            return redirect()->route('student.dashboard');
         }
 
-        return view('instructor_login');
+        return view('instructor.login');
     }
 
     // Handle the login request
@@ -112,7 +114,7 @@ class InstructorController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::guard('instructor')->attempt($credentials)) {
             // Authentication success, redirect to admin dashboard or any other page
-            return redirect('/instructor/dashboard');
+            return redirect()->route('instructor.dashboard');
         }
 
         // If login fails, redirect back with an error message
@@ -124,18 +126,76 @@ class InstructorController extends Controller
     {
         Auth::guard('instructor')->logout();
 
-        return redirect('/'); // Redirect to the home page or login page
+        return redirect()->route('index'); // Redirect to the home page or login page
     }
     // Instructor Dashboard
     // Show the instructor dashboard
     public function showInstructorDashboard()
     {
-        $name = Auth::user()->name;
-        $user = Auth::user();
+        $name = Auth::guard('instructor')->user()->name;
+        $user = Auth::guard('instructor')->user();
         $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
         $instructor = Auth::guard('instructor')->user();
         $courses = Course::where('instructor_id', $instructor->instructor_id)->paginate(10);
-        return view('instructor.dashboard', compact('instructor', 'courses', 'name', 'user', 'instructor_info'));
+
+        $courseIds = $instructor->courses->pluck('course_id');
+        $reviews = Reviews::whereIn('course_id', $courseIds)->get();
+
+        $transactions = Transactions::where(function ($query) use ($courseIds) {
+            foreach ($courseIds as $courseId) {
+                $query->orWhereJsonContains('course_id_amount', [['course_id' => $courseId]]);
+            }
+        })->get();
+
+
+        $data = $transactions->map(function ($transaction) {
+            return collect($transaction->course_id_amount)->map(function ($item) {
+                return [
+                    'course_id' => $item['course_id'],
+                    'amount' => $item['amount'],
+                ];
+            })->toArray();
+        })->flatten()->toArray();
+
+        $labels = [];
+        $amounts = [];
+
+        $courseTitles = Course::whereIn('course_id', $courseIds)->pluck('title', 'course_id');
+        // Iterate over each data point
+        $labels = $courseTitles->toArray();
+        $courseCounts = array_fill_keys($labels, 0);
+
+        // Iterate over each data point
+        foreach ($transactions as $transaction) {
+            // Extract course_id and amount from each transaction
+            foreach ($transaction->course_id_amount as $item) {
+                // Check if the course ID is in the $courseIds array
+                if (in_array($item['course_id'], $courseIds->toArray())) {
+                    // Increment the count for the corresponding course title
+                    $courseCounts[$courseTitles[$item['course_id']]]++;
+                }
+            }
+        }
+
+        // If a course doesn't appear in any transaction, its count will remain 0
+        $courseCounts = array_values($courseCounts);
+        $courseTitles = $instructor->courses->pluck('title');
+        $totalEarnings = 0;
+        foreach ($courseIds as $courseId) {
+            // Retrieve total earnings for each course ID
+            $earnings = Instructor_wallet::where('course_id', $courseId)->where('amount', '>=', 0)->sum('amount');
+
+            // Store the total earnings for the current course ID
+            $totalEarnings += $earnings;
+        }
+
+        $totalEarningsFormatted = '₱ ' . number_format($totalEarnings, 2, '.', ',');
+        $totalCourses = count($courseTitles);
+
+        $totalStudents = array_sum($courseCounts);
+
+
+        return view('instructor.dashboard', compact('instructor', 'courses', 'name', 'user', 'instructor_info', 'amounts', 'labels', 'courseIds', 'courseCounts', 'courseTitles', 'totalEarningsFormatted', 'totalCourses', 'reviews', 'totalStudents'));
     }
 
     public function profile(Request $request)
