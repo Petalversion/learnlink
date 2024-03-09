@@ -32,6 +32,9 @@ use App\Models\Instructor;
 */
 //Public
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/about-us', [IndexController::class, 'showAboutUsPage'])->name('about.us');
+Route::get('/become-an-instructor', [IndexController::class, 'showInstructorPage'])->name('become.instructor');
+Route::get('/contact-us', [IndexController::class, 'showContactUsPage'])->name('contact.us');
 Route::get('/course/{course_id}/details', [CourseController::class, 'details'])->name('course_details');
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
@@ -41,7 +44,7 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 
 // Instructor Registration
 Route::get('/instructor/register', [InstructorController::class, 'showRegistrationForm'])->name('instructor.register');
-Route::get('/become-an-instructor', [IndexController::class, 'showInstructorPage'])->name('become.instructor');
+
 Route::post('/instructor/register', [InstructorController::class, 'register']);
 Route::post('/instructor/register', [InstructorController::class, 'store']);
 

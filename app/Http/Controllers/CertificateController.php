@@ -57,11 +57,14 @@ class CertificateController extends Controller
                 $score->save();
 
                 if ($percentage >= 75) {
-                    $certificate = new Certificate();
-                    $certificate->course_id = $course_id;
-                    $certificate->result_id = $score->result_id;
-                    $certificate->student_id = $student;
-                    $certificate->save();
+                    $cert = Certificate::where('student_id', $student)->where('course_id', $course_id)->first();
+                    if (!$cert) {
+                        $certificate = new Certificate();
+                        $certificate->course_id = $course_id;
+                        $certificate->result_id = $score->result_id;
+                        $certificate->student_id = $student;
+                        $certificate->save();
+                    }
                 }
             } else {
                 $score->attempt = 1;
@@ -71,11 +74,14 @@ class CertificateController extends Controller
                 $score->save();
 
                 if ($percentage >= 75) {
-                    $certificate = new Certificate();
-                    $certificate->course_id = $course_id;
-                    $certificate->result_id = $score->result_id;
-                    $certificate->student_id = $student;
-                    $certificate->save();
+                    $cert = Certificate::where('student_id', $student)->where('course_id', $course_id)->first();
+                    if (!$cert) {
+                        $certificate = new Certificate();
+                        $certificate->course_id = $course_id;
+                        $certificate->result_id = $score->result_id;
+                        $certificate->student_id = $student;
+                        $certificate->save();
+                    }
                 }
             }
             return redirect()->back();
@@ -90,11 +96,14 @@ class CertificateController extends Controller
             $score->save();
 
             if ($percentage >= 75) {
-                $certificate = new Certificate();
-                $certificate->course_id = $course_id;
-                $certificate->result_id = $result_id;
-                $certificate->student_id = $student;
-                $certificate->save();
+                $cert = Certificate::where('student_id', $student)->where('course_id', $course_id)->first();
+                if (!$cert) {
+                    $certificate = new Certificate();
+                    $certificate->course_id = $course_id;
+                    $certificate->result_id = $score->result_id;
+                    $certificate->student_id = $student;
+                    $certificate->save();
+                }
             }
 
             return redirect()->back();

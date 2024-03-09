@@ -124,10 +124,7 @@
     <div class="nk-header-table">
       <div class="nk-header-table-cell">
         <div class="container">
-
           <h2 class="nk-subtitle text-white">LearnLink</h2>
-
-
           <h1 class="nk-title display-3 text-white">We are about to change the way
             <br>
             <em class="fw-400">you publish on the web</em>

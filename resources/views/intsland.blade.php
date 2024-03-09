@@ -315,7 +315,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i%7cWork+Sans:400,500,700" rel="stylesheet" type="text/css">
 
-  <link rel="stylesheet" href="/css/combined.css">
+  <link rel="stylesheet" href="/css/landing_combined.css">
   <link rel="stylesheet" href="/css/landing.css">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -342,16 +342,16 @@
         <div class="container">
 
 
-          <h2 class="nk-subtitle text-white">Come Teach with Us</h2>
+          <h2 class="nk-subtitle text-white" style="text-align:left;">Come Teach with Us</h2>
 
 
-          <h1 class="nk-title display-3 text-white">Become an Instructor and change the world
+          <h1 class="nk-title display-3 text-white" style="text-align:left;">Become an Instructor and change the world
             <br>
             <em class="fw-400"></em>
           </h1>
 
           <div class="nk-gap"></div>
-          <div class="nk-header-text text-white">
+          <div class="nk-header-text text-white" style="text-align:left;">
             <!-- <div class="nk-gap-4"></div> -->
             <a href="{{route('instructor.register')}}" class="btn btn-info btn-lg">Get Started</a>
           </div>

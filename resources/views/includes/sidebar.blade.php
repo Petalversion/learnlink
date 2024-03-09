@@ -165,7 +165,7 @@
     <!-- Main Content -->
     <div id="content">
       <!-- Topbar -->
-      <div class="navbar-wrapper w-100" style="z-index: 999;">
+      <div class="navbar-wrapper position-fixed w-100" style="z-index: 999;">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
