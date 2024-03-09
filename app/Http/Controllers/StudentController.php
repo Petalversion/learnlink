@@ -135,27 +135,33 @@ class StudentController extends Controller
     {
 
         $course = Course::where('course_id', $course_id)->first();
-        $lesson = Lesson::where('lesson_id', $lesson_id)->first();
-        $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
-        $user = Auth::user();
-        $user_info = Student_info::where('student_id', $user->student_id)->first();
-        $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
-        $name = Auth::user()->name;
+        if ($course) {
+            $lesson = Lesson::where('lesson_id', $lesson_id)->first();
+            if ($lesson) {
+                $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
+                $user = Auth::user();
+                $user_info = Student_info::where('student_id', $user->student_id)->first();
+                $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
+                $name = Auth::user()->name;
 
-        $student = Student::get();
-        $student_info = Student_info::get();
-        $student_comment = Questions::where('lesson_id', $lesson->lesson_id)->get();
-        $instructor_comment = Answers::where('comment_id', $lesson->lesson_id)->get();
-        $course_reviews = Reviews::where('course_id', $course_id)->whereNotIn('student_id', [$user->student_id])->get();
-        $student_review = Reviews::where('course_id', $course_id)->where('student_id', $user->student_id)->first();
+                $student = Student::get();
+                $student_info = Student_info::get();
+                $student_comment = Questions::where('lesson_id', $lesson->lesson_id)->get();
+                $instructor_comment = Answers::where('comment_id', $lesson->lesson_id)->get();
+                $course_reviews = Reviews::where('course_id', $course_id)->whereNotIn('student_id', [$user->student_id])->get();
+                $student_review = Reviews::where('course_id', $course_id)->where('student_id', $user->student_id)->first();
 
 
 
-        if (!$course) {
-            return redirect()->route('student.profile')->with('error', 'Course not found.');
+                if (!$course) {
+                    return redirect()->route('student.profile')->with('error', 'Course not found.');
+                }
+
+                return view('student.learn', compact('course', 'lesson', 'cart', 'name', 'user_info', 'student_comment', 'instructor_comment', 'user', 'course_reviews', 'student_review'));
+            }
+            return redirect()->route('student.courses');
         }
-
-        return view('student.learn', compact('course', 'lesson', 'cart', 'name', 'user_info', 'student_comment', 'instructor_comment', 'user', 'course_reviews', 'student_review'));
+        return redirect()->route('student.courses');
     }
 
     // Handle the login request
@@ -189,59 +195,64 @@ class StudentController extends Controller
         $user = Auth::user();
         $user_info = Student_info::where('student_id', $user->student_id)->first();
 
-        // Initialize an empty array to hold the formatted questions
-        $formattedQuestions = [];
+        if ($questions) {
 
-        foreach ($questions as $question) {
-            // Format each question into the desired structure
-            $options = $question->choices;
+            // Initialize an empty array to hold the formatted questions
+            $formattedQuestions = [];
 
-            $formattedQuestion = [
-                'numb' => $question->id, // Assuming 'id' is the primary key of the questions table
-                'question' => $question->question, // Assuming 'question_text' is the column containing the question text
-                'answer' => $question->answer, // Assuming 'correct_answer' is the column containing the correct answer
-                'options' => $question->choices
-            ];
+            foreach ($questions as $question) {
+                // Format each question into the desired structure
+                $options = $question->choices;
 
-            // Add the formatted question to the array
-            $formattedQuestions[] = $formattedQuestion;
-        }
+                $formattedQuestion = [
+                    'numb' => $question->id, // Assuming 'id' is the primary key of the questions table
+                    'question' => $question->question, // Assuming 'question_text' is the column containing the question text
+                    'answer' => $question->answer, // Assuming 'correct_answer' is the column containing the correct answer
+                    'options' => $question->choices
+                ];
 
-        // Convert the formatted questions array to JSON
-        $jsonFormattedQuestions = json_encode($formattedQuestions);
-
-        // Get only the courses created by the current instructor
-        $exams = Exam::where('course_id', $course_id)->get();
-        $count = Exam::where('course_id', $course_id)->count();
-        $header = Course::where('course_id', $course_id)->get();
-        $courses = Course::where('course_id', $course_id)->first();
-        $coursex = $courses->course_id;
-        $attempts = QuizAttemptCounter::where('student_id', $user->student_id)->where('course_id', $coursex)->first();
-        $remainingTime = '';
-        $attempt = '';
-        if ($attempts) {
-            $attempt = $attempts->attempt;
-            $attempttimer = Carbon::parse($attempts->updated_at);
-            // Get the current time
-            $currentDateTime = Carbon::now();
-
-            // Calculate the difference in minutes
-            $timeDifferenceInMinutes = $currentDateTime->diffInMinutes($attempttimer);
-
-            // Calculate remaining hours and minutes until 24 hours
-            $hoursRemaining = floor((24 * 60 - $timeDifferenceInMinutes) / 60); // Convert remaining minutes to hours
-            $minutesRemaining = (24 * 60 - $timeDifferenceInMinutes) % 60;
-
-            $remainingTime = '';
-            if ($hoursRemaining > 0) {
-                $remainingTime .= $hoursRemaining . ' hour' . ($hoursRemaining > 1 ? 's' : '');
+                // Add the formatted question to the array
+                $formattedQuestions[] = $formattedQuestion;
             }
-            if ($minutesRemaining > 0) {
-                $remainingTime .= ($hoursRemaining > 0 ? ' and ' : '') . $minutesRemaining . ' minute' . ($minutesRemaining > 1 ? 's' : '');
+
+            // Convert the formatted questions array to JSON
+            $jsonFormattedQuestions = json_encode($formattedQuestions);
+
+            // Get only the courses created by the current instructor
+            $exams = Exam::where('course_id', $course_id)->get();
+            $count = Exam::where('course_id', $course_id)->count();
+            $header = Course::where('course_id', $course_id)->get();
+            $courses = Course::where('course_id', $course_id)->first();
+            if ($courses) {
+                $coursex = $courses->course_id;
+                $attempts = QuizAttemptCounter::where('student_id', $user->student_id)->where('course_id', $coursex)->first();
+                $remainingTime = '';
+                $attempt = '';
+                if ($attempts) {
+                    $attempt = $attempts->attempt;
+                    $attempttimer = Carbon::parse($attempts->updated_at);
+                    // Get the current time
+                    $currentDateTime = Carbon::now();
+
+                    // Calculate the difference in minutes
+                    $timeDifferenceInMinutes = $currentDateTime->diffInMinutes($attempttimer);
+
+                    // Calculate remaining hours and minutes until 24 hours
+                    $hoursRemaining = floor((24 * 60 - $timeDifferenceInMinutes) / 60); // Convert remaining minutes to hours
+                    $minutesRemaining = (24 * 60 - $timeDifferenceInMinutes) % 60;
+
+                    $remainingTime = '';
+                    if ($hoursRemaining > 0) {
+                        $remainingTime .= $hoursRemaining . ' hour' . ($hoursRemaining > 1 ? 's' : '');
+                    }
+                    if ($minutesRemaining > 0) {
+                        $remainingTime .= ($hoursRemaining > 0 ? ' and ' : '') . $minutesRemaining . ' minute' . ($minutesRemaining > 1 ? 's' : '');
+                    }
+                }
+                return view('student.examination', compact('exams', 'count', 'jsonFormattedQuestions', 'header', 'name', 'user_info', 'coursex', 'remainingTime', 'attempt'));
             }
         }
-
-        return view('student.examination', compact('exams', 'count', 'jsonFormattedQuestions', 'header', 'name', 'user_info', 'coursex', 'remainingTime', 'attempt'));
+        return redirect()->route('student.courses');
     }
 
 

@@ -138,7 +138,7 @@ class CourseController extends Controller
         $status = Auth::guard('instructor')->user()->status;
         $instructor_id = Auth::guard('instructor')->user()->instructor_id;
         if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+            return redirect()->route('instructor.profile');
         } else {
 
 

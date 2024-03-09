@@ -29,12 +29,15 @@ class CertificateController extends Controller
         $name = Auth::guard('student')->user()->name;
         $student = Auth::guard('student')->user()->student_id;
         $course = Course::where('course_id', $course_id)->first();
-        $courseName = $course->title;
         $certificate = Certificate::where('course_id', $course_id)->where('student_id', $student)->first();
-        $date = $certificate->created_at;
-        $Instructor = $course->instructor->name;
-        $cid = $certificate->result_id;
-        return view('cc', compact('name', 'courseName', 'date', 'Instructor', 'cid'));
+        if ($certificate) {
+            $courseName = $course->title;
+            $date = $certificate->created_at;
+            $Instructor = $course->instructor->name;
+            $cid = $certificate->result_id;
+            return view('cc', compact('name', 'courseName', 'date', 'Instructor', 'cid'));
+        }
+        return redirect()->route('student.certificates');
     }
 
     public function examAttempt(Request $request)

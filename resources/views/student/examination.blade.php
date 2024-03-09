@@ -86,7 +86,7 @@
     @endif
     <div class="sticky-bottom text-end">
         <div class="position-fixed bottom-0 end-0 m-3">
-            <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-journal-bookmark-fill me-3"></i>Lessons</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bi bi-journal-bookmark-fill me-3"></i>Lessons</button>
         </div>
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -99,15 +99,15 @@
                     <hr>
                     @foreach($course->lessons as $lessons)
 
-                    <a href="{{ route('student.learn', ['course_id' => $course->course_id, 'lesson_id' => $lessons->lesson_id]) }}">Lesson
+                    <a class="btn btn-secondary text-start" href="{{ route('student.learn', ['course_id' => $course->course_id, 'lesson_id' => $lessons->lesson_id]) }}"><i class="fa-solid fa-book"></i> Lesson
                         {{$loop->iteration}}:</a>
 
-                    <div class="panel">
+                    <div class="panel mt-2 ml-1">
                         <p>{{$lessons->title}}</p>
                     </div>
                     @endforeach
 
-                    <a href="{{ route('student.examination', ['course_id' => $course->course_id]) }}">Take the Quiz!</a>
+                    <a class="btn btn-success text-start" href="{{ route('student.examination', ['course_id' => $course->course_id]) }}"><i class="fa-solid fa-pencil"></i> Take the Quiz!</a>
                 </ul>
             </div>
         </div>
