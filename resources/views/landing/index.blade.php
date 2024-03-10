@@ -576,20 +576,16 @@
 
   <!-- Become an Instructor -->
   <div class="bg-img">
-    <div class="row">
-      <div class="col-md-6 col-sm-12 d-flex align-items-center">
-        <img src="/img/hihi.png" alt="" width="70%" class="d-block">
-      </div>
-      <div class="col-md-6 col-sm-12 d-flex align-items-center">
-        <div class="text-center" style="align-items: center; width: 80%; text-align: center;">
-          <h1 class="text-white" style="color:#31dcfe; margin-bottom: 30px;">Become an Instructor</h1>
-          <p class="text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam voluptas
-            minima dolorem laboriosam eveniet itaque modi quis vitae perferendis, praesentium quas culpa
-            facilis omnis animi temporibus quae ullam amet unde.</p>
-          <a href="{{ route('become.instructor') }}" class="btn custom-btn">Start Now</a>
-        </div>
+
+    <div class="col-lg-6">
+      <div class="text-center">
+        <h1 class="text-white" style="color:#31dcfe; margin-bottom: 30px;">Come Teach with Us</h1>
+        <p class="text-white">
+          Teaching is not just a profession; it's a calling. It's about inspiring minds, empowering individuals, and shaping the future. Whether you're an expert in technology, art, business, or any other domain, there are countless learners eager to benefit from your wisdom..</p>
+        <a href="{{ route('become.instructor') }}" class="btn custom-btn">Learn More</a>
       </div>
     </div>
+
   </div>
 </div>
 @endsection

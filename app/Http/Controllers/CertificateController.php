@@ -31,6 +31,10 @@ class CertificateController extends Controller
         $course = Course::where('course_id', $course_id)->first();
         $certificate = Certificate::where('course_id', $course_id)->where('student_id', $student)->first();
         if ($certificate) {
+            $course69 = Course::where('course_id', $certificate->course_id)->where('free', 1)->first();
+            if ($course69) {
+                return redirect()->route('student.certificates');
+            }
             $courseName = $course->title;
             $date = $certificate->created_at;
             $Instructor = $course->instructor->name;

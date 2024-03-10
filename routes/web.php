@@ -64,7 +64,8 @@ Route::post('/login', [StudentController::class, 'login'])->name('student.login'
 //Terms
 Route::get('/terms-and-conditions', [InstructorController::class, 'show'])->name('terms.show');
 
-//Payment
+//Search
+Route::get('/search', [IndexController::class, 'search'])->name('search');
 
 
 Route::middleware('auth:admin')->group(function () {

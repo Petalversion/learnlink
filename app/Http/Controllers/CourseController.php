@@ -148,7 +148,7 @@ class CourseController extends Controller
                 $lessons = count($course->lessons);
                 $quizzes = count($course->quiz);
 
-                if ($lessons == 0 || $quizzes == 0) {
+                if ($lessons == 0 || $quizzes < 25) {
                     $combo = 0;
                 } else {
                     $combo = 1;
@@ -197,7 +197,7 @@ class CourseController extends Controller
                 $lessons = count($course->lessons);
                 $quizzes = count($course->quiz);
 
-                if ($lessons == 0 || $quizzes == 0) {
+                if ($lessons == 0 || $quizzes < 25) {
                     $combo = 0;
                 } else {
                     $combo = 1;

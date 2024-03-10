@@ -10083,7 +10083,7 @@ body {
 
 
 .bg-img {
-    background-image: url('/img/bg-pattern.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.589), rgba(0, 0, 0, 0.589)), url('/img/woman_banner.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -10261,4 +10261,24 @@ body {
     /* Hide any overflowing content */
     text-overflow: ellipsis;
     /* Display an ellipsis (...) to indicate truncated text */
+}
+
+.badge-beginner {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.badge-intermediate {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.badge-expert {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.badge-lessons {
+    background-color: #808080;
+    color: #fff;
 }

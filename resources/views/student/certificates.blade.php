@@ -29,7 +29,7 @@
                             @endphp
                             @if($cert)
                             <td class="text-center">
-                                <button type="button" onclick="window.location='{{ route('certificate', ['course_id' => $certificate->course_id]) }}'" class=" badge badge-pill badge-success"><i class="fa-solid fa-award"></i></button>
+                                <button type="button" onclick="window.open('{{ route('certificate', ['course_id' => $certificate->course_id]) }}', '_blank')" class="badge badge-pill badge-success"><i class="fa-solid fa-award"></i></button>
                             </td>
                             @else
                             <td></td>

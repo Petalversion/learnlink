@@ -95,74 +95,77 @@
                         <a href="{{ route('instructor.lesson.lesson-create', ['course_id' => $course->id]) }}" class="btn btn-primary btn-icon-split p-0"><span class="icon text-white-50"><i class="fas fa-plus"></i></span><span class="text">Lessons</span></a>
                     </div>
                     <div class="mt-4">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="myTable12345">
-                                <thead>
-                                    <tr>
-                                        <th class="text-right">No.</th>
-                                        <th class="text-center">Title</th>
-                                        <th class="text-center">Questions</th>
-                                        <th class="text-center">Attachments</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($course->lessons as $lesson)
-                                    <tr>
-                                        <td class="text-right">{{ $loop->iteration }}.</td>
-                                        <td> {{$lesson->title}} </td>
-                                        <td class="text-center"> <a href="{{ route('instructor.course.questions', ['lesson_id' => $lesson->id])}}" class="btn btn-success">
-                                                <i class="fa-solid fa-comments text-white"></i>
-                                            </a> </td>
-                                        <td class="text-left">
-                                            @if (!empty($lesson->uploadedFiles))
-                                            @foreach ($lesson->uploadedFiles as $file)
-                                            @if (is_array($file) && isset($file['name']))
-                                            {{ htmlspecialchars($file['name']) }}<br>
-                                            @endif
-                                            @endforeach
-                                            @else
-                                            No files uploaded
-                                            @endif
+                        @if(count($course->lessons) < 5) <p>You need to have atleast <strong>5 Lessons</strong> to Publish your Course!</p>
+                            <p>You need <strong>{{5-(count($course->lessons))}}</strong> more to publish your Course! Keep Going!</p>
+                            @endif
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="myTable12345">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-right">No.</th>
+                                            <th class="text-center">Title</th>
+                                            <th class="text-center">Questions</th>
+                                            <th class="text-center">Attachments</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($course->lessons as $lesson)
+                                        <tr>
+                                            <td class="text-right">{{ $loop->iteration }}.</td>
+                                            <td> {{$lesson->title}} </td>
+                                            <td class="text-center"> <a href="{{ route('instructor.course.questions', ['lesson_id' => $lesson->id])}}" class="btn btn-success">
+                                                    <i class="fa-solid fa-comments text-white"></i>
+                                                </a> </td>
+                                            <td class="text-left">
+                                                @if (!empty($lesson->uploadedFiles))
+                                                @foreach ($lesson->uploadedFiles as $file)
+                                                @if (is_array($file) && isset($file['name']))
+                                                {{ htmlspecialchars($file['name']) }}<br>
+                                                @endif
+                                                @endforeach
+                                                @else
+                                                No files uploaded
+                                                @endif
 
-                                        </td>
-                                        <td class="text-center">
-                                            <!-- Edit Link -->
-                                            <a href="{{ route('instructor.lesson.lesson-edit', ['lesson_id' => $lesson->id]) }}" class="btn btn-primary">
-                                                <i class="fas fa-edit fa-sm"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLessonModal{{$lesson->id}} ">
-                                                <i class="fas fa-trash fa-sm"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <div class="modal fade" id="deleteLessonModal{{$lesson->id}}" tabindex="-1" aria-labelledby="deleteLessonModal{{$lesson->id}}" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <form action=" {{route('instructor.lesson.lesson-destroy', ['lesson_id' => $lesson->id])}}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
+                                            </td>
+                                            <td class="text-center">
+                                                <!-- Edit Link -->
+                                                <a href="{{ route('instructor.lesson.lesson-edit', ['lesson_id' => $lesson->id]) }}" class="btn btn-primary">
+                                                    <i class="fas fa-edit fa-sm"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLessonModal{{$lesson->id}} ">
+                                                    <i class="fas fa-trash fa-sm"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <div class="modal fade" id="deleteLessonModal{{$lesson->id}}" tabindex="-1" aria-labelledby="deleteLessonModal{{$lesson->id}}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form action=" {{route('instructor.lesson.lesson-destroy', ['lesson_id' => $lesson->id])}}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
 
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteQuizLabel{{$lesson->id}}">Delete Lesson</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Are you sure you want to delete this Lesson
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </div>
-                                                </form>
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteQuizLabel{{$lesson->id}}">Delete Lesson</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure you want to delete this Lesson
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -185,71 +188,74 @@
                             </span><span class="text">Questions</span></a>
                     </div>
                     <div class="mt-4">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="myTable123456">
-                                <thead>
-                                    <tr>
-                                        <th class="text-right">No.</th>
-                                        <th class="text-center">Question</th>
-                                        <th class="text-center">Type</th>
-                                        <th class="text-center">Answer</th>
-                                        <th class="text-center">Choices</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($course->quiz as $question)
-                                    <tr>
-                                        <td class="text-right">{{ $loop->iteration }}.</td>
-                                        <td> {{$question->question}} </td>
-                                        <td> {{$question->type}} </td>
-                                        <td> {{$question->answer}} </td>
-                                        <td>
-                                            @foreach ($question->choices as $choice)
-                                            {{ $choice }}<br>
-                                            @endforeach
-                                        </td>
-                                        <td class="text-center">
-                                            <!-- Edit Link -->
-                                            <a href="{{ route('instructor.exam.question-edit', ['exam_id' => $question->id]) }}" class="btn btn-primary">
-                                                <i class="fas fa-edit fa-sm"></i>
-                                            </a>
-                                            <!-- View Link -->
+                        @if(count($course->quiz) < 25) <p>You need to have at least <strong>25 Questions</strong> to Publish your Course!</p>
+                            <p>You need <strong>{{25-(count($course->quiz))}}</strong> more to publish your Course! Keep Going!</p>
+                            @endif
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="myTable123456">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-right">No.</th>
+                                            <th class="text-center">Question</th>
+                                            <th class="text-center">Type</th>
+                                            <th class="text-center">Answer</th>
+                                            <th class="text-center">Choices</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($course->quiz as $question)
+                                        <tr>
+                                            <td class="text-right">{{ $loop->iteration }}.</td>
+                                            <td> {{$question->question}} </td>
+                                            <td> {{$question->type}} </td>
+                                            <td> {{$question->answer}} </td>
+                                            <td>
+                                                @foreach ($question->choices as $choice)
+                                                {{ $choice }}<br>
+                                                @endforeach
+                                            </td>
+                                            <td class="text-center">
+                                                <!-- Edit Link -->
+                                                <a href="{{ route('instructor.exam.question-edit', ['exam_id' => $question->id]) }}" class="btn btn-primary">
+                                                    <i class="fas fa-edit fa-sm"></i>
+                                                </a>
+                                                <!-- View Link -->
 
-                                            <!-- Delete Button -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteQuizModal{{$question->id}}">
-                                                <i class="fas fa-trash fa-sm"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <div class="modal fade" id="deleteQuizModal{{$question->id}}" tabindex="-1" aria-labelledby="deleteQuizModalLabel{{$question->id}}" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <form action=" {{route('instructor.exam.question-destroy', ['exam_id' => $question->id])}}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
+                                                <!-- Delete Button -->
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteQuizModal{{$question->id}}">
+                                                    <i class="fas fa-trash fa-sm"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <div class="modal fade" id="deleteQuizModal{{$question->id}}" tabindex="-1" aria-labelledby="deleteQuizModalLabel{{$question->id}}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form action=" {{route('instructor.exam.question-destroy', ['exam_id' => $question->id])}}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
 
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteQuizLabel{{$question->id}}">
-                                                            Delete Question</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Are you sure you want to delete this Question
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </div>
-                                                </form>
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteQuizLabel{{$question->id}}">
+                                                                Delete Question</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure you want to delete this Question
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                     </div>
                 </div>
             </div>

@@ -8,9 +8,10 @@
                     <img src="/img/blcck.png" alt="" width="85">
                 </a>
 
-                <form action="/search" method="get" class="scc">
-                    <input class="search" id="searchleft" type="search" name="q" placeholder="Search Category">
+                <form action="{{ route('search') }}" method="get" class="scc">
+                    <input class="search" id="searchleft" type="search" name="search" placeholder="Search Courses">
                     <label style="color: #31dcfe;" class="button searchbutton" for="searchleft"><span class="mglass">&#9906;</span></label>
+                    <input type="submit" style="display: none;">
                 </form>
 
                 <ul class="nk-nav nk-nav-right hidden-md-down" data-nav-mobile="#nk-nav-mobile">

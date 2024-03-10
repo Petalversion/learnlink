@@ -82,4 +82,60 @@ class IndexController extends Controller
 
         return view('contact', compact('cart', 'user_info', 'instructor_info'));
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        if ($search == '' || ctype_space($search)) {
+            return redirect()->route('index');
+        }
+
+        if ($search) {
+            $dataQuery = Course::where('title', 'LIKE', "%{$search}%")
+                ->where('status', 'publish');
+
+            if ($request->has('free')) {
+                $dataQuery->where('free', 1);
+            }
+
+            if ($request->has('paid')) {
+                $dataQuery->where('paid', 1);
+            }
+
+            if ($request->has('beginner')) {
+                $dataQuery->where('difficulty', 'beginner');
+            }
+
+            if ($request->has('intermediate')) {
+                $dataQuery->where('difficulty', 'intermediate');
+            }
+
+            if ($request->has('expert')) {
+                $dataQuery->where('difficulty', 'expert');
+            }
+
+            $data = $dataQuery->get();
+        }
+
+
+        $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
+        $user_info = Student_info::where('student_id', $userId)->first();
+        $InstrId = Auth::guard('instructor')->user() ? Auth::guard('instructor')->user()->instructor_id : null;
+        $instructor_info = Instructor_info::where('instructor_id', $InstrId)->first();
+        $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
+
+        $reviewsData = Reviews::select('course_id', \DB::raw('AVG(score) as average_score'), \DB::raw('COUNT(*) as reviewer_count'))
+            ->groupBy('course_id')
+            ->get();
+
+        $coursesWithReviewsData = $data->map(function ($course) use ($reviewsData) {
+            $reviewData = $reviewsData->where('course_id', $course->course_id)->first();
+            $course->average_score = $reviewData ? $reviewData->average_score : 0;
+            $course->reviewer_count = $reviewData ? $reviewData->reviewer_count : 0;
+            return $course;
+        });
+
+        return view('search', compact('data', 'cart', 'user_info', 'instructor_info', 'coursesWithReviewsData', 'search'));
+    }
 }

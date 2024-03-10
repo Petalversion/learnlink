@@ -62,7 +62,7 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="{{route('student.profile')}}">
                 <span class="mr-2 d-none d-lg-inline text-gray-800 small">{{$name}}</span>
                 @if(isset($user_info) && $user_info->profile_picture)
                 <img class="img-profile rounded-circle" src="{{ asset('storage/' . $user_info->profile_picture) }}">
@@ -72,12 +72,7 @@
                 @endif
               </a>
               <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="{{route('student.profile')}}">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-              </div>
+
             </li>
         </nav>
       </div>
@@ -283,7 +278,7 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="{{route('instructor.profile')}}">
                 <span class="mr-2 d-none d-lg-inline text-gray-800 small">{{$name}}</span>
                 @if(isset($instructor_info) && $instructor_info->profile_picture)
                 <img class="img-profile rounded-circle" src="{{ asset('storage/' . $instructor_info->profile_picture) }}">
@@ -293,12 +288,6 @@
                 @endif
               </a>
               <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="{{route('instructor.profile')}}">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-              </div>
             </li>
         </nav>
       </div>

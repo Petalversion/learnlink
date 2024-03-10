@@ -116,7 +116,7 @@
 <body>
 
   <div class="border">
-    <div class="content">
+    <div class="content" id="certificate">
       <div class="inner-content">
         <div class="logo ">
           <img src="/img/blcck.png" alt="" width="140">
@@ -141,8 +141,25 @@
         </div>
       </div>
     </div>
-
   </div>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+  <script>
+    html2canvas(document.querySelector("#certificate")).then(canvas => {
+      // Convert canvas to data URL
+      var imgData = canvas.toDataURL('image/png');
+
+      // Create a link element
+      var link = document.createElement('a');
+      link.download = 'certificate.png'; // Set the download attribute
+      link.href = imgData; // Set the href attribute to the data URL
+
+      // Trigger a click event on the link to initiate the download
+      link.click();
+    });
+  </script>
 </body>
+
+
 
 </html>

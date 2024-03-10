@@ -27,7 +27,7 @@
                         <p>No Reviews Yet</p>
                         @endif
                 </div>
-                <p class="lead" style="text-align: left;">Created By: {{ $course_check->instructor->name }}
+                <p class="lead" style="text-align: left;">Created By: <a href="#" onclick="scrollAboveDiv('instwaktor')">{{ $course_check->instructor->name }}</a>
                 </p>
             </div>
         </div>
@@ -126,7 +126,7 @@
                 <h2 class="display-2" style="font-size: 30px; margin-top: 5%;">Description</h2>
                 {!! $course_check->description !!}
             </div>
-            <div class="container">
+            <div class="container" id="instwaktor">
                 <div class="row" style="margin-top: 5%;">
                     <div class="col-sm-12 col-md-2 col-lg-3">
                         <img class="profile-picture-2" src="{{ asset('storage/' . $course_check->instructor_info->profile_picture) }}" alt="...">
@@ -204,3 +204,19 @@
     @endforeach
 </div>
 @endif
+<script>
+    function scrollAboveDiv(id, event) {
+        event.preventDefault();
+        var element = document.getElementById(id);
+        if (element) {
+            var offset = -50; // Adjust this value as needed
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+                inline: 'nearest'
+            });
+            window.scrollBy(0, offset);
+        }
+    }
+</script>
+@endsection
