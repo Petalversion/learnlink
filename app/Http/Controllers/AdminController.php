@@ -10,6 +10,7 @@ use App\Models\Reviews;
 use App\Models\Student;
 use App\Models\Exam;
 use App\Models\Instructor;
+use App\Models\toc;
 use App\Models\Instructor_wallet;
 use App\Models\Transactions;
 use Illuminate\Support\Facades\Hash;
@@ -240,5 +241,30 @@ class AdminController extends Controller
         return view('admin.withdrawal-request', compact('name', 'transactions', 'withdrawalRequest', 'pendingInstructor'));
     }
 
+    public function toc(Request $request)
+    {
+        $name = Auth::user()->name;
+        $user = Auth::user();
+        $toc = toc::first();
+        $transactions = Transactions::whereNotNull('total_amount')->get();
+        $pendingInstructor = Instructor::where('status', 'pending')->count();
+        $withdrawalRequest = Instructor_wallet::where('amount', '<', 0)->whereNull('reference_id')->count();
+
+        return view('admin.terms', compact('name', 'transactions', 'withdrawalRequest', 'pendingInstructor', 'toc'));
+    }
+
+    public function tocUpdate(Request $request)
+    {
+        $name = Auth::user()->name;
+
+        $request->validate([
+            'toc' => 'required',
+        ]);
+        $toc = toc::first();
+        $toc->content = $request->input('toc');
+        $toc->save();
+
+        return redirect()->route('toc', compact('name'))->with('success', 'Information updated successfully.');
+    }
     // Define other admin-specific actions or methods as needed
 }

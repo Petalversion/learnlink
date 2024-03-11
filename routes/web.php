@@ -35,8 +35,12 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/about-us', [IndexController::class, 'showAboutUsPage'])->name('about.us');
 Route::get('/become-an-instructor', [IndexController::class, 'showInstructorPage'])->name('become.instructor');
 Route::get('/contact-us', [IndexController::class, 'showContactUsPage'])->name('contact.us');
+Route::post('/contact-us', [IndexController::class, 'sendContactUsPage'])->name('contact.send');
 Route::get('/course/{course_id}/details', [CourseController::class, 'details'])->name('course_details');
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::get('/terms-and-condition', [IndexController::class, 'showTCPage'])->name('terms.condition');
+
+
 
 // Admin Login
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
@@ -44,7 +48,6 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 
 // Instructor Registration
 Route::get('/instructor/register', [InstructorController::class, 'showRegistrationForm'])->name('instructor.register');
-
 Route::post('/instructor/register', [InstructorController::class, 'register']);
 Route::post('/instructor/register', [InstructorController::class, 'store']);
 
@@ -61,12 +64,8 @@ Route::post('/student/register', [StudentController::class, 'store']);
 Route::get('/login', [StudentController::class, 'showLoginForm'])->name('student.login');
 Route::post('/login', [StudentController::class, 'login'])->name('student.login');
 
-//Terms
-Route::get('/terms-and-conditions', [InstructorController::class, 'show'])->name('terms.show');
-
 //Search
 Route::get('/search', [IndexController::class, 'search'])->name('search');
-
 
 Route::middleware('auth:admin')->group(function () {
     // Admin Pages
@@ -85,6 +84,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/users/new-admin', [AdminController::class, 'showRegistrationForm'])->name('admin.register');
     Route::post('/admin/users/new-admin', [AdminController::class, 'register']);
     Route::post('/admin/users/new-admin', [AdminController::class, 'store']);
+    Route::get('/admin/toc', [AdminController::class, 'toc'])->name('toc');
+    Route::put('/admin/toc/update', [AdminController::class, 'tocUpdate'])->name('toc.update');
 });
 
 Route::middleware('auth:instructor')->group(function () {

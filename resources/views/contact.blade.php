@@ -72,33 +72,41 @@
     <div class="nk-header-table">
       <div class="nk-header-table-cell">
         <div class="container">
-          <h2 class="nk-subtitle text-white" style="font-size: 50px; margin-bottom: 160px;text-align:left;">Reach Us</h2>
+          <h2 class="nk-subtitle text-white" style="font-size: 50px; margin-bottom: 160px;text-align:left;">Contact Us</h2>
         </div>
       </div>
     </div>
   </div>
   <!-- END: Header Title -->
 
-  <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+  <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height:700px;">
     <div class="row mb-30">
+      @if(session('success'))
+      <div class="alert alert-success">
+        {{ session('success') }}
+      </div>
+      @endif
       <div class="col-md-12 col-sm-12 col-lg-6 order-2 order-md-1 order-lg-1 d-flex flex-column justify-content-center align-items-center">
         <div class="content">
           <p style="font-size: 20px; margin-left: 30px;margin-bottom: 30px; margin-top: 20px;">Have questions? The quickest way
             to get in touch with us is using the contact information below.</p>
-          <div class="row">
-            <div class="col-12 px-5 pb-3">
-              <input type="text" name="" class="form-control" placeholder="Full Name">
+          <form action="{{ route('contact.send') }}" method="post">
+            @csrf
+            <div class="row">
+              <div class="col-12 px-5 pb-3">
+                <input type="text" name="name" class="form-control" placeholder="Full Name">
+              </div>
+              <div class="col-12 px-5 pb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email">
+              </div>
+              <div class="col-12 px-5 pb-3">
+                <textarea class="form-control" name="message" id="" cols="30" rows="5" placeholder="Message"></textarea>
+              </div>
+              <div class="col-12 px-5 pb-3">
+                <input type="submit" value="Send Message" class="btn btn-success">
+              </div>
             </div>
-            <div class="col-12 px-5 pb-3">
-              <input type="email" name="" class="form-control" placeholder="Email">
-            </div>
-            <div class="col-12 px-5 pb-3">
-              <textarea class="form-control" name="" id="" cols="30" rows="5" placeholder="Message"></textarea>
-            </div>
-            <div class="col-12 px-5 pb-3">
-              <input type="submit" value="Send Message" class="btn btn-success">
-            </div>
-          </div>
+          </form>
 
         </div>
 

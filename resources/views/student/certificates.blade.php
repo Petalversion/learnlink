@@ -26,11 +26,16 @@
                             </td>
                             @php
                             $cert = \App\Models\Certificate::where('student_id', $certificate->student_id)->where('course_id', $certificate->course_id)->first();
+                            $certi = \App\Models\Course::where('course_id', $certificate->course_id)->where('free', 0)->first();
                             @endphp
                             @if($cert)
+                            @if($certi)
                             <td class="text-center">
                                 <button type="button" onclick="window.open('{{ route('certificate', ['course_id' => $certificate->course_id]) }}', '_blank')" class="badge badge-pill badge-success"><i class="fa-solid fa-award"></i></button>
                             </td>
+                            @else
+                            <td></td>
+                            @endif
                             @else
                             <td></td>
                             @endif

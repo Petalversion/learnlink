@@ -26,8 +26,8 @@ class QuizController extends Controller
     public function create($course_id)
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+        if ($status == 'Pending' || $status == 'Declined') {
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $name = Auth::guard('instructor')->user()->name;
@@ -134,8 +134,8 @@ class QuizController extends Controller
     public function examEdit($exam_id)
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+        if ($status == 'Pending' || $status == 'Declined') {
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $quiz = Exam::where('id', $exam_id)->first();

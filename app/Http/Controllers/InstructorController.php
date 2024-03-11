@@ -22,7 +22,7 @@ class InstructorController extends Controller
         if (Auth::guard('instructor')->check()) {
             $status = Auth::guard('instructor')->user()->status;
             if ($status == 'Pending') {
-                redirect()->route('instructor.profile');
+                return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
             } else {
                 return redirect()->route('instructor.dashboard');
             }
@@ -92,7 +92,7 @@ class InstructorController extends Controller
         if (Auth::guard('instructor')->check()) {
             $status = Auth::guard('instructor')->user()->status;
             if ($status == 'Pending') {
-                return redirect()->route('instructor.profile');
+                return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
             } else {
                 return redirect()->route('instructor.dashboard');
             }

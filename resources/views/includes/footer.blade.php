@@ -13,7 +13,7 @@
                 <div class="nk-footer-social">
                     <ul>
                         <li><a href="{{route('about.us')}}">About us</a></li>
-                        <li><a href="#">Terms and Condition</a></li>
+                        <li><a href="{{route('terms.condition')}}">Terms and Condition</a></li>
                         <li><a href="{{route('contact.us')}}">Contact Us</a></li>
                         <li><a href="{{route('become.instructor')}}">Become an Instructor</a></li>
                     </ul>

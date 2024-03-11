@@ -5,6 +5,7 @@
 
 <!-- End of Topbar -->
 <div class="sidetoppadding">
+    <h1 class="h3 mb-3 text-gray-800"><i class="fa-solid fa-user"></i> Profile</h1>
     <!-- Page Heading -->
     <div class="card-body">
         @if(session('success'))

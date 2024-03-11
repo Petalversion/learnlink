@@ -137,7 +137,7 @@
         <p class="code" style="text-transform: uppercase;">LL{{$cid}}</p>
         <div class="icon-container">
 
-          <img src="/img/oo.png" alt="" width="180">
+          <img src="/img/oo_1.png" alt="" width="180">
         </div>
       </div>
     </div>

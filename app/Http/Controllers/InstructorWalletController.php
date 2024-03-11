@@ -15,7 +15,7 @@ class InstructorWalletController extends Controller
     {
         $status = Auth::guard('instructor')->user()->status;
         if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $name = Auth::user()->name;
@@ -46,7 +46,7 @@ class InstructorWalletController extends Controller
     {
         $status = Auth::guard('instructor')->user()->status;
         if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $name = Auth::user()->name;

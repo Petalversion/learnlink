@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Tag;
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Reviews;
+use App\Models\toc;
 use App\Models\Student_info;
+use App\Mail\ContactFormMail;
 use App\Models\Instructor_info;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -72,6 +76,19 @@ class IndexController extends Controller
 
         return view('about-us', compact('cart', 'user_info', 'instructor_info'));
     }
+
+    public function showTCPage()
+    {
+        $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
+        $user_info = Student_info::where('student_id', $userId)->first();
+        $InstrId = Auth::guard('instructor')->user() ? Auth::guard('instructor')->user()->instructor_id : null;
+        $instructor_info = Instructor_info::where('instructor_id', $InstrId)->first();
+        $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
+
+        $toc = toc::first();
+
+        return view('terms-and-condition', compact('cart', 'user_info', 'instructor_info', 'toc'));
+    }
     public function showContactUsPage()
     {
         $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
@@ -82,6 +99,26 @@ class IndexController extends Controller
 
         return view('contact', compact('cart', 'user_info', 'instructor_info'));
     }
+
+    public function sendContactUsPage(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ];
+
+        Mail::to('abellaaaa15@gmail.com')->send(new ContactFormMail($data));
+
+        return redirect()->back()->with('success', 'Thank you for contacting us! We will get back to you soon.');
+    }
+
 
     public function search(Request $request)
     {

@@ -63,10 +63,10 @@
                     <li>
                         <a href="#">
                             @if(isset($user_info) && $user_info->profile_picture)
-                            <img class="profile-picture" src="{{ asset('storage/' . $user_info->profile_picture) }}" alt="...">
+                            <img class="profile-picture text-center" src="{{ asset('storage/' . $user_info->profile_picture) }}" alt="...">
                             @else
                             <!-- Add a placeholder image or default image -->
-                            <img class="profile-picture" src="/img/9131529.png" alt="Placeholder Image">
+                            <img class="profile-picture text-center" src="/img/9131529.png" alt="Placeholder Image">
                             @endif
                         </a>
                     </li>
@@ -147,10 +147,10 @@
             <div class="container">
                 <div class="nk-nav-social">
                     <ul>
-                        <li><a href="https://twitter.com/nkdevv"><i class="fa-brands fa-twitter"></i></a></li>
-                        <li><a href="https://www.facebook.com/unvabdesign/"><i class="fa-brands fa-facebook"></i></a></li>
-                        <li><a href="https://dribbble.com/_nK"><i class="fa-brands fa-dribbble"></i></a></li>
-                        <li><a href="https://www.instagram.com/unvab/"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>

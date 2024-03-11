@@ -25,7 +25,7 @@ class CourseController extends Controller
     public function index()
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
+        if ($status == 'Pending' || $status == 'Declined') {
             return redirect('/instructor/profile');
         } else {
             // Retrieve the currently authenticated user
@@ -56,7 +56,7 @@ class CourseController extends Controller
     public function createCourse()
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
+        if ($status == 'Pending' || $status == 'Declined') {
             return redirect('/instructor/profile');
         } else {
 
@@ -137,7 +137,7 @@ class CourseController extends Controller
     {
         $status = Auth::guard('instructor')->user()->status;
         $instructor_id = Auth::guard('instructor')->user()->instructor_id;
-        if ($status == 'Pending') {
+        if ($status == 'Pending' || $status == 'Declined') {
             return redirect()->route('instructor.profile');
         } else {
 
@@ -188,7 +188,7 @@ class CourseController extends Controller
     {
         $status = Auth::guard('instructor')->user()->status;
         $instructor_id = Auth::guard('instructor')->user()->instructor_id;
-        if ($status == 'Pending') {
+        if ($status == 'Pending' || $status == 'Declined') {
             return redirect('/instructor/profile');
         } else {
 

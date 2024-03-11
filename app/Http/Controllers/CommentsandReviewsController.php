@@ -89,8 +89,8 @@ class CommentsandReviewsController extends Controller
     public function instructorRecentComments()
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+        if ($status == 'Pending' || $status == 'Declined') {
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $name = Auth::user()->name;
@@ -121,8 +121,8 @@ class CommentsandReviewsController extends Controller
     public function instructorComments($lesson_id)
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+        if ($status == 'Pending' || $status == 'Declined') {
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $name = Auth::user()->name;
@@ -199,8 +199,8 @@ class CommentsandReviewsController extends Controller
     public function reviews()
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+        if ($status == 'Pending' || $status == 'Declined') {
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $name = Auth::user()->name;

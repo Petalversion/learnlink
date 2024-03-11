@@ -211,6 +211,59 @@
     </div>
   </div>
 
+  <!-- START: Partners -->
+  <div class="bg-white" style="margin-top:50px;">
+    <div class="container-fluid">
+      <div class="nk-carousel-2">
+        <div class="nk-carousel-inner">
+          <div>
+            <div>
+              <div class="nk-box-1 text-center">
+                <img src="/img/Sony-logo.png" alt="" class="nk-img-fit" style="max-height: 150px;">
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div class="nk-box-1 text-center">
+                <img src="/img/Google-Black-and-White.png" alt="" class="nk-img-fit" style="max-height: 150px;">
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div class="nk-box-1">
+                <img src="/img/new-rakk-logo_yeua.png" alt="" class="nk-img-fit" style="max-height: 150px;">
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div class="nk-box-1">
+                <img src="/img/MSI-Logo-500x281.png" alt="" class="nk-img-fit" style="max-height: 150px;">
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div class=" nk-box-1">
+                <img src="/img/Asus-Logo.png" alt="" class="nk-img-fit" style="max-height: 150px;">
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class=" nk-box-1">
+              <img src="/img/nin.png" alt="" class="nk-img-fit" style="max-height: 150px;">
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+  <!-- END: Features -->
   <h2 class="text-xs-center display-4" style="padding-top: 50px; padding-bottom: 30px;">Popular Courses</h2>
 
   <div class="nk-carousel-2 nk-carousel-x2 nk-carousel-no-margin nk-carousel-all-visible nk-blog-isotope" data-dots="true">
@@ -275,307 +328,8 @@
   </div>
 
 
-
-
-
-  <!-- START: Features -->
-  <div class="nk-box bg-dark-1 text-white" style="margin-top: 3rem;">
-    <div class="bg-image bg-image-parallax" style="background-image: url('/img/bg-pattern.jpg');">
-    </div>
-    <div class="nk-gap-5 mnt-6"></div>
-    <div class="container">
-      <div class="row vertical-gap">
-        <div class="col-md-6 col-lg-3">
-          <div class="nk-ibox-1">
-            <div class="nk-ibox-icon">
-              <span class="pe-7s-portfolio"></span>
-            </div>
-            <div class="nk-ibox-cont">
-              <div class="nk-ibox-title">548</div>
-              <div class="nk-ibox-text">Projects Completed</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="nk-ibox-1">
-            <div class="nk-ibox-icon">
-              <span class="pe-7s-clock"></span>
-            </div>
-            <div class="nk-ibox-cont">
-              <div class="nk-ibox-title">1465</div>
-              <div class="nk-ibox-text">Working Hours</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="nk-ibox-1">
-            <div class="nk-ibox-icon">
-              <span class="pe-7s-star"></span>
-            </div>
-            <div class="nk-ibox-cont">
-              <div class="nk-ibox-title">612</div>
-              <div class="nk-ibox-text">Positive Feedbacks</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="nk-ibox-1">
-            <div class="nk-ibox-icon">
-              <span class="pe-7s-like"></span>
-            </div>
-            <div class="nk-ibox-cont">
-              <div class="nk-ibox-title">735</div>
-              <div class="nk-ibox-text">Happy Clients</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="nk-gap-5 mnt-6"></div>
-  </div>
-  <!-- END: Features -->
-
-  <!-- START: Portfolio -->
-  <div class="nk-box bg-white" id="projects">
-    <div class="nk-gap-4 mt-5"></div>
-
-    <h2 class="text-xs-center display-4">Topics Recommended for you</h2>
-
-    <div class="nk-gap mnt-6"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-          <div class="text-xs-center"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="nk-gap-2 mt-12"></div>
-    <div class="container">
-      <div class="nk-portfolio-list nk-isotope nk-isotope-3-cols">
-        <div class="nk-isotope-item" data-filter="Mockup">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/budy.jpg');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Business</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="nk-isotope-item" data-filter="Print">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/photo.jpg');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Photography & Video</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="nk-isotope-item" data-filter="Branding">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/graph.jpg');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Design</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="nk-isotope-item" data-filter="Design">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/fiiii.jpg');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Finance & Accounting</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="nk-isotope-item" data-filter="Design">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/aca.jpg');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Teaching & Academics</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="nk-isotope-item" data-filter="Print">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/it\ de.jpg');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Development</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="nk-isotope-item" data-filter="Branding">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/proo.jpg');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Office Productivity</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="nk-isotope-item" data-filter="Photography">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/mus.png');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Music</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="nk-isotope-item" data-filter="Photography">
-          <div class="nk-portfolio-item nk-portfolio-item-square nk-portfolio-item-info-style-1">
-            <a href="" class="nk-portfolio-item-link"></a>
-            <div class="nk-portfolio-item-image">
-              <div style="background-image: url('/img/life.jpg');"></div>
-            </div>
-            <div class="nk-portfolio-item-info nk-portfolio-item-info-center text-xs-center">
-              <div>
-                <h2 class="portfolio-item-title h3">Lifestyle</h2>
-                <div class="portfolio-item-category"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-  <!-- END: Portfolio -->
-
-
-
-  <!-- START: Partners -->
-  <div class="bg-white">
-    <div class="container">
-      <div class="nk-carousel-2 nk-carousel-x4 nk-carousel-no-margin nk-carousel-all-visible">
-        <div class="nk-carousel-inner">
-          <div>
-            <div>
-              <div class="nk-box-1">
-                <img src="/img/partner-logo-1-dark.png" alt="" class="nk-img-fit">
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div class="nk-box-1">
-                <img src="/img/partner-logo-2-dark.png" alt="" class="nk-img-fit">
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div class="nk-box-1">
-                <img src="/img/partner-logo-3-dark.png" alt="" class="nk-img-fit">
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div class="nk-box-1">
-                <img src="/img/partner-logo-4-dark.png" alt="" class="nk-img-fit">
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div class="nk-box-1">
-                <img src="/img/partner-logo-5-dark.png" alt="" class="nk-img-fit">
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div class="nk-box-1">
-                <img src="/img/partner-logo-6-dark.png" alt="" class="nk-img-fit">
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div class="nk-box-1">
-                <img src="/img/partner-logo-7-dark.png" alt="" class="nk-img-fit">
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <div class="nk-box-1">
-                <img src="/img/partner-logo-8-dark.png" alt="" class="nk-img-fit">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- END: Partners -->
-
-
-  <!-- START: Contact Info -->
-
   <!-- Become an Instructor -->
-  <div class="bg-img">
+  <div class="bg-img" style="margin-top:50px;">
 
     <div class="col-lg-6">
       <div class="text-center">

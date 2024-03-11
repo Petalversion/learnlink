@@ -381,10 +381,10 @@
   <div class="container-fluid pl-0 pr-0 pt-5 mb-5">
     <!-- <div class="container "> -->
     <div class="row" style="margin-left:2px;">
-      <div class="col-lg-4 col-md-6 pb-1">
+      <div class="col-lg-4 col-md-12 pb-1">
         <div class="d-flex bg-light shadow-sm border-top rounded mb-4" style="padding: 30px">
-          <img src="/img/teachchhhh.png" alt="" width="250" height="250">
           <div class="pl-4 d-flex flex-column justify-content-center">
+            <center><img src="/img/teachchhhh.png" alt="" width="250" height="250"></center>
             <h4>Teach your way</h4>
             <p class="m-0">
               Kasd labore kasd et dolor est rebum dolor ut, clita dolor vero
@@ -393,10 +393,10 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 pb-1">
+      <div class="col-lg-4 col-md-12 pb-1">
         <div class="d-flex bg-light shadow-sm border-top rounded mb-4" style="padding: 30px">
-          <img src="/img/think.png" alt="" width="250" height="250">
           <div class="pl-4 d-flex flex-column justify-content-center">
+            <center><img src="/img/think.png" alt="" width="250" height="250"></center>
             <h4>Inspire Learners</h4>
             <p class="m-0">
               Inspire learners by encouraging curiosity, creating a positive environment, and
@@ -404,10 +404,10 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 pb-1">
+      <div class="col-lg-4 col-md-12 pb-1">
         <div class="d-flex bg-light shadow-sm border-top rounded mb-4" style="padding: 30px">
-          <img src="/img/Achievement.png" alt="" width="250" height="250">
           <div class="pl-4 d-flex flex-column justify-content-center">
+            <center><img src="/img/Achievement.png" alt="" width="250" height="250"></center>
             <h4>Get Rewarded</h4>
             <p class="m-0">
               Kasd labore kasd et dolor est rebum dolor ut, clita dolor vero
@@ -417,91 +417,83 @@
         </div>
       </div>
     </div>
+  </div>
 
 
-    <!-- START: Features -->
+  <!-- START: Features -->
+  <div class="container py-5">
 
-    <div class="nk-gap-5 mnt-6"></div>
-    <div class="container">
-      <div class="row vertical-gap custom-bg">
-        <div class="col-md-6 col-lg-3 p-0 mx-auto">
-          <div class="nk-ibox-1">
-            <!-- <div class="nk-ibox-icon">
+    <div class="row vertical-gap custom-bg p-0 m-0">
+      <div class="col-md-6 col-lg-3 p-0 mx-auto">
+        <div class="nk-ibox-1">
+          <!-- <div class="nk-ibox-icon">
                                         <span class="pe-7s-portfolio"></span>
                                     </div> -->
-            <div class="nk-ibox-cont">
-              <div class="nk-ibox-title">548M</div>
-              <div class="nk-ibox-text">Students</div>
-            </div>
+          <div class="nk-ibox-cont">
+            <div class="nk-ibox-title">548M</div>
+            <div class="nk-ibox-text">Students</div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 p-0 mx-auto">
-          <div class="nk-ibox-1">
-            <!-- <div class="nk-ibox-icon">
+      </div>
+      <div class="col-md-6 col-lg-3 p-0 mx-auto">
+        <div class="nk-ibox-1">
+          <!-- <div class="nk-ibox-icon">
                                         <span class="pe-7s-clock"></span>
                                     </div> -->
-            <div class="nk-ibox-cont">
-              <div class="nk-ibox-title">450+</div>
-              <div class="nk-ibox-text">Hours</div>
-            </div>
+          <div class="nk-ibox-cont">
+            <div class="nk-ibox-title">450+</div>
+            <div class="nk-ibox-text">Hours</div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 p-0 mx-auto">
-          <div class="nk-ibox-1">
-            <!-- <div class="nk-ibox-icon">
+      </div>
+      <div class="col-md-6 col-lg-3 p-0 mx-auto">
+        <div class="nk-ibox-1">
+          <!-- <div class="nk-ibox-icon">
                                         <span class="pe-7s-star"></span>
                                     </div> -->
-            <div class="nk-ibox-cont">
-              <div class="nk-ibox-title">612+</div>
-              <div class="nk-ibox-text">Enrollments</div>
-            </div>
+          <div class="nk-ibox-cont">
+            <div class="nk-ibox-title">612+</div>
+            <div class="nk-ibox-text">Enrollments</div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-3 p-0 mx-auto">
-          <div class="nk-ibox-1">
-            <!-- <div class="nk-ibox-icon">
+      </div>
+      <div class="col-md-6 col-lg-3 p-0 mx-auto">
+        <div class="nk-ibox-1">
+          <!-- <div class="nk-ibox-icon">
                                         <span class="pe-7s-like"></span>
                                     </div> -->
-            <div class="nk-ibox-cont">
-              <div class="nk-ibox-title">735+</div>
-              <div class="nk-ibox-text">Instructors</div>
-            </div>
+          <div class="nk-ibox-cont">
+            <div class="nk-ibox-title">735+</div>
+            <div class="nk-ibox-text">Instructors</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="nk-gap-5 mnt-6"></div>
+
   </div>
-  <!-- END: Features -->
 
-
-
-
-  <!-- About Start -->
   <div class="container-fluid py-5">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-lg-5 p-0">
+        <div class="col-lg-5 col-md-12 p-0">
           <img class="img-fluid rounded mb-5 mb-lg-0 instructor-vector" src="/img/hihih.png" alt="" />
         </div>
-        <div class="col-lg-7 pt-50">
-
+        <div class="col-lg-7 col-md-12 ">
           <h1 class="mb-6" style="font-size: 50px; text-align: center;">How to Begin</h1>
           <p style="margin-top: 4%; text-align: center; font-size: 20px;">
             The way that you teach — what you bring to it — is up to you.
           </p>
           <div class="row pt-2 pb-4">
-
-            <div class="col-6 col-md-8">
+            <div class="col-12 text-center">
               <ul class="list-inline m-1">
-                <li class="py-2 border-top border-bottom">
-                  <i class="fa fa-check text-primary pr-10"></i>Plan Your Curriculum
+                <li class="py-2 ">
+                  <span style="font-size:25px;"><i class="fa fa-check text-primary pr-10"></i>Plan Your Curriculum</span>
                 </li>
-                <li class="py-2 border-bottom">
-                  <i class="fa fa-check text-primary pr-10"></i>Make Your Lesson
+                <li class="py-2">
+                  <span style="font-size:25px;"><i class="fa fa-check text-primary pr-10"></i>Make Your Lesson</span>
                 </li>
-                <li class="py-2 border-bottom">
-                  <i class="fa fa-check text-primary pr-10"></i>Launch Your Course
+                <li class="py-2">
+                  <span style="font-size:25px;"><i class="fa fa-check text-primary pr-10"></i>Launch Your Course</span>
                 </li>
               </ul>
             </div>
@@ -510,12 +502,7 @@
       </div>
     </div>
   </div>
-  <!-- About End -->
 
-
-
-
-  <!-- START: Partners -->
   <div class="bg-white">
     <div class="container py-4">
       <div class="nk-carousel-2 nk-carousel-x4 nk-carousel-no-margin nk-carousel-all-visible">

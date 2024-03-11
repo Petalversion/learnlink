@@ -24,8 +24,8 @@ class LessonController extends Controller
     public function create($course_id)
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+        if ($status == 'Pending' || $status == 'Declined') {
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $name = Auth::guard('instructor')->user()->name;
@@ -150,8 +150,8 @@ class LessonController extends Controller
     public function lessonEdit($lesson_id)
     {
         $status = Auth::guard('instructor')->user()->status;
-        if ($status == 'Pending') {
-            return redirect('/instructor/profile');
+        if ($status == 'Pending' || $status == 'Declined') {
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $lesson = Lesson::where('id', $lesson_id)->first();

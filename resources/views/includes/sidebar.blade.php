@@ -104,6 +104,15 @@
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
+
+      <li class="nav-item {{ request()->routeIs('toc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{route('toc')}}">
+          <i class="fa-solid fa-newspaper"></i>
+          <span>Terms of Service</span>
+        </a>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item {{ (request()->routeIs('admin.student') || request()->routeIs('admin.instructor')) || request()->routeIs('admin.admin') || request()->routeIs('admin.course') || request()->routeIs('admin.lesson') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">

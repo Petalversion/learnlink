@@ -5,7 +5,6 @@
 
 <!-- End of Topbar -->
 <div class="sidetoppadding">
-    <!-- Page Heading -->
     @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
@@ -20,7 +19,17 @@
         </ul>
     </div>
     @endif
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+    <h1 class="h3 mb-3 text-gray-800"><i class="fa-solid fa-user"></i> Profile</h1>
+    <!-- Page Heading -->
+
+
     <div class="card shadow mb-4">
+
         <div class="card-body">
             <div class="container">
                 <form class="row gutters" action="{{ route('instructor.profileupdate') }}" method="POST" enctype="multipart/form-data">
@@ -38,7 +47,23 @@
                                         @endif
                                     </div>
                                     <h6 class="mb-3 text-primary" style="font-size: 20px;">Upload:</h6>
-                                    <input type="file" name="profile_picture" accept=".jpeg, .jpg, .png">
+                                    <input class="form-control" type="file" name="profile_picture" accept=".jpeg, .jpg, .png">
+                                </div>
+                                <div class="col-xl-12">
+                                    <h6 class="mb-3 text-primary" style="font-size: 20px;">Change Password</h6>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="oldPassword">Old Password</label>
+                                        <input type="text" class="form-control" id="oldPassword" name="oldPassword" placeholder="Old Password">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="newPassword">New Password</label>
+                                        <input type="text" class="form-control" id="newPassword" name="newPassword" placeholder="New Password">
+                                        <input type="text" class="form-control mt-2" id="confirmnewPassword" name="confirmnewPassword" placeholder="Confirm New Password">
+                                    </div>
                                 </div>
                             </div>
                         </div>
