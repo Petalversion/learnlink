@@ -32,7 +32,7 @@
         margin: 5px;
     }
 
-    .tags .remove-tags {
+    .fa-circle-xmark {
         margin-left: 10px;
         cursor: pointer;
     }
@@ -162,6 +162,7 @@
 
                                     </div>
                                     <div id="tags-container">
+
                                     </div>
                                 </div>
                                 <hr>
@@ -323,9 +324,8 @@
                     const tag = document.createElement("span");
                     tag.className = "tags";
                     tag.textContent = value;
-                    const removeBtn = document.createElement("span");
-                    removeBtn.className = "remove-tags";
-                    removeBtn.textContent = "x";
+                    const removeBtn = document.createElement("i");
+                    removeBtn.className = "fa-solid fa-circle-xmark";
 
                     removeBtn.onclick = function() {
                         tag.remove();

@@ -25,6 +25,7 @@ class Course extends Model
         'image',
         'amount',
         'status',
+        'category',
         'tags'
     ];
 
@@ -39,7 +40,7 @@ class Course extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->hasOne(Category::class, 'id', 'category');
     }
 
     public function sales()

@@ -30,6 +30,7 @@ use App\Models\Instructor;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 //Public
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/about-us', [IndexController::class, 'showAboutUsPage'])->name('about.us');
@@ -40,8 +41,6 @@ Route::get('/course/{course_id}/details', [CourseController::class, 'details'])-
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('/terms-and-condition', [IndexController::class, 'showTCPage'])->name('terms.condition');
 Route::get('/instructor-info/{id}', [IndexController::class, 'showInstructorInfoPage'])->name('instructor.index');
-
-
 
 // Admin Login
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');

@@ -252,13 +252,12 @@ class CourseController extends Controller
             'description' => 'required|string',
             'wyl' => 'required|string',
             'requirements' => 'required|string',
-            'paid' => 'nullable|boolean',
-            'free' => 'nullable|boolean',
-            'draft' => 'nullable|boolean',
             'difficulty' => ['required', 'in:beginner,intermediate,expert'],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'category' => 'required',
             'tags' => 'required|array|min:1',
             'amount' => 'nullable|numeric',
+            'tags' => 'required',
 
             // Add any other validation rules for your fields
         ]);
@@ -276,20 +275,30 @@ class CourseController extends Controller
             return redirect()->route('instructor.course.course')->with('error', 'Course not found.');
         }
 
+        $option_validate = $request->input('options');
+
+        if ($option_validate == 0) {
+            $course->free = 0;
+            $course->paid = 1;
+            $course->amount = $request->input('amount');
+        } else {
+            $course->free = 1;
+            $course->paid = 0;
+            $course->amount = 0;
+        }
 
         $course->title = $request->input('title');
         $course->summary = $request->input('summary');
         $course->description = $request->input('description');
         $course->wyl = $request->input('wyl');
         $course->requirements = $request->input('requirements');
-        $course->paid = $request->has('paid');
+        $course->category = $request->input('category');
         $course->difficulty = $request->input('difficulty');
-        $course->amount = $request->input('amount');
-        $course->status = $request->input('status', 'draft'); // Default to draft if no status is provided
+        $course->status = $request->input('status', 'draft');
+        $course->tags = $request->input('tags');
         $course->save();
 
-        // Sync tags and categories for the course
-        $course->tags()->sync($request->input('tags'));
+
 
         return redirect()->route('instructor.course.course-edit', ['course_id' => $course->id])->with('success', 'Course updated successfully.');
     }
