@@ -1,6 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')<!-- Begin Page Content -->
+<title>{{$name}} - New Question</title>
 <div class="sidetoppadding">
     <a href="{{ route('instructor.course.course-view', ['course_id' => $courses->id]) }}">
         <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>

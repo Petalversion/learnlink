@@ -2,6 +2,8 @@
 
 @section('content')
 
+<title>{{$name}} - {{$lesson->title}}</title>
+
 
 <div class="sidetoppadding">
 

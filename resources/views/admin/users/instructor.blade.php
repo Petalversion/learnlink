@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>Admin - All Instructors</title>
+
 <!-- Begin Page Content -->
 <div class="sidetoppadding">
 

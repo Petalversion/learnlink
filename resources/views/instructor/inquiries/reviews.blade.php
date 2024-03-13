@@ -1,6 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>{{$name}} - Course Reviews</title>
 <div class="sidetoppadding">
     <div class="card shadow mb-4">
         <div class="card-body">

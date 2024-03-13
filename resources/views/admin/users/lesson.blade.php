@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="sidetoppadding">
+    <title>{{$course->title}}</title>
+
 
     <!-- Page Heading -->
 

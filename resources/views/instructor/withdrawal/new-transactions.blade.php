@@ -1,6 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>{{$name}} - Withdrawal Request</title>
 
 <!-- End of Topbar -->
 

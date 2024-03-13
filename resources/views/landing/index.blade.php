@@ -12,14 +12,19 @@
   <meta name="description" content="Snow - Clean & Minimal Portfolio HTML template.">
   <meta name="keywords" content="portfolio, clean, minimal, blog, template, portfolio website">
   <meta name="author" content="nK">
-
-  <link rel="icon" type="image/png" href="/img/favicon.png">
-
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 
   <!-- START: Styles -->
   <style>
+    * {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+    }
+
     .clamp-two-lines {
       overflow: hidden;
       display: -webkit-box;
@@ -97,6 +102,42 @@
     .vertical-center {
       align-items: center;
     }
+
+    .exo-h3 {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 40px;
+    }
+
+    .exo-h2 {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 50px;
+    }
+
+    .exo-h1 {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 70px;
+    }
+
+    .exo-p {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 15px;
+    }
+
+    .exo-price {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 20px;
+    }
+
+    .exo-title {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 25px;
+    }
   </style>
 
   <!-- Google Fonts -->
@@ -125,7 +166,7 @@
       <div class="nk-header-table-cell">
         <div class="container">
           <h2 class="nk-subtitle text-white">LearnLink</h2>
-          <h1 class="nk-title display-3 text-white">We are about to change the way
+          <h1 class="nk-title exo-h2 text-white">We are about to change the way
             <br>
             <em class="fw-400">you publish on the web</em>
           </h1>
@@ -149,7 +190,7 @@
   <!-- START: Blog -->
 
 
-  <h2 class="text-xs-center display-4" style="padding-top: 50px; padding-bottom: 30px;">Fresh New Courses</h2>
+  <h2 class="text-xs-center exo-h2" style="padding-top: 50px; padding-bottom: 30px;">Fresh New Courses</h2>
 
   <div class="nk-carousel-2 nk-carousel-x2 nk-carousel-no-margin nk-carousel-all-visible nk-blog-isotope" data-dots="true">
     <div class="nk-carousel-inner">
@@ -264,7 +305,7 @@
     </div>
   </div>
   <!-- END: Features -->
-  <h2 class="text-xs-center display-4" style="padding-top: 50px; padding-bottom: 30px;">Popular Courses</h2>
+  <h2 class="text-xs-center exo-h2" style="padding-top: 50px; padding-bottom: 30px;">Popular Courses</h2>
 
   <div class="nk-carousel-2 nk-carousel-x2 nk-carousel-no-margin nk-carousel-all-visible nk-blog-isotope" data-dots="true">
     <div class="nk-carousel-inner">
@@ -333,7 +374,7 @@
 
     <div class="col-lg-6">
       <div class="text-center">
-        <h1 class="text-white" style="color:#31dcfe; margin-bottom: 30px;">Come Teach with Us</h1>
+        <h1 class="text-white exo-h3" style="color:#31dcfe; margin-bottom: 30px;">Come Teach with Us</h1>
         <p class="text-white">
           Teaching is not just a profession; it's a calling. It's about inspiring minds, empowering individuals, and shaping the future. Whether you're an expert in technology, art, business, or any other domain, there are countless learners eager to benefit from your wisdom..</p>
         <a href="{{ route('become.instructor') }}" class="btn custom-btn">Learn More</a>

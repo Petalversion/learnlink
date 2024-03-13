@@ -1,3 +1,46 @@
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<style>
+    * {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+    }
+
+    .exo-h3 {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 40px;
+    }
+
+    .exo-h2 {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 50px;
+    }
+
+    .exo-h1 {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 70px;
+    }
+
+    .exo-p {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 15px;
+    }
+
+    .exo-price {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 20px;
+    }
+
+    .exo-title {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 25px;
+    }
+</style>
 @extends('layout.main')
 
 @section('content')
@@ -5,14 +48,14 @@
 <title>{{ $course_check->title }}</title>
 
 <!-- Hero Section -->
-<div class="hero-section">
-    <div class="row">
+<div class="hero-section" style="height: 700px;">
+    <div class="row  ">
         <div class="col-sm-12 col-md-5 col-lg-4">
         </div>
-        <div class="col-sm-12 col-md-5 col-lg-8">
+        <div class="col-sm-12 col-md-5 col-lg-8 " style="margin-top: 100px;">
             <div class="container text-white">
-                <h2 class="text-white" style="text-align: left;">{{ $course_check->title }}</h2>
-                <p class="lead" style="text-align: left;">{{ $course_check->summary }}</p>
+                <h2 class="text-white exo-h2 " style="text-align: left;">{{ $course_check->title }}</h2>
+                <p class="lead exo-p" style="text-align: left;">{{ $course_check->summary }}</p>
                 <div class="ratings" style="text-align: left;">
                     @if ($course_count)
                     @php
@@ -22,21 +65,19 @@
 
                     $stars = '';
 
-                    for ($i = 0; $i < $fullStars; $i++) { $stars .='<i class="fa-solid fa-star" style="color: #ffa500;"></i>' ; } if ($halfStar) { $stars .='<i class="fa-solid fa-star-half-stroke" style="color: #ffa500;"></i>' ; } for ($i=0; $i < $blankStars; $i++) { $stars .='<i class="fa-regular fa-star" style="color: #ffa500;"></i>' ; } @endphp <p><strong>{{ number_format($rounded_rating, 1) }}</strong> {!! $stars !!} ({{ $course_count }})</p>
+                    for ($i = 0; $i < $fullStars; $i++) { $stars .='<i class="fa-solid fa-star" style="color: #ffa500;"></i>' ; } if ($halfStar) { $stars .='<i class="fa-solid fa-star-half-stroke" style="color: #ffa500;"></i>' ; } for ($i=0; $i < $blankStars; $i++) { $stars .='<i class="fa-regular fa-star" style="color: #ffa500;"></i>' ; } @endphp <p class="lead exo-p"><strong>{{ number_format($rounded_rating, 1) }}</strong> {!! $stars !!} ({{ $course_count }})</p>
                         @else
-                        <p>No Reviews Yet</p>
+                        <p class="lead exo-p">No Reviews Yet</p>
                         @endif
                 </div>
-                <p class="lead" style="text-align: left;">Created By: <a href="#" onclick="scrollAboveDiv('instwaktor')">{{ $course_check->instructor->name }}</a>
+                <p class="nk-post-title exo-p" style="text-align: left;">Created By: <a href="{{route('instructor.index',['id'=>$instr->id])}}">{{ $course_check->instructor->name }}</a>
                 </p>
             </div>
         </div>
     </div>
-
-
 </div>
 
-<div class="container" style="margin-top: 80px">
+<div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-5 col-lg-4">
             <div class="container-fluid">
@@ -58,33 +99,33 @@
                             {{ session('success') }}
                         </div>
                         @endif
-                        <h5 class="card-price">{{ $course_check->amount == 0 ? 'FREE' : '₱ ' . number_format($course_check->amount, 2) }}</h5>
+                        <h5 class="exo-h3 ">{{ $course_check->amount == 0 ? 'FREE' : '₱ ' . number_format($course_check->amount, 2) }}</h5>
 
                         <form action="{{ route('cart.add') }}" method="POST">
                             @csrf
                             <input type="hidden" name="course_id" value="{{ $course_check->course_id }}">
                             @if(Auth::guard('student')->check())
                             @if($course_check->amount == 0 )
-                            <a href="{{ route('free.success', ['course_id' => $course_check->course_id]) }}" class="btn btn-primary btn-lg btn-block square">Add to Account</a>
+                            <a href="{{ route('free.success', ['course_id' => $course_check->course_id]) }}" class="btn btn-primary btn-lg btn-block square exo-p">Add to Account</a>
                             @else
-                            <button type="submit" class="btn btn-primary btn-lg btn-block square">Add to Cart</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block square exo-p">Add to Cart</button>
                             @endif
                             @elseif(Auth::guard('instructor')->check())
                             @if($course_check->amount == 0 )
-                            <a href="#" class="btn btn-lg btn-block square disabled" style="pointer-events: none; background-color: #cccccc; color: #666666;">Add to Account</a>
+                            <a href="#" class="btn btn-lg btn-block square disabled exo-p" style="pointer-events: none; background-color: #cccccc; color: #666666;">Add to Account</a>
                             @else
-                            <a href="#" class="btn btn-lg btn-block square disabled" style="pointer-events: none; background-color: #cccccc; color: #666666;">Add to Cart</a>
+                            <a href="#" class="btn btn-lg btn-block square disabled exo-p" style="pointer-events: none; background-color: #cccccc; color: #666666;">Add to Cart</a>
                             @endif
                             @else
                             @if($course_check->amount == 0 )
-                            <a href="{{ route('student.login') }}" class="btn btn-primary btn-lg btn-block square">Add to Account</a>
+                            <a href="{{ route('student.login') }}" class="btn btn-primary btn-lg btn-block square exo-p">Add to Account</a>
                             @else
-                            <a href="{{ route('student.login') }}" class="btn btn-primary btn-lg btn-block square">Add to Cart</a>
+                            <a href="{{ route('student.login') }}" class="btn btn-primary btn-lg btn-block square exo-p">Add to Cart</a>
                             @endif
                             @endif
                         </form>
-                        <p class="display-1" style="font-size: 20px; margin-top: 5%;">Requirements</p>
-                        {!! $course_check->requirements !!}
+                        <p class=" exo-p mb-0" style="font-size: 20px; margin-top: 10px;"><strong>Requirements</strong></p>
+                        <div style="margin-top:0px;">{!! $course_check->requirements !!}</div>
                     </div>
                 </div>
             </div>
@@ -93,19 +134,19 @@
         <div class="col-sm-12 col-md-7 col-lg-8 ps-4">
 
             <div class="container">
-                <h2 class="display-2" style="font-size: 30px; margin-top: -4%;">What You'll Learn</h2>
+                <h2 class="exo-h2" style="font-size: 30px;margin-top:50px;">What You'll Learn</h2>
                 {!! $course_check->wyl !!}
             </div>
 
             <!-- Accordion Start -->
             <div class="container" style="margin: 50px 0;">
-                <h2 class="display-2" style="font-size: 30px; margin-top: -4%;">Course Content</h2>
+                <h2 class="exo-h2" style="font-size: 30px; margin-top: -4%;">Course Content</h2>
 
                 <div class="accordion-container">
                     @foreach($course_check->Lessons as $lesson)
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            <h4 class="ps-3 pe-3 m-0">{{ $loop->iteration }}. {{ $lesson->title }}</h4>
+                            <h3 class="ps-3 pe-3 m-0 exo-p">{{ $loop->iteration }}. {{ $lesson->title }}</h3>
                             <!-- <span>&#9654;</span> -->
                         </div>
                         <!-- 
@@ -123,7 +164,7 @@
 
 
             <div class="container">
-                <h2 class="display-2" style="font-size: 30px; margin-top: 5%;">Description</h2>
+                <h2 class="exo-h2" style="font-size: 30px; margin-top: 5%;">Description</h2>
                 {!! $course_check->description !!}
             </div>
             <div class="container" id="instwaktor">
@@ -131,8 +172,8 @@
                     <div class="col-sm-12 col-md-2 col-lg-3">
                         <img class="profile-picture-2" src="{{ asset('storage/' . $course_check->instructor_info->profile_picture) }}" alt="...">
                     </div>
-                    <h2 class="display-2" style="font-size: 30px;margin-top: 2%;">Instructor</h2>
-                    <h5 class="card-title">{{$course_check->instructor->name}}</h5>
+                    <h2 class="exo-h2" style="font-size: 30px;margin-top: 2%;">Instructor</h2>
+                    <h5 class="card-title exo-h3" style="font-size: 20px;">{{$course_check->instructor->name}}</h5>
                     <p class="card-text"></p>
                     <div class="col-sm-12 col-md-5 col-lg-9 d-flex align-items-center">
                         <ul class="pl-0 ml-0 list-unstyled mb-0">
@@ -155,11 +196,11 @@
 
 @if ($course_list->count() === 0)
 <div class="container border rounded" style="padding:50px; margin-top: 80px;margin-bottom: 80px;">
-    <h2 class="text-xs-center display-4" style="padding-top: 10px; padding-bottom: 80px;">No More Courses By {{$course_check->instructor->name}}</h2>
+    <h2 class="text-xs-center exo-h3" style="padding-top: 10px; padding-bottom: 80px;">No More Courses By {{$course_check->instructor->name}}</h2>
 </div>
 @else
 <div class="container border rounded" style="padding:50px; margin-top: 80px;margin-bottom: 80px;">
-    <h2 class="text-xs-center display-4" style="padding-top: 10px; padding-bottom: 80px;">Other Courses By {{$course_check->instructor->name}}</h2>
+    <h2 class="text-xs-center exo-h3" style="padding-top: 10px; padding-bottom: 80px;">Other Courses By {{$course_check->instructor->name}}</h2>
     @foreach($coursesWithReviewsData as $course)
     <div class="container">
         <div class="card mb-10">

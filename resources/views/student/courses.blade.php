@@ -1,7 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
-<title>All Courses</title>
+<title>{{$name}} - My Courses</title>
+
 <div class="sidetoppadding">
     <h1 class="h3 mb-3 text-gray-900">Your Courses</h1>
     @if(isset($courseinfo) && !empty($courseinfo))

@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>Admin - All Courses</title>
+
 <div class="sidetoppadding">
     <a href="{{ route('admin.instructor') }}">
         <button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Back</button></a>

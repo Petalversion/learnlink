@@ -39,6 +39,7 @@ Route::post('/contact-us', [IndexController::class, 'sendContactUsPage'])->name(
 Route::get('/course/{course_id}/details', [CourseController::class, 'details'])->name('course_details');
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('/terms-and-condition', [IndexController::class, 'showTCPage'])->name('terms.condition');
+Route::get('/instructor-info/{id}', [IndexController::class, 'showInstructorInfoPage'])->name('instructor.index');
 
 
 

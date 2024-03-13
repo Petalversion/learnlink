@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>{{$name}} - Recent Questions</title>
+
 <div class="sidetoppadding">
     @if(session('success'))
     <div class="alert alert-success">

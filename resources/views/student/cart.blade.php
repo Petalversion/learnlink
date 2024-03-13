@@ -1,7 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
-<title>My Cart</title>
+<title>{{$name}} - My Cart</title>
+
 <div class="sidetoppadding">
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -27,16 +28,16 @@
                         <div class="container">
                             <div class="card mb-3">
                                 <div class="row g-0 ">
-                                    <div class="col-md-2 col-sm-12">
-                                        <img src="{{ asset('storage/' . $course->image) }}" class="img-fluid rounded-start">
+                                    <div class="col-lg-2 col-md-12 col-sm-12">
+                                        <img src="{{ asset('storage/' . $course->image) }}" class="img-fluid rounded-start" style="min-height:auto ;min-width:150px;">
                                     </div>
-                                    <div class="col-md-7 col-sm-12 d-flex align-items-center" style="padding: 10px;">
+                                    <div class="col-lg-6 col-md-12 col-sm-12 d-flex align-items-center" style="padding: 10px;">
                                         <h4 class="clamped-line card-title" style="font-size: 15px;"><a href="{{route('course_details', $course->course_id)}}">{{ $course->title }}</a></h4>
                                     </div>
-                                    <div class="col-md-2 col-sm-12 d-flex align-items-center">
-                                        <h4 class="card-title " style="margin: 10px 0;">₱ {{ number_format($course->amount, 2, '.', ',') }} </h4>
+                                    <div class=" col-lg-3 col-md-12 col-sm-12 d-flex align-items-center">
+                                        <h4 class="card-title " style="margin: 10px 0;font-size:20px">₱ {{ number_format($course->amount, 2, '.', ',') }} </h4>
                                     </div>
-                                    <div class="col-md-1 col-sm-12 d-flex justify-content-center align-items-center">
+                                    <div class=" col-lg-1 col-md-12 col-sm-12 d-flex justify-content-center align-items-center">
                                         <form action="{{ route('cart.remove', $cartItem->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')

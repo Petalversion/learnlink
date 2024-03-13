@@ -1,7 +1,42 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>{{$name}} - New Course</title>
 
+<style>
+    .tags-input {
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .tags {
+        background-color: #007bff;
+        color: white;
+        padding: 3px 10px;
+        border-radius: 50px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+    }
+
+    .tag-input {
+        border: none;
+        outline: none;
+        margin: 5px;
+    }
+
+    .tags .remove-tags {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+</style>
 
 <div class="sidetoppadding">
 
@@ -16,7 +51,7 @@
 
                 <div class="container">
                     <h1>New Course</h1>
-                    <form action="{{ route('instructor.course.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('instructor.course.store') }}" method="POST" enctype="multipart/form-data" id="course-form">
                         @csrf
                         @if ($errors->any())
                         <div class="alert alert-danger">
@@ -31,6 +66,19 @@
 
                         <div class="row">
                             <div class="col-md-9">
+                                <div class="container border p-3 mb-3" style="border-radius: 15px;">
+                                    <div class="mb-3">
+                                        <label for="select" class="form-label">Category</label>
+                                        <select class="form-select" name="category">
+                                            <option value="" selected disabled>--Select Category--</option>
+                                            @foreach ($categories as $category)
+                                            <option value="{{$category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <hr>
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Title</label>
                                     <input type="text" id="title" name="title" class="form-control" required>
@@ -71,7 +119,7 @@
                                     <div class="mb-1">
                                         <label class="form-label">Difficulty</label><br>
                                         <div class="form-check form-check-inline col-xl-12 ">
-                                            <input type="radio" id="beginner" name="difficulty" class="form-check-input" value="beginner" required>
+                                            <input type="radio" id="beginner" name="difficulty" class="form-check-input" value="beginner" checked required>
                                             <label for="beginner" class="form-check-label">Beginner</label>
                                         </div>
                                         <div class="form-check form-check-inline col-xl-12 ">
@@ -85,57 +133,44 @@
 
                                     </div>
                                 </div>
-
                                 <hr>
-                                <div class="container border p-3 mb-3" style="border-radius: 15px;">
-                                    <div class="mb-3">
-                                        <label for="tag" class="form-label">Tag</label>
-                                        <!-- <div id="tags" class="form-check">
-                                                            @foreach ($tags as $tag)
-                                                            <span>{{$tag->name }}</span>
-                                                            <input type="text" value="{{ $tag->id }}"
-                                                                placeholder="Add a tag" name="tags[]" />
-                                                            @endforeach
-                                                        </div> -->
-                                        @foreach ($tags as $tag)
-                                        <div class="form-check">
-                                            <input type="checkbox" id="tag_{{ $tag->id }}" name="tags[]" class="form-check-input" value="{{ $tag->id }}">
-                                            <label for="tag_{{ $tag->id }}" class="form-check-label">{{
-                                                                $tag->name }}</label>
+                                <div class="container border p-3  mb-3" style="border-radius: 15px;">
+                                    <div class="mb-1">
+                                        <label class="form-label">Course Type</label><br>
+                                        <div class="form-check col-xl-12">
+                                            <input type="radio" id="paid" name="options" class="form-check-input" value="0" onclick="toggleInput(true)" checked required>
+                                            <label for="paid" class="form-check-label">Paid Course</label>
                                         </div>
-                                        @endforeach
-
+                                        <div class="mb-3 mt-3 input-group" id="amount">
+                                            <span class="input-group-text">₱</span>
+                                            <input type="number" name="amount" class="form-control" step="0.01" placeholder="Price">
+                                        </div>
+                                        <div class="form-check col-xl-12">
+                                            <input type="radio" id="free" name="options" class="form-check-input" value="1" onclick="toggleInput(false)">
+                                            <label for="free" class="form-check-label">Free Course</label>
+                                        </div>
                                     </div>
                                 </div>
-
-
-
                                 <hr>
-                                <div class="container border p-3" style="border-radius: 15px;">
-                                    <h7>Course Type</h7>
-                                    <hr>
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" id="paid" name="paid" class="form-check-input" value="1">
-                                        <label for="paid" class="form-check-label">Paid Course</label>
-                                    </div>
+                                <div class="container border p-3  mb-3" style="border-radius: 15px;">
+                                    <div class="mb-1">
+                                        <label for="tags" class="form-label">Tags</label>
+                                        <div class="mb-3 mt-3 input-group">
+                                            <span class="input-group-text">Tags</span>
+                                            <input type="text" id="tag-input-field" name="tagsgenerator" class="form-control" placeholder="HTML,CSS, etc...">
+                                        </div>
 
-                                    <div class="mb-3 form-check">
-                                        <input type="hidden" name="free" value="0">
-                                        <input type="checkbox" id="free" name="free" class="form-check-input" value="1">
-                                        <label for="free" class="form-check-label">Free Course</label>
                                     </div>
-
-                                    <hr class="mt-4">
-                                    <div class="mb-3 mt-4 input-group">
-                                        <span class="input-group-text">₱</span>
-                                        <input type="number" id="amount" name="amount" class="form-control" step="0.01" placeholder="Course Amount">
+                                    <div id="tags-container">
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="container p-0 mt-3 mb-3" style="border-radius: 15px;">
                                     <button type="submit" class="btn btn-primary">Submit</button>
-                                    <!-- <button type="submit" name="draft" value="1"
-                                                    class="btn btn-secondary">Save as Draft</button> -->
                                 </div>
+
+
+
                             </div>
                         </div>
                     </form>
@@ -248,5 +283,61 @@
         });
 
     });
+</script>
+<script>
+    function toggleInput(show) {
+        var input = document.getElementById('amount');
+        if (show) {
+            input.style.display = '';
+        } else {
+            input.style.display = 'none';
+        }
+    }
+</script>
+<script>
+    document.getElementById('course-form').addEventListener('submit',
+        function(e) {
+            e.preventDefault();
+
+            const tags = document.querySelectorAll('.tags');
+
+            tags.forEach(tag => {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'tags[]';
+                hiddenInput.value = tag.textContent;
+                document.getElementById('course-form').appendChild(hiddenInput);
+            });
+
+            this.submit();
+        });
+
+    document.getElementById('tag-input-field').addEventListener('keydown',
+        function(e) {
+            if (e.key === "Enter" || e.keyCode === 13) {
+                e.preventDefault();
+
+                const value = this.value.trim();
+
+                if (value) {
+                    const tag = document.createElement("span");
+                    tag.className = "tags";
+                    tag.textContent = value;
+                    const removeBtn = document.createElement("span");
+                    removeBtn.className = "remove-tags";
+                    removeBtn.textContent = "x";
+
+                    removeBtn.onclick = function() {
+                        tag.remove();
+                    };
+
+                    tag.appendChild(removeBtn);
+
+                    document.getElementById('tags-container').appendChild(tag);
+
+                    this.value = "";
+                }
+            }
+        });
 </script>
 @endsection

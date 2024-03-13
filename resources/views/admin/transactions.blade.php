@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>Admin - Transactions History</title>
+
 <div class="sidetoppadding">
     <h1 class="h3 mb-3 text-gray-800"><i class="fas fa-fw fa-exchange"></i> Transactions</h1>
     <div class="card shadow mb-4">

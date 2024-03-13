@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>Admin - Dashboard</title>
+
 <div class="sidetoppadding">
     <div class="row">
         <div class="col-xl-4 col-md-6 mb-4">

@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>LearnLink</title>
+  <title>Become an Instructor</title>
 
   <meta name="description" content="Snow - Clean & Minimal Portfolio HTML template.">
   <meta name="keywords" content="portfolio, clean, minimal, blog, template, portfolio website">
@@ -20,10 +20,52 @@
 
   <link rel='stylesheet' href='https://www.littlesnippets.net/css/codepen-result.css'>
   <link rel="stylesheet" href="assets/css/style3.css">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 
   <!-- START: Styles -->
   <style>
+    * {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+    }
+
+    .exo-h3 {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 40px;
+    }
+
+    .exo-h2 {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 50px;
+    }
+
+    .exo-h1 {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 70px;
+    }
+
+    .exo-p {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 15px;
+    }
+
+    .exo-price {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 20px;
+    }
+
+    .exo-title {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+      font-size: 25px;
+    }
+
     .searchbutton {
       margin: 0 10px !important;
     }
@@ -342,10 +384,10 @@
         <div class="container">
 
 
-          <h2 class="nk-subtitle text-white" style="text-align:left;">Come Teach with Us</h2>
+          <h2 class="text-white exo-h3" style="text-align:left;font-size:35px;">Come Teach with Us</h2>
 
 
-          <h1 class="nk-title display-3 text-white" style="text-align:left;">Become an Instructor and change the world
+          <h1 class="nk-title exo-h2 text-white" style="text-align:left;">Become an Instructor and change the world
             <br>
             <em class="fw-400"></em>
           </h1>
@@ -372,7 +414,7 @@
   <!-- START: Blog -->
 
 
-  <h2 class="text-xs-center display-4" style="padding-top: 50px; padding-bottom: 30px;">Many Reasons To Start
+  <h2 class="text-xs-center exo-h3" style="padding-top: 50px; padding-bottom: 30px;">Many Reasons To Start
   </h2>
 
 
@@ -385,8 +427,8 @@
         <div class="d-flex bg-light shadow-sm border-top rounded mb-4" style="padding: 30px">
           <div class="pl-4 d-flex flex-column justify-content-center">
             <center><img src="/img/teachchhhh.png" alt="" width="250" height="250"></center>
-            <h4>Teach your way</h4>
-            <p class="m-0">
+            <h4 class=" exo-price text-center">Teach your way</h4>
+            <p class="m-5">
               Kasd labore kasd et dolor est rebum dolor ut, clita dolor vero
               lorem amet elitr vero...
             </p>
@@ -397,8 +439,8 @@
         <div class="d-flex bg-light shadow-sm border-top rounded mb-4" style="padding: 30px">
           <div class="pl-4 d-flex flex-column justify-content-center">
             <center><img src="/img/think.png" alt="" width="250" height="250"></center>
-            <h4>Inspire Learners</h4>
-            <p class="m-0">
+            <h4 class=" exo-price text-center">Inspire Learners</h4>
+            <p class="m-5">
               Inspire learners by encouraging curiosity, creating a positive environment, and
               celebrating their achievements. Make learning a joyful journey of discovery.
           </div>
@@ -408,8 +450,8 @@
         <div class="d-flex bg-light shadow-sm border-top rounded mb-4" style="padding: 30px">
           <div class="pl-4 d-flex flex-column justify-content-center">
             <center><img src="/img/Achievement.png" alt="" width="250" height="250"></center>
-            <h4>Get Rewarded</h4>
-            <p class="m-0">
+            <h4 class=" exo-price text-center">Get Rewarded</h4>
+            <p class="m-5">
               Kasd labore kasd et dolor est rebum dolor ut, clita dolor vero
               lorem amet elitr vero...
             </p>
@@ -479,7 +521,7 @@
           <img class="img-fluid rounded mb-5 mb-lg-0 instructor-vector" src="/img/hihih.png" alt="" />
         </div>
         <div class="col-lg-7 col-md-12 ">
-          <h1 class="mb-6" style="font-size: 50px; text-align: center;">How to Begin</h1>
+          <h1 class="mb-6 exo-h2" style="font-size: 50px; text-align: center;">How to Begin</h1>
           <p style="margin-top: 4%; text-align: center; font-size: 20px;">
             The way that you teach — what you bring to it — is up to you.
           </p>
@@ -560,9 +602,9 @@
   <!-- Testimonial Start -->
   <div class="testimonial-container">
     <main>
-      <h2 class="text-xs-center display-4" style="padding-top: 50px; color: white; font-weight: 600;">Testimony
+      <h2 class="text-xs-center exo-h2" style="padding-top: 50px; color: white; font-weight: 600;">Testimony
       </h2>
-      <h3>What Instructor Says</h3>
+      <h3 class="text-xs-center exo-price">What Instructor Says</h3>
 
       <div class="custom-slider">
         <div class="slide-row" id="slide-row">
@@ -571,7 +613,7 @@
               <p>"Helping people around the world improve their careers and build great things. Teaching a skills
                 necessary to stand out from the crowd.”</p>
               <div style="border-bottom: 3px solid #898989; max-width: 80px;"></div>
-              <h2 class="name">Jennifer Swan</h2>
+              <h2 class="name exo-p">Jennifer Swan</h2>
               <p class="title">Developer</p>
             </div>
             <div class="hero">
@@ -584,7 +626,7 @@
               <p>"Helping people around the world improve their careers and build great things. Teaching a skills
                 necessary to stand out from the crowd.”</p>
               <div style="border-bottom: 3px solid #898989; max-width: 80px;"></div>
-              <h2 class="name">Shin Minhyuk</h2>
+              <h2 class="name exo-p">Shin Minhyuk</h2>
               <p class="title">Cinematographer / Photographer</p>
             </div>
             <div class="hero">
@@ -597,7 +639,7 @@
               <p>Charlie Green is an European entrepreneur and media consultant, and investor. He is the
                 founder of the Hallmark Inc.</p>
               <div style="border-bottom: 3px solid #898989; max-width: 80px;"></div>
-              <h2 class="name">Charles Jayson</h2>
+              <h2 class="name exo-p">Charles Jayson</h2>
               <p class="title">Hallmark Inc.</p>
             </div>
             <div class="hero">
@@ -610,7 +652,7 @@
               <p>Sarah Dam is an American internet entrepreneur and media proprietor, and investor. She is
                 the founder of the multi-national technology company Zara.</p>
               <div style="border-bottom: 3px solid #898989; max-width: 80px;"></div>
-              <h2 class="name">Sarah</h2>
+              <h2 class="name exo-p">Sarah</h2>
               <p class="title">Zara Inc.</p>
             </div>
             <div class="hero">

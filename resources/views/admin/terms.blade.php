@@ -1,7 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
-<title>{{$name}} - Terms and Condition</title>
+<title>Admin - Terms and Condition</title>
 
 <!-- End of Topbar -->
 <div class="sidetoppadding">

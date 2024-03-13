@@ -1,6 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>{{$name}} - {{$quiz->question}}</title>
 <!-- Begin Page Content -->
 <div class="sidetoppadding">
     <a href="{{ route('instructor.course.course-view', ['course_id' => $quiz->course->id]) }}">

@@ -25,6 +25,11 @@ class Course extends Model
         'image',
         'amount',
         'status',
+        'tags'
+    ];
+
+    protected $casts = [
+        'tags' => 'json', // Cast 'options' to JSON array
     ];
 
     public function tags()

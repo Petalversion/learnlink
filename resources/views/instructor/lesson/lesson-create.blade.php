@@ -1,6 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>{{$name}} - New Lesson</title>
 
 
 <div class="sidetoppadding">

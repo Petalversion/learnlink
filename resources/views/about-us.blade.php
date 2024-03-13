@@ -5,20 +5,24 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>LearnLink</title>
+  <title>About Us</title>
 
   <meta name="description" content="Snow - Clean & Minimal Portfolio HTML template.">
   <meta name="keywords" content="portfolio, clean, minimal, blog, template, portfolio website">
   <meta name="author" content="nK">
 
-  <link rel="icon" type="image/png" href="assets/images/favicon.png">
-
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
   <!-- START: Styles -->
   <style>
+    * {
+      font-family: "Exo 2", sans-serif;
+      font-optical-sizing: auto;
+    }
+
     .searchbutton {
       margin: 0 10px !important;
     }

@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>Admin - All Students</title>
+
 <div class="sidetoppadding">
     <!-- Page Heading -->
     <h1 class="h3 mb-3 text-gray-800"><i class="fas fa-fw fa-users"></i> All Students</h1>

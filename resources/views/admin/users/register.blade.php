@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>Admin - Add New Account</title>
+
 <!-- Begin Page Content -->
 <div class="sidetoppadding">
   <div class="card o-hidden border-0 shadow-lg">

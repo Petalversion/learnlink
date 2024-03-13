@@ -1,7 +1,6 @@
 @extends('layout.main-side')
 
 @section('content')
-
 @foreach($header as $course)
 <title>{{$course->title}}</title>
 @endforeach

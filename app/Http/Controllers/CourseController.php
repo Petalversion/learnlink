@@ -93,18 +93,29 @@ class CourseController extends Controller
             'description' => 'required|string',
             'wyl' => 'required|string',
             'requirements' => 'required|string',
-            'paid' => 'nullable|boolean',
-            'free' => 'nullable|boolean',
             'difficulty' => 'required|in:beginner,intermediate,expert',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'tags' => 'required|array',
+            'category' => 'required',
             'amount' => 'nullable|numeric|min:0',
+            'tags' => 'required',
         ]);
 
         // Get the authenticated instructor
         $instructor = Auth::guard('instructor')->user();
         $validatedData['instructor_id'] = $instructor->instructor_id;
         $validatedData['course_id'] = Str::random(9);
+        $option_validate = $request->input('options');
+
+        if ($option_validate == 0) {
+            $validatedData['free'] = 0;
+            $validatedData['paid'] = 1;
+        } else {
+            $validatedData['free'] = 1;
+            $validatedData['paid'] = 0;
+            $validatedData['amount'] = 0;
+        }
+
+        // dd($request->input('tags'));
 
         // Set the status based on the button clicked
         $status = 'draft';
@@ -121,11 +132,11 @@ class CourseController extends Controller
         // Save the course before attaching tags and categories
         $course->save();
 
-        // Get the tag IDs from the request
-        $tags = $request->input('tags');
+        // Get the category IDs from the request
+        $category = $request->input('category');
 
         // Attach tags and categories to the course
-        $course->tags()->sync($request->input('tags'));
+        $course->categories()->sync($request->input('category'));
 
 
         // If not saved as draft, redirect to course view
@@ -324,6 +335,8 @@ class CourseController extends Controller
                 return $course;
             });
 
+            $instr = Instructor::where('instructor_id', $instructor)->first();
+
             if (Auth::guard('student')->check()) {
                 $sid = Auth::guard('student')->user()->student_id;
                 $check_course = Transactions::where('student_id', $sid)->get();
@@ -413,7 +426,7 @@ class CourseController extends Controller
 
 
             $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
-            return view('course_details', compact('coursesWithReviewsData', 'course_count', 'rounded_rating', 'course_check', 'course_list', 'cart', 'user_info', 'instructor_info', 'totalCourses', 'totalStudents', 'totalReviews', 'totalAverageReviews'));
+            return view('course_details', compact('coursesWithReviewsData', 'course_count', 'rounded_rating', 'course_check', 'course_list', 'cart', 'user_info', 'instructor_info', 'totalCourses', 'totalStudents', 'totalReviews', 'totalAverageReviews', 'instr'));
         }
         return redirect()->route('index');
     }

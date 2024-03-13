@@ -28,6 +28,8 @@ class InstructorController extends Controller
             }
         } elseif (Auth::guard('student')->check()) {
             return redirect()->route('student.profile');
+        } elseif (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
         }
 
         return view('instructor.register'); // Return the view for the registration form
@@ -98,6 +100,8 @@ class InstructorController extends Controller
             }
         } elseif (Auth::guard('student')->check()) {
             return redirect()->route('student.profiles');
+        } elseif (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
         }
 
         return view('instructor.login');

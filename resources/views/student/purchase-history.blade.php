@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>{{$name}} - My Purchases</title>
+
 <div class="sidetoppadding">
     <h1 class="h3 mb-3 text-gray-800"><i class="fa-solid fa-cart-shopping"></i> Purchase History</h1>
     @if(isset($transactions) && $transactions->isNotEmpty())

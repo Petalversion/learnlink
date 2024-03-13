@@ -1,6 +1,8 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>Admin - Withdrawal Requests</title>
+
 <!-- Begin Page Content -->
 <div class="sidetoppadding">
 

@@ -9981,7 +9981,7 @@ body {
 
 @media (max-width: 767px) {
     .hero-section {
-        background-image: url('/img/bg-pattern.jpg');
+        background-image: url('/img/blue.jpg');
         background-size: cover;
         background-position: center;
         height: 500px;
@@ -10006,7 +10006,7 @@ body {
     }
 
     .hero-section {
-        background-image: url('/img/bg-pattern.jpg');
+        background-image: url('/img/blue.jpg');
         background-size: cover;
         background-position: center;
         height: 500px;
@@ -10019,7 +10019,7 @@ body {
     }
 
     .card.sticky-card {
-        margin-top: -450px;
+        margin-top: -550px;
         position: relative;
         z-index: 1001s;
         border-radius: 0;

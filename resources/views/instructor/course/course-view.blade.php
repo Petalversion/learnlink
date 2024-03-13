@@ -1,6 +1,9 @@
 @extends('layout.main-side')
 
 @section('content')
+<title>{{$name}} - {{$course->title}}</title>
+
+
 <div class="sidetoppadding">
 
     <!-- Page Heading -->

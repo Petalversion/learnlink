@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Courses</title>
+  <title> {{number_format(count($coursesWithReviewsData))}} results for "{{$search}}"</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/landing_combined.css">
 </head>
@@ -93,7 +93,7 @@
             <input class="form-check-input" type="checkbox" name="expert" value="expert" id="expertCheckbox" {{ request()->has('expert') ? 'checked' : '' }}>
             <label class="form-check-label" for="flexCheckChecked2">Expert ({{$expertCount}})</label>
           </div>
-          <hr>
+
 
 
           <input class="search" id="searchleft" type="hidden" name="search" value={{$search}}>
@@ -129,6 +129,24 @@
             <input class="form-check-input" type="checkbox" name="paid" value="1" id="paidCheckbox" {{ request()->has('paid') ? 'checked' : '' }}>
             <label class="form-check-label" for="flexCheckChecked">Paid ({{$paidCount}})</label>
           </div>
+          <hr class="mt-0" style="background-color: gray;width: 100%;margin-bottom: 10px;">
+          <h5>Categories</h5>
+          @foreach ($categories as $category)
+          @php
+          $categoryCount = 0;
+          @endphp
+          @foreach($coursesWithReviewsData as $datas)
+          @if($datas->category == $category->id)
+          @php
+          $categoryCount++;
+          @endphp
+          @endif
+          @endforeach
+          <div class="form-check" id="radioCategory">
+            <input type="radio" name="category" value="{{ $category->id }}" class="form-check-input categoryRadio" {{  request()->has('category') && $category->id == $_GET['category'] ? 'checked' : '' }}>
+            <label class="form-check-label" for="categoryRadio_{{ $category->id }}">{{ $category->name }} ({{$categoryCount}})</label>
+          </div>
+          @endforeach
         </form>
         <hr>
       </div>
@@ -154,7 +172,12 @@
           <div class="col-lg-8">
 
             <h5 class="nk-post-title h4"><a href="{{route('course_details', $datas->id)}}">{{$datas->title}}</a></h5>
-            <p class="card-text">{{$datas->summary}}</p>
+            <p class="card-text mb-5">{{$datas->summary}}</p>
+            @php
+            $name = \App\Models\Instructor::where('instructor_id', $datas->instructor_id)->first();
+            @endphp
+
+            <p class="card-text mt-0">Instructor: <strong class="nk-post-title"><a href="{{route('instructor.index',['id'=>$name->id])}}">{{$name->name}}</a></strong></p>
             <div class="ratings" style="margin-top: -15px;">
               @if ($datas->average_score)
               @php
@@ -206,6 +229,7 @@
   const beginnerCheckbox = document.getElementById('beginnerCheckbox');
   const intermediateCheckbox = document.getElementById('intermediateCheckbox');
   const expertCheckbox = document.getElementById('expertCheckbox');
+  var categoryRadios = document.querySelectorAll('.categoryRadio');
 
   // Add event listener to the checkbox
   freeCheckbox.addEventListener('change', function() {
@@ -231,6 +255,14 @@
   expertCheckbox.addEventListener('change', function() {
     // Automatically submit the form when the checkbox value changes
     searchForm.submit();
+  });
+
+  categoryRadios.forEach(function(radio) {
+    // Add change event listener
+    radio.addEventListener('change', function() {
+      // Automatically submit the form when the radio button value changes
+      searchForm.submit();
+    });
   });
 </script>
 @endsection

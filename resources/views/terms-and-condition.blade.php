@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>LearnLink</title>
+    <title>Terms and Conditions</title>
 
     <meta name="description" content="Snow - Clean & Minimal Portfolio HTML template.">
     <meta name="keywords" content="portfolio, clean, minimal, blog, template, portfolio website">
@@ -19,6 +19,11 @@
 
     <!-- START: Styles -->
     <style>
+        * {
+            font-family: "Exo 2", sans-serif;
+            font-optical-sizing: auto;
+        }
+
         .searchbutton {
             margin: 0 10px !important;
         }
@@ -89,9 +94,6 @@
         .nk-main>.container>.row>.col>h4 {
             font-family: "Exo 2", sans-serif;
             font-optical-sizing: auto;
-            font-weight: <weight>;
-            font-style: normal;
-
         }
     </style>
 
