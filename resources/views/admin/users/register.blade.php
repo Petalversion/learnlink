@@ -4,8 +4,8 @@
 <title>Admin - Add New Account</title>
 
 <!-- Begin Page Content -->
-<div class="sidetoppadding">
-  <div class="card o-hidden border-0 shadow-lg">
+<div class="sidetoppadding" style="display: flex; justify-content: center;">
+  <div class="card o-hidden border-0 shadow-lg" style="width:600px;">
     <div class="card-body my-auto">
       <div class="p-3">
         <div class="nk-nav-logo text-center mb-3">
@@ -40,7 +40,7 @@
             </div>
           </div>
           <input type="hidden" name="role" value="admin">
-          <a href="#" onclick="submitRegistration()" class="btn btn-primary btn-user btn-block">
+          <a href="#" onclick="submitRegistration()" class="btn btn-primary btn-user btn-block" id="registerBtn">
             Register
           </a>
         </form>
@@ -50,8 +50,14 @@
 </div>
 <script>
   function submitRegistration() {
+    event.preventDefault();
     var form = document.getElementById('registrationForm');
-    form.submit();
+    if (!form.submitting) {
+      form.submitting = true;
+      document.getElementById('registerBtn').innerText = 'Please wait...';
+      document.getElementById('registerBtn').setAttribute('disabled', 'disabled');
+      form.submit();
+    }
   }
 </script>
 @endsection

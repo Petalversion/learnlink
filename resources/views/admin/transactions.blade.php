@@ -23,10 +23,10 @@
                             @php
                             $student_name = \App\Models\Student::where('student_id', $transaction->student_id)->first();
                             @endphp
-                            <td>{{$student_name->name}}</td>
-                            <td class="text-center">{{$transaction->transaction_id}}</td>
-                            <td class="text-center">{{$transaction->created_at->format('F d, Y')}}</td>
-                            <td class="text-center"><button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                            <td style="vertical-align: middle;">{{$student_name->name}}</td>
+                            <td class="text-center" style="vertical-align: middle;">{{$transaction->transaction_id}}</td>
+                            <td class="text-center" style="vertical-align: middle;">{{$transaction->created_at->format('F d, Y')}}</td>
+                            <td class="text-center" style="vertical-align: middle;"><button type="button" class="btn btn-pill btn-primary" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
                         </tr>
                         <div class="modal fade" id="exampleModal{{ $loop->index }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">

@@ -23,17 +23,17 @@
                         <h2 style="margin-bottom: 2%;"><i class="fa-solid fa-book"></i> Courses</h2>
                         @foreach($courses as $course)
                         <tr>
-                            <td>{{$course->title}}</td>
-                            <td class="text-center">
+                            <td style="vertical-align: middle;">{{$course->title}}</td>
+                            <td class="text-center" style="vertical-align: middle;">
                                 <span class="badge rounded-pill {{$course->difficulty == 'beginner' ? 'badge-beginner' : ($course->difficulty == 'intermediate' ? 'badge-intermediate' : 'badge-expert')}}">
                                     {{$course->difficulty}}
                                 </span>
                             </td>
-                            <td>{{ $course->paid == 1 ? 'Paid' : 'Free' }}</td>
-                            <td class="text-end">{{ $course->paid == 1 ? '₱' . ' ' .
+                            <td style="vertical-align: middle;">{{ $course->paid == 1 ? 'Paid' : 'Free' }}</td>
+                            <td class="text-end" style="vertical-align: middle;">{{ $course->paid == 1 ? '₱' . ' ' .
                                                         number_format($course->amount, 2) : 'Free' }}</td>
-                            <td class="text-center">
-                                <button type="button" onclick="window.location='{{ route('admin.lesson', ['course_id' => $course->id]) }}'" class=" badge badge-pill badge-success"><i class="fa-solid fa-book"></i></button>
+                            <td class="text-center" style="vertical-align: middle;">
+                                <button type="button" onclick="window.location='{{ route('admin.lesson', ['course_id' => $course->id]) }}'" class=" btn btn-pill btn-success"><i class="fa-solid fa-book" style="color: #ffffff;"></i> Lessons</button>
                             </td>
                         </tr>
                         @endforeach

@@ -32,10 +32,10 @@
                     <tbody>
                         @foreach($instructors as $instructor)
                         <tr>
-                            <td>{{$instructor->name}}</td>
-                            <td>{{$instructor->email}}</td>
-                            <td>{{$instructor->created_at->format('F d, Y')}}</td>
-                            <td class="text-center">
+                            <td style="vertical-align: middle;">{{$instructor->name}}</td>
+                            <td style="vertical-align: middle;">{{$instructor->email}}</td>
+                            <td style="vertical-align: middle;">{{$instructor->created_at->format('F d, Y')}}</td>
+                            <td class="text-center" style="vertical-align: middle;">
                                 @if($instructor->status == 'pending' || $instructor->status == 'Pending' )
                                 <span class="badge badge-pill badge-secondary">{{$instructor->status}}</span>
                                 @elseif($instructor->status == 'approved' || $instructor->status == 'Approved' )
@@ -44,9 +44,9 @@
                                 <span class="badge badge-pill badge-danger">{{$instructor->status}}</span>
                                 @endif
                             </td>
-                            <td class="text-center">
-                                <button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}"><i class="fa-solid fa-tag"></i></button>
-                                <button type="button" onclick="window.location='{{ route('admin.course', ['instructor_id' => $instructor->id]) }}'" class=" badge badge-pill badge-info"><i class="fa-solid fa-book"></i></button>
+                            <td class="text-center" style="vertical-align: middle;">
+                                <button type="button" class="btn btn-pill btn-primary" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}"><i class="fa-solid fa-tag"></i> Status</button>
+                                <button type="button" onclick="window.location='{{ route('admin.course', ['instructor_id' => $instructor->id]) }}'" class=" btn btn-pill btn-success" style="color: #ffffff;"><i class="fa-solid fa-book" style="color: #ffffff;"></i> Courses</button>
                             </td>
                         </tr>
                         <div class="modal fade" id="exampleModal{{ $loop->index }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

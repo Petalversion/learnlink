@@ -40,25 +40,25 @@
                             $instructor_name = \App\Models\Instructor::where('instructor_id', $transaction->instructor_id)->first();
                             @endphp
 
-                            <td>{{$instructor_name->name}}</td>
-                            <td class="text-center">{{$transaction->request_id}}</td>
-                            <td class="text-center"><span class="badge badge-pill {{ $transaction->type === 'paypal' ? 'badge-warning' : 'badge-primary' }}">
+                            <td style="vertical-align: middle;">{{$instructor_name->name}}</td>
+                            <td class="text-center" style="vertical-align: middle;">{{$transaction->request_id}}</td>
+                            <td class="text-center" style="vertical-align: middle;"><span class="badge badge-pill {{ $transaction->type === 'paypal' ? 'badge-warning' : 'badge-primary' }}">
                                     {{ $transaction->type === 'paypal' ? 'PayPal' : ($transaction->type === 'gcash' ? 'Gcash' : $transaction->type) }}
                                 </span></td>
                             @php
                             $payment_method = \App\Models\Instructor_info::where('instructor_id', $transaction->instructor_id)->first();
                             @endphp
-                            <td>
+                            <td style="vertical-align: middle;">
                                 @if($transaction->type == 'gcash')
                                 0{{$payment_method->gcash}}
                                 @elseif($transaction->type == 'paypal')
                                 {{$payment_method->paypal}}
                                 @endif
                             </td>
-                            <td class="text-center">₱ {{number_format((($transaction->amount)*-1.00), 2, '.', ',')}}</td>
-                            <td class="text-center">{{$transaction->created_at->format('F d, Y')}}</td>
-                            <td class="text-center"><button type="button" class="badge badge-pill badge-primary" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}"><i class="fa fa-faw fa-receipt" aria-hidden="true"></i></button></td>
-                            <td class="text-center">
+                            <td class="text-center" style="vertical-align: middle;">₱ {{number_format((($transaction->amount)*-1.00), 2, '.', ',')}}</td>
+                            <td class="text-center" style="vertical-align: middle;">{{$transaction->created_at->format('F d, Y')}}</td>
+                            <td class="text-center" style="vertical-align: middle;"><button type="button" class="btn btn-pill btn-primary" data-toggle="modal" data-target="#exampleModal{{ $loop->index }}"><i class="fa-solid fa-money-check-dollar"></i></button></td>
+                            <td class="text-center" style="vertical-align: middle;">
                                 @if(is_null($transaction->reference_id))
                                 <span class="badge badge-pill badge-secondary">Pending</span>
                                 @else
