@@ -62,7 +62,7 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="{{route('student.profile')}}">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-800 small">{{$name}}</span>
                 @if(isset($user_info) && $user_info->profile_picture)
                 <img class="img-profile rounded-circle" src="{{ asset('storage/' . $user_info->profile_picture) }}">
@@ -71,8 +71,16 @@
                 <img class="img-profile rounded-circle" src="/img/9131529.png" alt="Placeholder Image">
                 @endif
               </a>
-              <!-- Dropdown - User Information -->
-
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{{route('student.profile')}}">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="{{route('student.password')}}">
+                  <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Change Password
+                </a>
+              </div>
             </li>
         </nav>
       </div>
@@ -113,6 +121,16 @@
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
+
+      <li class="nav-item {{ request()->routeIs('categories') ? 'active' : '' }}">
+        <a class="nav-link" href="{{route('categories')}}">
+          <i class="fa-solid fa-list"></i>
+          <span>Categories</span>
+        </a>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item {{ (request()->routeIs('admin.student') || request()->routeIs('admin.instructor')) || request()->routeIs('admin.admin') || request()->routeIs('admin.course') || request()->routeIs('admin.lesson') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
@@ -287,7 +305,7 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="{{route('instructor.profile')}}">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-800 small">{{$name}}</span>
                 @if(isset($instructor_info) && $instructor_info->profile_picture)
                 <img class="img-profile rounded-circle" src="{{ asset('storage/' . $instructor_info->profile_picture) }}">
@@ -296,7 +314,16 @@
                 <img class="img-profile rounded-circle" src="/img/9131529.png" alt="Placeholder Image">
                 @endif
               </a>
-              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{{route('instructor.profile')}}">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="{{route('instructor.password')}}">
+                  <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Change Password
+                </a>
+              </div>
             </li>
         </nav>
       </div>
@@ -320,10 +347,24 @@
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
           @csrf
-          <button type="submit">Logout</button>
+          <button type="submit" onclick="disableButton()">Logout</button>
         </form>
-        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="font-weight:700 !important;" class="btn btn-primary">Logout</a>
+        <a href="#" onclick="disableButtonAndSubmit(event)" style="font-weight:700 !important;" class="btn btn-primary" id="logoutBtn">Logout</a>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function disableButtonAndSubmit(event) {
+    event.preventDefault();
+    var logoutForm = document.getElementById('logout-form');
+    if (!logoutForm.submitting) {
+      logoutForm.submitting = true;
+      document.getElementById('logoutBtn').innerText = 'Logging out...';
+      document.getElementById('logoutBtn').setAttribute('disabled', 'disabled');
+      document.getElementById('logoutBtn').style.backgroundColor = 'gray';
+      logoutForm.submit();
+    }
+  }
+</script>

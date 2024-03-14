@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 4%;">Update</button>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 4%;" id="submitBtn">Update</button>
 
                     </div>
                 </form>
@@ -119,5 +119,12 @@
     // Add event listener to radio buttons to call toggleFields function when stion cha 
     document.getElementById('multiple_choice_radio').addEventListener('change', toggleFields);
     document.getElementById('true_false_radio').addEventListener('change', toggleFields);
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            this.setAttribute('disabled', 'true');
+            this.innerText = 'Updating...';
+            document.querySelector('form').submit();
+        });
+    });
 </script>
 @endsection

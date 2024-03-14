@@ -145,7 +145,7 @@
                                         <div class="modal fade" id="deleteLessonModal{{$lesson->id}}" tabindex="-1" aria-labelledby="deleteLessonModal{{$lesson->id}}" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
-                                                    <form action=" {{route('instructor.lesson.lesson-destroy', ['lesson_id' => $lesson->id])}}" method="POST">
+                                                    <form action=" {{route('instructor.lesson.lesson-destroy', ['lesson_id' => $lesson->id])}}" method="POST" id="lessonDeleteForm{{$lesson->id}}">
                                                         @csrf
                                                         @method('DELETE')
 
@@ -159,7 +159,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                            <button type="submit" class="btn btn-danger" onclick="deleteLesson({{$lesson->id}})" id="deleteLesson_{{$lesson->id}}">Delete</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -234,7 +234,7 @@
                                         <div class="modal fade" id="deleteQuizModal{{$question->id}}" tabindex="-1" aria-labelledby="deleteQuizModalLabel{{$question->id}}" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
-                                                    <form action=" {{route('instructor.exam.question-destroy', ['exam_id' => $question->id])}}" method="POST">
+                                                    <form action=" {{route('instructor.exam.question-destroy', ['exam_id' => $question->id])}}" method="POST" id="questionDeleteForm{{$question->id}}">
                                                         @csrf
                                                         @method('DELETE')
 
@@ -249,7 +249,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                            <button type="submit" class="btn btn-danger" onclick="deleteQuestion({{$question->id}})" id="deleteQuestion_{{$question->id}}">Delete</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -265,4 +265,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    function deleteLesson(lessonId) {
+        var deleteBtn = document.getElementById('deleteLesson_' + lessonId);
+        deleteBtn.setAttribute('disabled', 'true');
+        deleteBtn.innerText = 'Deleting...';
+        document.getElementById('lessonDeleteForm' + lessonId).submit();
+    }
+
+    function deleteQuestion(questionId) {
+        var deleteBtn = document.getElementById('deleteQuestion_' + questionId);
+        deleteBtn.setAttribute('disabled', 'true');
+        deleteBtn.innerText = 'Deleting...';
+        document.getElementById('questionDeleteForm' + questionId).submit();
+    }
+</script>
 @endsection

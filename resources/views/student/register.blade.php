@@ -86,7 +86,7 @@
                         Conditions</a>
                     </label>
                   </div>
-                  <a href="#" onclick="submitRegistration()" class="btn btn-primary btn-user btn-block">
+                  <a href="#" onclick="submitRegistration()" class="btn btn-primary btn-user btn-block" id="registerBtn">
                     Register
                   </a>
                   <a href="{{ route('instructor.register') }}" class="btn btn-secondary btn-user btn-block">
@@ -118,8 +118,14 @@
   <!-- Submit button -->
   <script>
     function submitRegistration() {
+      event.preventDefault();
       var form = document.getElementById('registrationForm');
-      form.submit();
+      if (!form.submitting) {
+        form.submitting = true;
+        document.getElementById('registerBtn').innerText = 'Please wait...';
+        document.getElementById('registerBtn').setAttribute('disabled', 'disabled');
+        form.submit();
+      }
     }
   </script>
 

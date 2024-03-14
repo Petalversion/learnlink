@@ -92,42 +92,47 @@ class PaymentController extends Controller
 
     public function success($transaction_id)
     {
-        $userId = Auth::guard('student')->user()->student_id;
-        $total = Cart::where('student_id', $userId)->sum('amount');
-        $cartItems = Cart::where('student_id', $userId)->get();
-        $lineItems = [];
-        foreach ($cartItems as $cartItem) {
-            foreach ($cartItem->courses as $course) {
-                $lineItems[] = [
-                    'course_id' => $course->course_id,
-                    'amount' => $course->amount,
-                ];
+        $check_transaction = Transactions::where('transaction_id', $transaction_id)->first();
+        if ($check_transaction) {
+            return view('thankyou');
+        } else {
+            $userId = Auth::guard('student')->user()->student_id;
+            $total = Cart::where('student_id', $userId)->sum('amount');
+            $cartItems = Cart::where('student_id', $userId)->get();
+            $lineItems = [];
+            foreach ($cartItems as $cartItem) {
+                foreach ($cartItem->courses as $course) {
+                    $lineItems[] = [
+                        'course_id' => $course->course_id,
+                        'amount' => $course->amount,
+                    ];
+                }
             }
-        }
 
-        foreach ($cartItems as $cartItem) {
-            foreach ($cartItem->courses as $course) {
-                $wallet = Instructor_wallet::create([
-                    'instructor_id' => $course->instructor_id,
-                    'course_id' => $course->course_id,
-                    'amount' => ((40 / 100) * $course->amount),
-                ]);
-                $wallet->save();
+            foreach ($cartItems as $cartItem) {
+                foreach ($cartItem->courses as $course) {
+                    $wallet = Instructor_wallet::create([
+                        'instructor_id' => $course->instructor_id,
+                        'course_id' => $course->course_id,
+                        'amount' => ((40 / 100) * $course->amount),
+                    ]);
+                    $wallet->save();
+                }
             }
+
+            $transaction = Transactions::create([
+                'transaction_id' => $transaction_id,
+                'student_id' => $userId,
+                'course_id_amount' => $lineItems,
+                'total_amount' => $total,
+                'type' => 'gcash',
+            ]);
+
+            Cart::where('student_id', $userId)->delete();
+
+
+            return view('thankyou');
         }
-
-        $transaction = Transactions::create([
-            'transaction_id' => $transaction_id,
-            'student_id' => $userId,
-            'course_id_amount' => $lineItems,
-            'total_amount' => $total,
-            'type' => 'gcash',
-        ]);
-
-        Cart::where('student_id', $userId)->delete();
-
-
-        return view('thankyou');
     }
 
 

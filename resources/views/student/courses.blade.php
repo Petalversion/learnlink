@@ -11,6 +11,10 @@
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
+        @elseif(session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
         @endif
         @foreach($courseinfo as $course)
         <div class="col-md-6 col-lg-3 col-sm-12">

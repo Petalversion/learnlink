@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Instructor;
@@ -263,6 +264,55 @@ class InstructorController extends Controller
 
         $questionNotif = count($all_student_comments);
         return view('instructor.profile', compact('name', 'user', 'instructor_info', 'questionNotif'));
+    }
+
+    public function changePassword(Request $request)
+    {
+        $name = Auth::user()->name;
+        $user = Auth::user();
+        $instructor_info = Instructor_info::where('instructor_id', $user->instructor_id)->first();
+        $instructorId = Auth::user()->instructor_id;
+        $instructor = Instructor::where('instructor_id', $user->instructor_id)->first();
+        $all_student_comments = [];
+
+        // Retrieve all courses associated with the instructor
+        $courses = $instructor->courses;
+
+        // Loop through each course
+        $all_student_comments = Questions::whereIn('course_id', $instructor->courses->pluck('course_id'))
+            ->with(['lesson.course', 'student', 'answers' => function ($query) use ($instructorId) {
+                $query->where('instructor_id', $instructorId);
+            }, 'student_info'])
+            ->whereDoesntHave('answers')
+            ->get();
+
+        $questionNotif = count($all_student_comments);
+
+
+        return view('instructor.change_password', compact('name', 'user', 'instructor_info', 'questionNotif'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.'])->withInput();
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password changed successfully.');
     }
 
     public function profileUpdate(Request $request)

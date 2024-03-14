@@ -193,7 +193,7 @@ class CommentsandReviewsController extends Controller
         // Save the course before attaching tags and categories
         $answer->save();
 
-        return redirect()->route('instructor.questions')->with('success', 'Question successfully answered!');
+        return redirect()->back()->with('success', 'Question successfully answered!');
     }
 
     public function reviews()

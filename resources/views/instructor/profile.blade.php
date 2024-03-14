@@ -5,6 +5,7 @@
 
 <!-- End of Topbar -->
 <div class="sidetoppadding">
+    <h1 class="h3 mb-3 text-gray-800"><i class="fa-solid fa-user"></i> Profile</h1>
     @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
@@ -24,7 +25,7 @@
         {{ session('error') }}
     </div>
     @endif
-    <h1 class="h3 mb-3 text-gray-800"><i class="fa-solid fa-user"></i> Profile</h1>
+
     <!-- Page Heading -->
 
 
@@ -32,7 +33,7 @@
 
         <div class="card-body">
             <div class="container">
-                <form class="row gutters" action="{{ route('instructor.profileupdate') }}" method="POST" enctype="multipart/form-data">
+                <form class="row gutters" action="{{ route('instructor.profileupdate') }}" method="POST" enctype="multipart/form-data" id="profileForm">
                     @csrf
                     @method('PUT')
                     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
@@ -48,22 +49,6 @@
                                     </div>
                                     <h6 class="mb-3 text-primary" style="font-size: 20px;">Upload:</h6>
                                     <input class="form-control" type="file" name="profile_picture" accept=".jpeg, .jpg, .png">
-                                </div>
-                                <div class="col-xl-12">
-                                    <h6 class="mb-3 text-primary" style="font-size: 20px;">Change Password</h6>
-                                </div>
-                                <div class="col-xl-12">
-                                    <div class="form-group">
-                                        <label for="oldPassword">Old Password</label>
-                                        <input type="text" class="form-control" id="oldPassword" name="oldPassword" placeholder="Old Password">
-                                    </div>
-                                </div>
-                                <div class="col-xl-12">
-                                    <div class="form-group">
-                                        <label for="newPassword">New Password</label>
-                                        <input type="text" class="form-control" id="newPassword" name="newPassword" placeholder="New Password">
-                                        <input type="text" class="form-control mt-2" id="confirmnewPassword" name="confirmnewPassword" placeholder="Confirm New Password">
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +90,7 @@
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                         <div class="text-right">
-                                            <button type="submit" name="submit" class="btn btn-primary">Update</button>
+                                            <button type="submit" id="submitBtn" onclick="submitProfile()" class="btn btn-primary">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -143,5 +128,16 @@
         .catch(error => {
             console.error(error);
         });
+
+    function submitProfile() {
+        event.preventDefault();
+        var profileForm = document.getElementById('profileForm');
+        if (!profileForm.submitting) {
+            profileForm.submitting = true;
+            document.getElementById('submitBtn').innerText = 'Changing...';
+            document.getElementById('submitBtn').setAttribute('disabled', 'disabled'); // Disable the button
+            profileForm.submit();
+        }
+    }
 </script>
 @endsection

@@ -68,14 +68,14 @@
                                         </div>
                                         @endforeach
 
-                                        <form action="{{ route('add.answer') }}" method="POST">
+                                        <form action="{{ route('add.answer') }}" method="POST" id="questionForm{{ $loop->index }}">
                                             @csrf
                                             <input type="hidden" value="{{ $comment->comment_id }}" name="comment_id">
                                             <input type="hidden" value="{{ $instructor_info->instructor_id }}" name="instructor_id">
                                             <textarea class="form-control" name="comment" cols="30" rows="5" placeholder="Message..."></textarea>
 
                                             <div class="text-right mt-3">
-                                                <button type="submit" name="submit" class="btn btn-primary">Send Reply</button>
+                                                <button type="submit" class="btn btn-primary" onclick="replyQuestion({{ $loop->index }})" id="reply_{{ $loop->index }}">Send Reply</button>
                                             </div>
                                         </form>
                                     </div>
@@ -90,4 +90,12 @@
         </div>
     </div>
 </div>
+<script>
+    function replyQuestion(question) {
+        var replyBtn = document.getElementById('reply_' + question);
+        replyBtn.setAttribute('disabled', 'true');
+        replyBtn.innerText = 'Replying...';
+        document.getElementById('questionForm' + question).submit();
+    }
+</script>
 @endsection

@@ -22,7 +22,15 @@
     </div>
     @endif
   </div>
-
+  @if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+  @endif
   <ul class=" nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="comment-tab" data-bs-toggle="tab" data-bs-target="#comment-tab-pane" type="button" role="tab" aria-controls="comment-tab-pane" aria-selected="true">Comment</button>
@@ -35,17 +43,8 @@
     <div class="tab-pane fade show active" id="comment-tab-pane" role="tabpanel" aria-labelledby="comment-tab" tabindex="0">
       <div class="container-fluid">
         <div class="row">
-          @if ($errors->any())
-          <div class="alert alert-danger">
-            <ul>
-              @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div>
-          @endif
           <div class="col-md-12 ">
-            <form action="{{ route('add.question') }}" method="POST">
+            <form action="{{ route('add.question') }}" method="POST" id="commentForm">
               @csrf
               <div class="form-group">
                 <br>
@@ -56,7 +55,7 @@
                 <textarea class="form-control" rows="5" id="comment" name="comment" required></textarea>
                 <br>
               </div>
-              <button class="btn btn-info" type="submit">Submit</button>
+              <button class="btn btn-info" type="submit" id="commentBtn" onclick="submitComment()">Submit</button>
             </form>
           </div>
         </div>
@@ -114,7 +113,7 @@
         <div class="row">
           <div class="col-10 mx-auto mb-5">
             @if(empty($student_review))
-            <form action="{{ route('add.review') }}" method="POST">
+            <form action="{{ route('add.review') }}" method="POST" id="reviewForm">
               @csrf
               <div class="form-group mt-4">
                 <label for="comment">Review:</label>
@@ -125,7 +124,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  <button class="btn btn-info" type="submit">Submit</button>
+                  <button class="btn btn-info" type="submit" id="reviewBtn" onclick="submitReview()">Submit</button>
                 </div>
                 <div class="col-md-6 text-right">
                   <div class="rate">
@@ -235,4 +234,28 @@
     </div>
   </div>
 </div>
+
+<script>
+  function submitComment() {
+    event.preventDefault();
+    var commentform = document.getElementById('commentForm');
+    if (!commentform.submitting) {
+      commentform.submitting = true;
+      document.getElementById('commentBtn').innerText = 'Please wait...';
+      document.getElementById('commentBtn').setAttribute('disabled', 'disabled');
+      commentform.submit();
+    }
+  }
+
+  function submitReview() {
+    event.preventDefault();
+    var reviewform = document.getElementById('reviewForm');
+    if (!reviewform.submitting) {
+      reviewform.submitting = true;
+      document.getElementById('reviewBtn').innerText = 'Please wait...';
+      document.getElementById('reviewBtn').setAttribute('disabled', 'disabled');
+      reviewform.submit();
+    }
+  }
+</script>
 @endsection

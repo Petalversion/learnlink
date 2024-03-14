@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <button type="submit" name="status" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="status" class="btn btn-primary" id="submitBtn">Submit</button>
                             <!-- <button type="submit" name="status" value="draft"
                                                 class="btn btn-secondary">Save as Draft</button> -->
                         </div>
@@ -117,6 +117,14 @@
     document.getElementById("myForm").addEventListener("submit", function(event) {
         var htmlContent = document.getElementById("editor").innerHTML;
         document.getElementById("contentInput").value = htmlContent;
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            this.setAttribute('disabled', 'true');
+            this.innerText = 'Submitting...';
+            document.querySelector('form').submit();
+        });
     });
 </script>
 @endsection

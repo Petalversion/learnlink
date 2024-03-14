@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Student;
@@ -137,17 +138,20 @@ class StudentController extends Controller
 
     public function showLearn($course_id, $lesson_id)
     {
+        $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
+        $user = Auth::user();
+        $user_info = Student_info::where('student_id', $user->student_id)->first();
+        $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
+        $name = Auth::user()->name;
+        $courses = Transactions::where('student_id', $userId)->get();
+        $courseIds = $courses->flatMap(function ($transaction) {
+            return collect($transaction->course_id_amount)->pluck('course_id');
+        })->unique();
 
-        $course = Course::where('course_id', $course_id)->first();
-        if ($course) {
+        if ($courseIds->contains($course_id)) {
             $lesson = Lesson::where('lesson_id', $lesson_id)->first();
             if ($lesson) {
-                $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
-                $user = Auth::user();
-                $user_info = Student_info::where('student_id', $user->student_id)->first();
-                $cart = $userId ? Cart::where('student_id', $userId)->count() : 0;
-                $name = Auth::user()->name;
-
+                $course = Course::where('course_id', $course_id)->first();
                 $student = Student::get();
                 $student_info = Student_info::get();
                 $student_comment = Questions::where('lesson_id', $lesson->lesson_id)->get();
@@ -157,15 +161,15 @@ class StudentController extends Controller
 
 
 
-                if (!$course) {
+                if (!$courseIds->contains($course_id)) {
                     return redirect()->route('student.profile')->with('error', 'Course not found.');
                 }
 
                 return view('student.learn', compact('course', 'lesson', 'cart', 'name', 'user_info', 'student_comment', 'instructor_comment', 'user', 'course_reviews', 'student_review'));
             }
-            return redirect()->route('student.courses');
+            return redirect()->route('student.courses')->with('error', 'Lesson not found.');
         }
-        return redirect()->route('student.courses');
+        return redirect()->route('student.courses')->with('error', 'Course not found.');
     }
 
     // Handle the login request
@@ -198,8 +202,13 @@ class StudentController extends Controller
         $questions = Exam::where('course_id', $course_id)->get();
         $user = Auth::user();
         $user_info = Student_info::where('student_id', $user->student_id)->first();
+        $userId = Auth::guard('student')->user() ? Auth::guard('student')->user()->student_id : null;
+        $courses = Transactions::where('student_id', $userId)->get();
+        $courseIds = $courses->flatMap(function ($transaction) {
+            return collect($transaction->course_id_amount)->pluck('course_id');
+        })->unique();
 
-        if ($questions) {
+        if ($courseIds->contains($course_id)) {
 
             // Initialize an empty array to hold the formatted questions
             $formattedQuestions = [];
@@ -218,7 +227,7 @@ class StudentController extends Controller
                 // Add the formatted question to the array
                 $formattedQuestions[] = $formattedQuestion;
             }
-
+            shuffle($formattedQuestions);
             // Convert the formatted questions array to JSON
             $jsonFormattedQuestions = json_encode($formattedQuestions);
 
@@ -256,7 +265,7 @@ class StudentController extends Controller
                 return view('student.examination', compact('exams', 'count', 'jsonFormattedQuestions', 'header', 'name', 'user_info', 'coursex', 'remainingTime', 'attempt'));
             }
         }
-        return redirect()->route('student.courses');
+        return redirect()->route('student.courses')->with('error', 'Course not found.');
     }
 
 
@@ -307,16 +316,6 @@ class StudentController extends Controller
         $user_info = Student_info::where('student_id', $user->student_id)->first();
         $transactions = Transactions::where('student_id', $user->student_id)->get();
 
-        // foreach ($transactions as $transaction) {
-        //     foreach ($transaction->course_id_amount as $courseDetail) {
-        //         $courseId = $courseDetail['course_id'];
-        //         $course = Course::find($courseId);
-        //         // if ($course) {
-        //         //     $title = $course->title;
-        //         // }
-        //     }
-        // }
-
 
         return view('student.purchase-history', compact('name', 'user_info', 'transactions'));
     }
@@ -347,5 +346,38 @@ class StudentController extends Controller
         $date_today = date("Ymd");
         $random_string = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 7);
         return 'LL' . $date_today . '-' . $random_string;
+    }
+
+    public function changePassword(Request $request)
+    {
+        $name = Auth::user()->name;
+        $user = Auth::user();
+        $user_info = Student_info::where('student_id', $user->student_id)->first();
+
+
+        return view('student.change_password', compact('name', 'user', 'user_info'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.'])->withInput();
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password changed successfully.');
     }
 }

@@ -64,7 +64,7 @@
                                 <input type="radio" name="payment" value="paypal">
                                 <label for="paypal">PayPal (<strong>{{$instructor_info->paypal}}</strong>)</label><br>
                                 <hr>
-                                <button type="submit" class="btn btn-primary " style="border-radius: 20px;">Submit</button>
+                                <button type="submit" class="btn btn-primary " style="border-radius: 20px;" id="submitBtn">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -90,6 +90,14 @@
         if (valueParts.length > 1 && valueParts[1].length > 2) {
             this.value = parseFloat(this.value).toFixed(2);
         }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            this.setAttribute('disabled', 'true');
+            this.innerText = 'Submitting...';
+            document.querySelector('form').submit();
+        });
     });
 </script>
 @endsection

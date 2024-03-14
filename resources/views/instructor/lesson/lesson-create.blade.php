@@ -44,7 +44,7 @@
                             <input type="file" id="video_source" name="video_source" class="form-control" accept=".mp4, .mov, .avi">
                         </div>
                         <div class="mb-3">
-                            <button type="submit" name="status" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="status" class="btn btn-primary" id="submitBtn">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -65,5 +65,14 @@
         .catch(error => {
             console.error(error);
         });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            this.setAttribute('disabled', 'true');
+            this.innerText = 'Submitting...';
+            document.querySelector('form').submit();
+        });
+    });
 </script>
 @endsection

@@ -64,7 +64,7 @@
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
                                             </div>
-                                            <a href="#" onclick="submitLoginForm()" class="btn btn-danger btn-user btn-block mt-2">
+                                            <a href="#" onclick="submitLoginForm()" class="btn btn-danger btn-user btn-block mt-2" id="loginBtn">
                                                 Login
                                             </a>
                                         </form>
@@ -92,8 +92,14 @@
     <!-- Submit button -->
     <script>
         function submitLoginForm() {
+            event.preventDefault();
             var form = document.getElementById('loginForm');
-            form.submit();
+            if (!form.submitting) {
+                form.submitting = true;
+                document.getElementById('loginBtn').innerText = 'Logging in...';
+                document.getElementById('loginBtn').setAttribute('disabled', 'disabled');
+                form.submit();
+            }
         }
     </script>
 

@@ -167,7 +167,7 @@
                                 </div>
                                 <hr>
                                 <div class="container p-0 mt-3 mb-3" style="border-radius: 15px;">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
                                 </div>
 
 
@@ -299,7 +299,9 @@
     document.getElementById('course-form').addEventListener('submit',
         function(e) {
             e.preventDefault();
-
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.setAttribute('disabled', 'true');
+            submitBtn.innerText = 'Submitting...';
             const tags = document.querySelectorAll('.tags');
 
             tags.forEach(tag => {

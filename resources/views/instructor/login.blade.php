@@ -76,7 +76,7 @@
                                                         Me</label>
                                                 </div>
                                             </div>
-                                            <a href="#" onclick="submitLoginForm()" class="btn btn-danger btn-user btn-block mt-2">
+                                            <a href="#" onclick="submitLoginForm()" class="btn btn-danger btn-user btn-block mt-2" id="loginBtn">
                                                 Login
                                             </a>
                                             <a href="{{ route('student.login') }}" class="btn btn-secondary btn-user btn-block mt-2">
@@ -112,13 +112,19 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
     <!-- Submit button -->
+
     <script>
         function submitLoginForm() {
+            event.preventDefault();
             var form = document.getElementById('loginForm');
-            form.submit();
+            if (!form.submitting) {
+                form.submitting = true;
+                document.getElementById('loginBtn').innerText = 'Logging in...';
+                document.getElementById('loginBtn').setAttribute('disabled', 'disabled');
+                form.submit();
+            }
         }
     </script>
-
 </body>
 
 </html>

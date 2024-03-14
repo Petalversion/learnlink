@@ -257,7 +257,6 @@ class CourseController extends Controller
             'category' => 'required',
             'tags' => 'required|array|min:1',
             'amount' => 'nullable|numeric',
-            'tags' => 'required',
 
             // Add any other validation rules for your fields
         ]);

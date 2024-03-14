@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\Category;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Reviews;
@@ -265,6 +266,64 @@ class AdminController extends Controller
         $toc->save();
 
         return redirect()->route('toc', compact('name'))->with('success', 'Information updated successfully.');
+    }
+
+    public function categories(Request $request)
+    {
+        $name = Auth::user()->name;
+        $user = Auth::user();
+        $categories = Category::all();
+        $transactions = Instructor_wallet::whereNotNull('request_id')->get();
+        $pendingInstructor = Instructor::where('status', 'pending')->count();
+        $withdrawalRequest = Instructor_wallet::where('amount', '<', 0)->whereNull('reference_id')->count();
+
+        return view('admin.categories', compact('name', 'withdrawalRequest', 'pendingInstructor', 'categories'));
+    }
+
+    public function storeCategories(Request $request)
+    {
+        $name = Auth::user()->name;
+
+        $request->validate([
+            'toc' => 'required',
+        ]);
+        $toc = toc::first();
+        $toc->content = $request->input('toc');
+        $toc->save();
+
+        return redirect()->route('toc', compact('name'))->with('success', 'Information updated successfully.');
+    }
+
+    public function updateCategories(Request $request)
+    {
+
+        $request->validate([
+            'category' => 'required',
+        ]);
+        $id = $request->input('categoryid');
+        $cat = Category::where('id', $id)->first();
+        $cat->name = $request->input('category');
+        $cat->save();
+
+        return redirect()->back()->with('success', 'Category updated successfully.');
+    }
+
+    public function addCategories(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'category' => 'required',
+            ]);
+
+            $cat = new Category();
+            $cat->name = $validatedData['category'];
+            $cat->save();
+
+            return redirect()->back()->with('success', 'New Category Added.');
+        } catch (\Exception $e) {
+            // Handle the exception (e.g., log the error, display a user-friendly error message)
+            return redirect()->back()->with('error', 'Failed to add new category. Please try again.');
+        }
     }
     // Define other admin-specific actions or methods as needed
 }

@@ -85,7 +85,10 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/users/new-admin', [AdminController::class, 'register']);
     Route::post('/admin/users/new-admin', [AdminController::class, 'store']);
     Route::get('/admin/toc', [AdminController::class, 'toc'])->name('toc');
+    Route::get('/admin/categories', [AdminController::class, 'categories'])->name('categories');
     Route::put('/admin/toc/update', [AdminController::class, 'tocUpdate'])->name('toc.update');
+    Route::put('/admin/categories/update', [AdminController::class, 'updateCategories'])->name('categories.update');
+    Route::post('/admin/categories/add', [AdminController::class, 'addCategories'])->name('categories.add');
 });
 
 Route::middleware('auth:instructor')->group(function () {
@@ -122,6 +125,8 @@ Route::middleware('auth:instructor')->group(function () {
     Route::get('instructor/reviews', [CommentsandReviewsController::class, 'reviews'])->name('instructor.reviews');
     Route::post('/instructor/add-answer/', [CommentsandReviewsController::class, 'storeAnswer'])->name('add.answer');
     Route::get('/instructor/profile', [InstructorController::class, 'profile'])->name('instructor.profile');
+    Route::get('/instructor/change-password', [InstructorController::class, 'changePassword'])->name('instructor.password');
+    Route::put('/instructor/update-password', [InstructorController::class, 'updatePassword'])->name('instructor.change');
     Route::put('/instructor/profile/update', [InstructorController::class, 'profileUpdate'])->name('instructor.profileupdate');
     Route::get('/instructor/withdrawal-history', [InstructorWalletController::class, 'showTransactions'])->name('instructor.transactions');
     Route::get('/instructor/withdrawal-request', [InstructorWalletController::class, 'newTransactions'])->name('instructor.transactions.new');
@@ -151,4 +156,10 @@ Route::middleware('auth:student')->group(function () {
     Route::post('/student/add-review/', [CommentsandReviewsController::class, 'storeReview'])->name('add.review');
     Route::get('/student/free/success/{course_id}', [StudentController::class, 'success'])->name('free.success');
     Route::get('/student/purchase-history', [StudentController::class, 'history'])->name('student.history');
+    Route::get('/student/change-password', [StudentController::class, 'changePassword'])->name('student.password');
+    Route::put('/student/update-password', [StudentController::class, 'updatePassword'])->name('student.change');
 });
+
+Route::get('/{any}', function () {
+    return redirect()->route('index');
+})->where('any', '.*');

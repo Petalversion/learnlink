@@ -45,7 +45,7 @@
                                 <div class="col-lg-6">
                                     <div class="p-4">
                                         <div class="nk-nav-logo text-center mb-3">
-                                            <a href="html" class="nk-nav-logo">
+                                            <a href="{{ route('index') }}" class="nk-nav-logo">
                                                 <img src="/img/blcck.png" alt="" width="120">
                                             </a>
                                         </div>
@@ -76,7 +76,7 @@
                                                         Me</label>
                                                 </div>
                                             </div>
-                                            <a href="#" onclick="submitLoginForm()" class="btn btn-danger btn-user btn-block mt-2">
+                                            <a href="#" onclick="submitLoginForm()" class="btn btn-danger btn-user btn-block mt-2" id="loginBtn">
                                                 Login
                                             </a>
                                             <a href="{{ route('instructor.login') }}" class="btn btn-secondary btn-user btn-block mt-2">
@@ -114,8 +114,14 @@
     <!-- Submit button -->
     <script>
         function submitLoginForm() {
+            event.preventDefault();
             var form = document.getElementById('loginForm');
-            form.submit();
+            if (!form.submitting) {
+                form.submitting = true;
+                document.getElementById('loginBtn').innerText = 'Logging in...';
+                document.getElementById('loginBtn').setAttribute('disabled', 'disabled');
+                form.submit();
+            }
         }
     </script>
 
