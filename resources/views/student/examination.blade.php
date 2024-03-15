@@ -1,6 +1,7 @@
 @extends('layout.main-side')
 
 @section('content')
+
 @foreach($header as $course)
 <title>{{$course->title}}</title>
 @endforeach
@@ -23,17 +24,18 @@
 
     @else
     <!-- start Quiz button -->
-    <div class="start_btn text-center" style="margin-left: 50px;"><button>Start Quiz</button></div>
+    <div class="start_btn text-center"><button>Start Quiz</button></div>
 
     <!-- Info Box -->
-    <div class="info_box " style="margin-left: 50px;">
+    <div class="info_box" style="z-index: 1001">
         <div class="info-title"><span>Rules of this Quiz</span></div>
         <div class="info-list">
             <div class="info">1. You will have only <span>60 seconds</span> per each question.</div>
             <div class="info">2. Once you select your answer, it can't be undone.</div>
             <div class="info">3. You can't select any option once time goes off.</div>
-            <div class="info">4. You can't exit from the Quiz while you're playing.</div>
-            <div class="info">5. You'll get points on the basis of your correct answers.</div>
+            <div class="info">4. You'll get points on the basis of your correct answers.</div>
+            <div class="info">5. Requirement to pass: <span>75%</span>.</div>
+            <div class="info">6. If you fail <span>3</span> times in a row you won't be able to retake the quiz for<span> 24hrs</span>.</div>
         </div>
         <div class="buttons">
             <button class="quit">Exit Quiz</button>
@@ -42,7 +44,7 @@
     </div>
 
     <!-- Quiz Box -->
-    <div class="quiz_box " style="margin-left: 50px;">
+    <div class="quiz_box" style="z-index: 1001">
         <header>
             <div class="title"></div>
             <div class="timer">
@@ -70,7 +72,7 @@
     </div>
 
     <!-- Result Box -->
-    <div class="result_box" style="margin-left: 50px;">
+    <div class="result_box" style="z-index: 1001">
 
         <div class="complete_text">You've completed the Quiz!</div>
         <div class="score_text">

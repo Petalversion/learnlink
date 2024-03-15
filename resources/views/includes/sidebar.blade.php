@@ -7,10 +7,28 @@
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
         <a href="{{route('index')}}" class="nk-nav-logo">
-          <img src="/img/white.png" alt="" width="105" class="logo-img large-img" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
-          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;margin-top:15px;margin-left:32px;margin-bottom:15px">
+          <img src="/img/white.png" alt="" width="105" class="logo-img large-img">
+          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;">
         </a>
       </div>
+
+
+      <hr class="sidebar-divider my-0 mobile-only-nav-item">
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item {{ request()->routeIs('student.profile') || request()->routeIs('student.password') ? 'active' : '' }} mobile-only-nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProfile" aria-expanded="true" aria-controls="collapseProfile">
+          <i class="fas fa-fw fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <div id="collapseProfile" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Profile:</h6>
+            <a class="collapse-item" href="{{route('student.profile')}}">Update Info</a>
+            <a class="collapse-item" href="{{route('student.password')}}">Change Password</a>
+          </div>
+        </div>
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
       <!-- Nav Item - Pages Collapse Menu -->
@@ -97,8 +115,8 @@
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
         <a href="{{route('index')}}" class="nk-nav-logo">
-          <img src="/img/white.png" alt="" width="105" class="logo-img large-img" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
-          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;margin-top:15px;margin-left:32px;margin-bottom:15px">
+          <img src="/img/white.png" alt="" width="105" class="logo-img large-img">
+          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;">
         </a>
       </div>
       <!-- Divider -->
@@ -110,6 +128,7 @@
           <span>Dashboard</span>
         </a>
       </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -224,10 +243,26 @@
       <!-- Sidebar - Brand -->
       <div class="nk-nav-logo">
         <a href="{{route('index')}}" class="nk-nav-logo">
-          <img src="/img/white.png" alt="" width="105" class="logo-img large-img" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px;">
-          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;margin-top:15px;margin-left:32px;margin-bottom:15px">
+          <img src="/img/white.png" alt="" width="105" class="logo-img large-img">
+          <img src="/img/ll-white.png" alt="" class="logo-img small-img" style="height: 40px;">
         </a>
       </div>
+
+      <hr class="sidebar-divider my-0 mobile-only-nav-item">
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item {{ request()->routeIs('instructor.profile') || request()->routeIs('instructor.password') ? 'active' : '' }} mobile-only-nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProfile" aria-expanded="true" aria-controls="collapseProfile">
+          <i class="fas fa-fw fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <div id="collapseProfile" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Profile:</h6>
+            <a class="collapse-item" href="{{route('instructor.profile')}}">Update Info</a>
+            <a class="collapse-item" href="{{route('instructor.password')}}">Change Password</a>
+          </div>
+        </div>
+      </li>
       <!-- Divider -->
       <hr class=" sidebar-divider my-0">
       <!-- Nav Item - Dashboard -->

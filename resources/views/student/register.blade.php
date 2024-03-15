@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
+  <link rel="icon" type="image/png" href="/img/favicon.png">
   <title>Student - Register</title>
 
   <!-- Custom fonts for this template-->
@@ -51,7 +51,7 @@
                   </a>
                 </div>
                 <div class="text-center">
-                  <h1 class="h5 text-gray-800 mb-4">Create an Account!</h1>
+                  <h1 class="h5 text-gray-800 mb-4">Create a Student Account!</h1>
                 </div>
                 <form id="registrationForm" class="user" action="{{ route('student.register') }}" method="POST">
                   @csrf
@@ -82,11 +82,11 @@
                   <div class="form-check mb-4">
                     <input class="form-check-input" type="checkbox" id="termsCheckbox" name="termsCheckbox" required>
                     <label class="form-check-label" for="termsCheckbox">
-                      <a href="#" id="termsLink" style="text-decoration:none;">Terms and
+                      <a href="{{ route('terms.condition')}}" id="termsLink" style="text-decoration:none;">Terms and
                         Conditions</a>
                     </label>
                   </div>
-                  <a href="#" onclick="submitRegistration()" class="btn btn-primary btn-user btn-block" id="registerBtn">
+                  <a href="{{ route('instructor.register') }}" onclick="submitRegistration()" class="btn btn-primary btn-user btn-block" id="registerBtn">
                     Register
                   </a>
                   <a href="{{ route('instructor.register') }}" class="btn btn-secondary btn-user btn-block">

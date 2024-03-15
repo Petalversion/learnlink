@@ -116,8 +116,8 @@ function showQuetions(index) {
     }
 }
 // creating the new div tags which for icons
-let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
-let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
+let tickIconTag = '';
+let crossIconTag = '';
 
 //if user clicked on option
 function optionSelected(answer) {
@@ -131,17 +131,18 @@ function optionSelected(answer) {
         userScore += 1; //upgrading score value with 1
         answer.classList.add("correct"); //adding green color to correct selected option
         answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
-        console.log("Correct Answer");
-        console.log("Your correct answers = " + userScore);
+        // console.log("Correct Answer");
+        // console.log("Your correct answers = " + userScore);
     } else {
         answer.classList.add("incorrect"); //adding red color to correct selected option
         answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
-        console.log("Wrong Answer");
+        // console.log("Wrong Answer");
     }
     for (i = 0; i < allOptions; i++) {
         option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
     }
-    next_btn.classList.add("show"); //show the next button if user selected any option
+    next_btn.classList.add("show");
+    //show the next button if user selected any option
 }
 
 
@@ -158,19 +159,19 @@ function showResult() {
     if (userScore > (questions.length * 0.9)) { // if user scored more than 3
         //creating a new span tag and passing the user score number and total question number
         let percentage = (userScore / questions.length) * 100;
-        let scoreTag = '<span>and congrats! 🎉, You got <p>' + percentage.toFixed(2) + '%</p></span>';
+        let scoreTag = '<span>You got <p>' + percentage.toFixed(2) + '%</p></span>';
         scoreText.innerHTML = scoreTag;
         saveScoreToDatabase(percentage); //adding new span tag inside score_Text
     }
     else if (userScore > (questions.length * 0.75)) { // if user scored more than 1
         let percentage = (userScore / questions.length) * 100;
-        let scoreTag = '<span>and nice 😎, You got <p>' + percentage.toFixed(2) + '%</p></span>';
+        let scoreTag = '<span>You got <p>' + percentage.toFixed(2) + '%</p></span>';
         scoreText.innerHTML = scoreTag;
         saveScoreToDatabase(percentage);
     }
     else { // if user scored less than 1
         let percentage = (userScore / questions.length) * 100;
-        let scoreTag = '<span>and sorry 😐, You got only <p>' + percentage.toFixed(2) + '%</p></span>';
+        let scoreTag = '<span>You got only <p>' + percentage.toFixed(2) + '%</p></span>';
         scoreText.innerHTML = scoreTag;
         saveScoreToDatabase(percentage);
     }
@@ -200,7 +201,7 @@ function startTimer(time) {
             for (i = 0; i < allOptions; i++) {
                 option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
             }
-            next_btn.classList.add("show"); //show the next button if user selected any option
+            next_btn.click(); //show the next button if user selected any option
         }
     }
 }

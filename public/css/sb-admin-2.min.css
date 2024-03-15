@@ -12791,3 +12791,9 @@ body.sidebar-toggled footer.sticky-footer {
         padding-right: 14px;
     }
 }
+
+@media (min-width: 769px) {
+    .mobile-only-nav-item {
+        display: none;
+    }
+}

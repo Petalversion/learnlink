@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="/img/favicon.png">
-    <title>Student - Login</title>
+    <title>Password Reset</title>
 
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -40,19 +40,29 @@
                             <!-- Nested Row within Card Body -->
                             <div class="row">
                                 <div class="col-lg-6 d-none d-lg-block">
-                                    <img class="img-fluid mt-4" src="/img/chil.png" alt="image">
+                                    <img class="img-fluid mt-4" src="/img/log.png" alt="image">
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 d-flex align-items-center justify-content-center">
                                     <div class="p-4">
+                                        @if(session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                        @endif
+                                        @if(session('error'))
+                                        <div class="alert alert-danger">
+                                            {{ session('error') }}
+                                        </div>
+                                        @endif
                                         <div class="nk-nav-logo text-center mb-3">
                                             <a href="{{ route('index') }}" class="nk-nav-logo">
                                                 <img src="/img/blcck.png" alt="" width="120">
                                             </a>
                                         </div>
                                         <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back Student!</h1>
+                                            <h1 class="h4 text-gray-900 mb-4">Reset your Password</h1>
                                         </div>
-                                        <form class="user" id="loginForm" action="{{ route('student.login') }}" method="POST">
+                                        <form class="user" id="loginForm" action="{{ route('instructor.reset') }}" method="POST">
                                             @csrf
                                             @if($errors->any())
                                             <div class="alert alert-danger">
@@ -63,38 +73,17 @@
                                                 </ul>
                                             </div>
                                             @endif
-                                            @if(session('success'))
-                                            <div class="alert alert-success">
-                                                {{ session('success') }}
-                                            </div>
-                                            @endif
                                             <div class="form-group">
-                                                <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email Address..." value="{{ old('email') }}">
+                                                <input type="hidden" name="token" value="{{ $token }}">
+                                                <input class="form-control form-control-user mb-2" type="email" name="email" value="{{ $email }}" readonly>
+                                                <input class="form-control form-control-user mb-2" type="password" name="password" placeholder="New Password" required>
+                                                <input class="form-control form-control-user" type="password" name="password_confirmation" placeholder="Confirm New Password" required>
                                             </div>
-                                            <div class="form-group">
-                                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox small">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                    <label class="custom-control-label" for="customCheck">Remember
-                                                        Me</label>
-                                                </div>
-                                            </div>
-                                            <a href="#" onclick="submitLoginForm()" class="btn btn-primary btn-user btn-block mt-2" id="loginBtn">
-                                                Login
-                                            </a>
-                                            <a href="{{ route('instructor.login') }}" class="btn btn-secondary btn-user btn-block mt-2">
-                                                Login as Instructor
-                                            </a>
 
+                                            <a href="#" onclick="submitLoginForm()" class="btn btn-danger btn-user btn-block mt-2" id="loginBtn">
+                                                Reset Password
+                                            </a>
                                         </form>
-                                        <div class="text-center mt-3">
-                                            <a class="small" href="{{ route('student.forgot') }}">Forgot Password?</a>
-                                        </div>
-                                        <div class="text-center">
-                                            <a class="small" href="{{ route('student.register') }}">Create an Account!</a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +112,7 @@
             var form = document.getElementById('loginForm');
             if (!form.submitting) {
                 form.submitting = true;
-                document.getElementById('loginBtn').innerText = 'Logging in...';
+                document.getElementById('loginBtn').innerText = 'Resetting...';
                 document.getElementById('loginBtn').setAttribute('disabled', 'disabled');
                 form.submit();
             }

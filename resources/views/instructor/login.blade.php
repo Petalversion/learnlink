@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="icon" type="image/png" href="/img/favicon.png">
     <title>Instructor - Login</title>
 
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -50,7 +50,7 @@
                                             </a>
                                         </div>
                                         <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back Instructor!</h1>
                                         </div>
                                         <form class="user" id="loginForm" action="{{ route('instructor.login') }}" method="POST">
                                             @csrf
@@ -76,16 +76,16 @@
                                                         Me</label>
                                                 </div>
                                             </div>
-                                            <a href="#" onclick="submitLoginForm()" class="btn btn-danger btn-user btn-block mt-2" id="loginBtn">
+                                            <a href="#" onclick="submitLoginForm()" class="btn btn-primary btn-user btn-block mt-2" id="loginBtn">
                                                 Login
                                             </a>
-                                            <a href="{{ route('student.login') }}" class="btn btn-secondary btn-user btn-block mt-2">
+                                            <a href="{{ route('student.login') }}" class="btn btn-warning btn-user btn-block mt-2">
                                                 Login as Student
                                             </a>
 
                                         </form>
                                         <div class="text-center mt-3">
-                                            <a class="small" href="#">Forgot Password?</a>
+                                            <a class="small" href="{{ route('instructor.forgot') }}">Forgot Password?</a>
                                         </div>
                                         <div class="text-center">
                                             <a class="small" href="{{ route('instructor.register') }}">Create an Account!</a>

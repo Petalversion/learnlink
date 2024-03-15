@@ -51,7 +51,7 @@
                   </a>
                 </div>
                 <div class="text-center">
-                  <h1 class="h5 text-gray-800 mb-4">Create an Account!</h1>
+                  <h1 class="h5 text-gray-800 mb-4">Create an Instructor Account!</h1>
                 </div>
                 <form id="registrationForm" class="user" action="{{ route('instructor.register') }}" method="POST">
                   @csrf
@@ -82,7 +82,7 @@
                   <div class="form-check mb-4">
                     <input class="form-check-input" type="checkbox" id="termsCheckbox" name="termsCheckbox" required>
                     <label class="form-check-label" for="termsCheckbox">
-                      <a href="#" id="termsLink" style="text-decoration:none;">Terms and
+                      <a href="{{ route('terms.condition')}}" id="termsLink" style="text-decoration:none;">Terms and
                         Conditions</a>
                     </label>
                   </div>

@@ -54,6 +54,10 @@ Route::post('/instructor/register', [InstructorController::class, 'store']);
 // Instructor Login
 Route::get('/instructor/login', [InstructorController::class, 'showLoginForm'])->name('instructor.login');
 Route::post('/instructor/login', [InstructorController::class, 'login']);
+Route::get('/instructor/forgot-password', [InstructorController::class, 'showForgotPasswordForm'])->name('instructor.forgot');
+Route::post('/instructor/forgot-password', [InstructorController::class, 'forgotPassword'])->name('instructor.send');
+Route::get('/instructor/forgot-password/reset/{token}', [InstructorController::class, 'showPasswordResetForm'])->name('instructor.newpass');
+Route::post('/instructor/forgot-password/reset/', [InstructorController::class, 'PasswordResetForm'])->name('instructor.reset');
 
 // Student Registration
 Route::get('/student/register', [StudentController::class, 'showRegistrationForm'])->name('student.register');
@@ -63,6 +67,10 @@ Route::post('/student/register', [StudentController::class, 'store']);
 //Student Login
 Route::get('/login', [StudentController::class, 'showLoginForm'])->name('student.login');
 Route::post('/login', [StudentController::class, 'login'])->name('student.login');
+Route::get('/forgot-password', [StudentController::class, 'showForgotPasswordForm'])->name('student.forgot');
+Route::post('/forgot-password', [StudentController::class, 'forgotPassword'])->name('student.send');
+Route::get('/forgot-password/reset/{token}', [StudentController::class, 'showPasswordResetForm'])->name('student.newpass');
+Route::post('/forgot-password/reset/', [StudentController::class, 'PasswordResetForm'])->name('student.reset');
 
 //Search
 Route::get('/search', [IndexController::class, 'search'])->name('search');

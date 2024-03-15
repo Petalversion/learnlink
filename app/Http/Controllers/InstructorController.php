@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -355,5 +357,95 @@ class InstructorController extends Controller
             // Redirecting back with error message if an exception occurs
             return redirect()->back()->with('error', 'Failed to update information. Please try again.');
         }
+    }
+    public function showForgotPasswordForm()
+    {
+        if (Auth::guard('instructor')->check()) {
+            return redirect()->route('instructor.dashboard');
+        } elseif (Auth::guard('student')->check()) {
+            return redirect()->route('student.profile');
+        } elseif (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('instructor.forgot');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|email|exists:instructor_users,email']);
+
+        $token = Str::random(60);
+        $email = $request->email;
+
+        // Insert or update the token in the database
+        DB::table('password_resets')->updateOrInsert(
+            ['email' => $email],
+            [
+                'email' => $email,
+                'token' => Hash::make($token),
+                'created_at' => now()
+            ]
+        );
+
+        // Send email
+        $resetLink = url('/instructor/forgot-password/reset/' . $token . '?email=' . urlencode($email));
+        Mail::send('emails.forgot-pasword-form', ['link' => $resetLink], function ($message) use ($email) {
+            $message->to($email)->subject('Your Password Reset Link');
+        });
+
+        return redirect()->route('instructor.login')->with('success', 'We have emailed your password reset link!');
+    }
+
+    public function showPasswordResetForm(Request $request)
+    {
+        if (Auth::guard('instructor')->check()) {
+            return redirect()->route('instructor.dashboard');
+        } elseif (Auth::guard('student')->check()) {
+            return redirect()->route('student.profile');
+        } elseif (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        $token = $request->route('token');
+        $email = $request->email;
+
+        return view('instructor.newpassword', compact('token', 'email'));
+    }
+
+    public function PasswordResetForm(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        $resetData = DB::table('password_resets')
+            ->where('email', $request->email)
+            ->first();
+
+        if (!$resetData) {
+            return back()->withInput()->withErrors(['email' => 'Email not found']);
+        }
+
+        // Check if the token matches the hashed token in the database
+        if (!Hash::check($request->token, $resetData->token)) {
+            return back()->withInput()->withErrors(['token' => 'Invalid token']);
+        }
+
+        $user = Instructor::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withInput()->withErrors(['email' => 'Email not found']);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Optionally, delete the password reset entry from the password_resets table
+        DB::table('password_resets')->where('email', $request->email)->delete();
+
+        return redirect()->route('instructor.login')->with('success', 'Your password has been reset successfully');
     }
 }
