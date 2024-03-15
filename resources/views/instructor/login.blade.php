@@ -77,7 +77,7 @@
                                                 </div>
                                             </div>
                                             <a href="#" onclick="submitLoginForm()" class="btn btn-primary btn-user btn-block mt-2" id="loginBtn">
-                                                Login
+                                                Log In
                                             </a>
                                             <a href="{{ route('student.login') }}" class="btn btn-warning btn-user btn-block mt-2">
                                                 Login as Student

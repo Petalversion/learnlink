@@ -1,3 +1,41 @@
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<style>
+    .exo-h3 {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 40px;
+    }
+
+    .exo-h2 {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 50px;
+    }
+
+    .exo-h1 {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 70px;
+    }
+
+    .exo-p {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 15px;
+    }
+
+    .exo-price {
+        font-family: "Exo 2", sans-serif !important;
+        font-optical-sizing: auto !important;
+        font-size: 20px !important;
+    }
+
+    .exo-title {
+        font-family: "Exo 2", sans-serif;
+        font-optical-sizing: auto;
+        font-size: 25px;
+    }
+</style>
 <header class="nk-header">
     <!--  START: Navbar -->
     <nav class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-transparent nk-navbar-white-text-on-top">
@@ -17,14 +55,14 @@
                 <ul class="nk-nav nk-nav-right hidden-md-down" data-nav-mobile="#nk-nav-mobile">
                     @if(Auth::guard('instructor')->check())
                     <li>
-                        <a href="{{ route('instructor.dashboard') }}" style="color:#31dcfe; font-weight:750 !important;">DASHBOARD</a>
+                        <a class="exo-price" href="{{ route('instructor.dashboard') }}" style="color:#31dcfe; font-weight:750 !important;">DASHBOARD</a>
                     </li>
                     <li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                             <button type="submit">Logout</button>
                         </form>
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="
+                        <a class="exo-price" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="
                             font-weight:700 !important;">LOGOUT</a>
 
                     </li>
@@ -41,7 +79,7 @@
                     </li>
                     @elseif(Auth::guard('student')->check())
                     <li>
-                        <a href="{{ route('student.profile') }}" style="color:#31dcfe; font-weight:750 !important;">PROFILE</a>
+                        <a class="exo-price" href="{{ route('student.profile') }}" style="color:#31dcfe; font-weight:750 !important;">PROFILE</a>
                     </li>
                     <li>
                         <a href="{{ route('student.cart') }}">
@@ -56,8 +94,8 @@
                             @csrf
                             <button type="submit">Logout</button>
                         </form>
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="
-                            font-weight:700 !important;">LOGOUT</a>
+                        <a class="exo-price" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="
+                            font-weight:700 !important; ">LOGOUT</a>
 
                     </li>
                     <li>
@@ -72,14 +110,14 @@
                     </li>
                     @else
                     <li>
-                        <a href="{{ route('become.instructor') }}" style="color:#31dcfe; font-weight:750 !important;">Become an
+                        <a class="exo-price" href="{{ route('become.instructor') }}" style="color:#31dcfe; font-weight:750 !important;">Become an
                             Instructor</a>
                     </li>
                     <li>
-                        <a href="{{ route('student.login') }}" style="font-weight:750 !important;">Log In</a>
+                        <a class="exo-price" href="{{ route('student.login') }}" style="font-weight:750 !important;">Log In</a>
                     </li>
                     <li>
-                        <a href="{{ route('student.register') }}" style="font-weight:700 !important;">Sign Up</a>
+                        <a class="exo-price" href="{{ route('student.register') }}" style="font-weight:700 !important;">Sign Up</a>
                     </li>
                     @endif
                 </ul>

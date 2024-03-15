@@ -26,7 +26,7 @@ class CourseController extends Controller
     {
         $status = Auth::guard('instructor')->user()->status;
         if ($status == 'Pending' || $status == 'Declined') {
-            return redirect('/instructor/profile');
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
             // Retrieve the currently authenticated user
             $instructor = Auth::guard('instructor')->user();
@@ -57,7 +57,7 @@ class CourseController extends Controller
     {
         $status = Auth::guard('instructor')->user()->status;
         if ($status == 'Pending' || $status == 'Declined') {
-            return redirect('/instructor/profile');
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $instructor = Auth::guard('instructor')->user();
@@ -149,7 +149,7 @@ class CourseController extends Controller
         $status = Auth::guard('instructor')->user()->status;
         $instructor_id = Auth::guard('instructor')->user()->instructor_id;
         if ($status == 'Pending' || $status == 'Declined') {
-            return redirect()->route('instructor.profile');
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
 
@@ -200,7 +200,7 @@ class CourseController extends Controller
         $status = Auth::guard('instructor')->user()->status;
         $instructor_id = Auth::guard('instructor')->user()->instructor_id;
         if ($status == 'Pending' || $status == 'Declined') {
-            return redirect('/instructor/profile');
+            return redirect()->route('instructor.profile')->with('error', 'Your application is being reviewed! Please wait for approval!');
         } else {
 
             $course = Course::where('instructor_id', $instructor_id)->where('id', $course_id)->first();
